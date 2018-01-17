@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,kBAAmB;EACjB,oBAAoB,EAAE,OAAO;EAE7B,0BAAO;IACL,cAAc,EAAE,KAAK;IACrB,eAAe,EAAE,IAAI;IAErB,gBAAgB,EAAE,GAAG;IACrB,qBAAqB,EAAE,GAAG;IAC1B,iBAAiB,EAAE,GAAG;IAEtB,oBAAoB,EAAE,OAAO;IAC7B,gBAAgB,EAAE,OAAO;IACzB,aAAa,EAAE,OAAO;EAGxB,gCAAa;IACX,oBAAoB,EAAE,OAAO",
+"sources": ["_partial/_sidebar.scss"],
+"names": [],
+"file": "dashboard.css"
+}

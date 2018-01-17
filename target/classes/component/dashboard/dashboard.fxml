@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="675.0" prefWidth="1200.0" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dashboard.DashboardController">
+   <children>
+      <HBox layoutX="257.0" layoutY="152.0" prefHeight="675.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="sidebarAnchorPane" prefHeight="200.0" prefWidth="250.0" styleClass="sidebarAnchorPane">
+               <children>
+                  <VBox layoutX="60.0" layoutY="107.0" prefHeight="675.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="ocrButton" mnemonicParsing="false" text="OCR" />
+                        <Button mnemonicParsing="false" text="Settings" />
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+            <AnchorPane fx:id="workspaceAnchorPane" prefHeight="200.0" prefWidth="950.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

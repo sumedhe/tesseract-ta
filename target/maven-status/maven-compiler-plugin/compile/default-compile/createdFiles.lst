@@ -1,0 +1,6 @@
+configuration/ConfigurationHandler.class
+component/dashboard/DashboardController.class
+App.class
+common/Session.class
+component/Component.class
+configuration/ConfigurationFile.class
