@@ -28,6 +28,22 @@
                 </includes>
                 <targetPath>component/dashboard</targetPath>
             </resource>
+            <resource>
+                <directory>src/main/java/component/ocr</directory>
+                <includes>
+                    <include>ocr.fxml</include>
+                    <include>ocr.css</include>
+                </includes>
+                <targetPath>component/ocr</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/java/component/settings</directory>
+                <includes>
+                    <include>settings.fxml</include>
+                    <include>settings.css</include>
+                </includes>
+                <targetPath>component/settings</targetPath>
+            </resource>
         </resources>
     </build>
     <dependencies>

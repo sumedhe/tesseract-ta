@@ -1,15 +1,17 @@
 import component.ComponentFactory;
-import component.ComponentName;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+
+import static component.ComponentFactory.ComponentName.DASHBOARD_COMPONENT;
 
 public class App extends Application{
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(ComponentFactory.getComponent(ComponentName.DASHBOARD_COMPONENT).getParent());
+        Scene scene = new Scene(ComponentFactory.getComponent(DASHBOARD_COMPONENT).getParent());
         scene.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 System.exit(0);
