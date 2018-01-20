@@ -44,11 +44,16 @@ public class OCRController implements Controller {
 
                 ocrTasks.add(ocrTask);
 
-//                Shell s = new Shell("ls");
+                Shell s = new Shell("ls");
 //                s.execute();
-//                s.setCommand("cd " + ocrTask.getInputPath());
+                s.setCommand("cd " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/");
+                s.execute();
+//                s.setCommand("text2image " +
+//                        "--text sin.testtext.txt " +
+//                        "--outputbase sin.testtext " +
+//                        "--fonts_dir " + System.getProperty("user.dir") + "/tessdata" + " " +
+//                        "--font \"Iskoola Pota Bold\"");
 //                s.execute();
-//                s.setCommand();
             }
         });
     }

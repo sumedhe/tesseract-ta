@@ -59,6 +59,11 @@ public class Shell implements Runnable {
         if (this.thread == null) {
             this.thread = new Thread (this, "sdf");
             this.thread.start ();
+        }else {
+            System.out.println(">>>>>");
+            this.thread = new Thread (this, "sdf");
+            this.thread.start ();
+            System.out.println("<<<<<");
         }
     }
 
