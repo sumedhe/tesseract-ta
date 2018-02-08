@@ -22,8 +22,10 @@ public class Shell implements Runnable {
 
         try {
             process = runtime.exec(command);
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            //BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             while (true) {
 
                 // Read output
@@ -44,6 +46,8 @@ public class Shell implements Runnable {
                 // Wait 200ms
                 Thread.sleep(200);
             }
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

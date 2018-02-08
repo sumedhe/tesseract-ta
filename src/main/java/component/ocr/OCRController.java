@@ -9,8 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteWatchdog;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -44,20 +48,47 @@ public class OCRController implements Controller {
 
                 ocrTasks.add(ocrTask);
 
-                System.out.println(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)));
+                String inputPath = ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/";
+
+//                System.out.println(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)));
 
                 Shell s = new Shell("ls");
-//                s.run();
-                s.setCommand("cd " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/");
                 s.run();
-                s.setCommand("ls");
-                s.run();
-//                s.setCommand("text2image " +
-//                        "--text sin.testtext.txt " +
-//                        "--outputbase sin.testtext " +
-//                        "--fonts_dir " + System.getProperty("user.dir") + "/tessdata" + " " +
-//                        "--font \"Iskoola Pota Bold\"");
-//                s.execute();
+                s.setCommand("text2image " +
+                        "--text " + ocrTask.getInputPath() + " " +
+                        "--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext " +
+                        "--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath() + " " +
+                        "--font \"Iskoola Pota\"");
+                s.execute();
+
+//                String c = "text2image " +
+//                        "--text " + ocrTask.getInputPath() + " " +
+//                        "--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext " +
+//                        "--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath() + " " +
+//                        "--font \"Iskoola Pota\"";
+//                System.out.println(c);
+//                CommandLine cmdLine = CommandLine.parse(c);
+//                DefaultExecutor executor = new DefaultExecutor();
+//                try {
+//                    int exitValue = executor.execute(cmdLine);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println(c);
+//                CommandLine cmdLine = new CommandLine("text2image");
+//                cmdLine.addArgument("--text " + ocrTask.getInputPath());
+//                cmdLine.addArgument("--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
+//                cmdLine.addArgument("--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath());
+//                cmdLine.addArgument("--font \"Iskoola Pota\"");
+//                DefaultExecutor executor = new DefaultExecutor();
+//                executor.setExitValue(1);
+//                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
+//                executor.setWatchdog(watchdog);
+//                try {
+//                    int exitValue = executor.execute(cmdLine);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
     }
