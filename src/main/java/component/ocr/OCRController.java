@@ -3,6 +3,8 @@ package component.ocr;
 import component.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -46,26 +48,32 @@ public class OCRController implements Controller {
                 ocrTask.setName(selectedFile.getName());
 
                 ocrTasks.add(ocrTask);
+            }
+        });
 
-                CommandLine cmdLine = new CommandLine("text2image");
-                cmdLine.addArgument("--text");
-                cmdLine.addArgument(ocrTask.getInputPath());
-                cmdLine.addArgument("--outputbase");
-                cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
-                cmdLine.addArgument("--fonts_dir");
-                cmdLine.addArgument(getClass().getClassLoader().getResource("tessdata").getPath());
-                cmdLine.addArgument("--font");
-                cmdLine.addArgument("Iskoola Pota", false);
-                DefaultExecutor executor = new DefaultExecutor();
-                executor.setExitValue(0);
-                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
-                executor.setWatchdog(watchdog);
-                try {
-                    int exitValue = executor.execute(cmdLine);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for(OCRTask ocrTask: ocrTasks){
+                    CommandLine cmdLine = new CommandLine("text2image");
+                    cmdLine.addArgument("--text");
+                    cmdLine.addArgument(ocrTask.getInputPath());
+                    cmdLine.addArgument("--outputbase");
+                    cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
+                    cmdLine.addArgument("--fonts_dir");
+                    cmdLine.addArgument(getClass().getClassLoader().getResource("tessdata").getPath());
+                    cmdLine.addArgument("--font");
+                    cmdLine.addArgument("Iskoola Pota", false);
+                    DefaultExecutor executor = new DefaultExecutor();
+                    executor.setExitValue(0);
+                    ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
+                    executor.setWatchdog(watchdog);
+                    try {
+                        int exitValue = executor.execute(cmdLine);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-
             }
         });
     }
