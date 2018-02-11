@@ -2,5 +2,10 @@
 /Users/ivantha/Git/tessaract-ta/src/main/java/common/Session.java
 /Users/ivantha/Git/tessaract-ta/src/main/java/App.java
 /Users/ivantha/Git/tessaract-ta/src/main/java/configuration/ConfigurationHandler.java
+/Users/ivantha/Git/tessaract-ta/src/main/java/component/Controller.java
 /Users/ivantha/Git/tessaract-ta/src/main/java/configuration/ConfigurationFile.java
+/Users/ivantha/Git/tessaract-ta/src/main/java/component/ocr/OCRTask.java
 /Users/ivantha/Git/tessaract-ta/src/main/java/component/Component.java
+/Users/ivantha/Git/tessaract-ta/src/main/java/component/settings/SettingsController.java
+/Users/ivantha/Git/tessaract-ta/src/main/java/component/ComponentFactory.java
+/Users/ivantha/Git/tessaract-ta/src/main/java/component/ocr/OCRController.java

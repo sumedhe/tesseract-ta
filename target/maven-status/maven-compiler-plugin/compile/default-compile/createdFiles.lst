@@ -1,6 +1,13 @@
-configuration/ConfigurationHandler.class
 component/dashboard/DashboardController.class
 App.class
 common/Session.class
-component/Component.class
 configuration/ConfigurationFile.class
+component/ocr/OCRTask.class
+component/ocr/OCRController.class
+component/ComponentFactory$1.class
+configuration/ConfigurationHandler.class
+component/ComponentFactory.class
+component/settings/SettingsController.class
+component/Component.class
+component/Controller.class
+component/ComponentFactory$ComponentName.class
