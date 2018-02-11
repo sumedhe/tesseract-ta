@@ -1,6 +1,5 @@
 package component.ocr;
 
-import common.Shell;
 import component.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OCRController implements Controller {
@@ -50,45 +51,48 @@ public class OCRController implements Controller {
 
                 String inputPath = ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/";
 
-//                System.out.println(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)));
-
-                Shell s = new Shell("ls");
-                s.run();
-                s.setCommand("text2image " +
-                        "--text " + ocrTask.getInputPath() + " " +
-                        "--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext " +
-                        "--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath() + " " +
-                        "--font \"Iskoola Pota\"");
-                s.execute();
-
-//                String c = "text2image " +
+//                Shell s = new Shell("text2image " +
 //                        "--text " + ocrTask.getInputPath() + " " +
 //                        "--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext " +
 //                        "--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath() + " " +
-//                        "--font \"Iskoola Pota\"";
-//                System.out.println(c);
-//                CommandLine cmdLine = CommandLine.parse(c);
-//                DefaultExecutor executor = new DefaultExecutor();
-//                try {
-//                    int exitValue = executor.execute(cmdLine);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println(c);
-//                CommandLine cmdLine = new CommandLine("text2image");
-//                cmdLine.addArgument("--text " + ocrTask.getInputPath());
-//                cmdLine.addArgument("--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
-//                cmdLine.addArgument("--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath());
-//                cmdLine.addArgument("--font \"Iskoola Pota\"");
-//                DefaultExecutor executor = new DefaultExecutor();
-//                executor.setExitValue(1);
-//                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
-//                executor.setWatchdog(watchdog);
-//                try {
-//                    int exitValue = executor.execute(cmdLine);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+//                        "--font \"Iskoola Pota\"");
+//                Shell s = new Shell(new String[]{"bash", "-c", "text2image " +
+//                        "--text " + ocrTask.getInputPath() + " " +
+//                        "--outputbase " + ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext " +
+//                        "--fonts_dir " + getClass().getClassLoader().getResource("tessdata").getPath() + " " +
+//                        "--font \"Iskoola Pota\""
+//                });
+//                Shell s = new Shell(new String[]{"bash", "-c", "text2image",
+//                        "--text", ocrTask.getInputPath(),
+//                        "--outputbase", ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext",
+//                        "--fonts_dir", getClass().getClassLoader().getResource("tessdata").getPath(),
+//                        "--font", "Iskoola Pota"
+//                });
+//                s.execute();
+
+
+//                Map map = new HashMap();
+//                map.put("file", new File("invoice.pdf"));
+                CommandLine cmdLine = new CommandLine("text2image");
+                cmdLine.addArgument("--text");
+                cmdLine.addArgument(ocrTask.getInputPath());
+                cmdLine.addArgument("--outputbase");
+                cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
+                cmdLine.addArgument("--fonts_dir");
+                cmdLine.addArgument(getClass().getClassLoader().getResource("tessdata").getPath());
+                cmdLine.addArgument("--font");
+                cmdLine.addArgument("Iskoola Pota", false);
+//                cmdLine.setSubstitutionMap(map);
+                DefaultExecutor executor = new DefaultExecutor();
+                executor.setExitValue(0);
+                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
+                executor.setWatchdog(watchdog);
+                try {
+                    int exitValue = executor.execute(cmdLine);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }

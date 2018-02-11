@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class Shell implements Runnable {
     private Thread thread;
-    private String command;
+    private String[] command;
 
     // Constructor
-    public Shell(String command){
+    public Shell(String[] command){
         this.command = command;
     }
 
@@ -22,10 +22,9 @@ public class Shell implements Runnable {
 
         try {
             process = runtime.exec(command);
-            //BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//
+//            BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             while (true) {
 
                 // Read output
@@ -46,9 +45,6 @@ public class Shell implements Runnable {
                 // Wait 200ms
                 Thread.sleep(200);
             }
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -63,16 +59,11 @@ public class Shell implements Runnable {
         if (this.thread == null) {
             this.thread = new Thread (this, "sdf");
             this.thread.start ();
-        }else {
-            System.out.println(">>>>>");
-            this.thread = new Thread (this, "sdf");
-            this.thread.start ();
-            System.out.println("<<<<<");
         }
     }
 
     // Set command
-    public void setCommand(String command){
+    public void setCommand(String[] command){
         this.command = command;
     }
 
