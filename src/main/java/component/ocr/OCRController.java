@@ -13,11 +13,13 @@ import javafx.stage.Stage;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
+import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.exec.environment.EnvironmentUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OCRController implements Controller {
@@ -61,16 +63,27 @@ public class OCRController implements Controller {
                     cmdLine.addArgument("--outputbase");
                     cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
                     cmdLine.addArgument("--fonts_dir");
-                    cmdLine.addArgument(getClass().getClassLoader().getResource("tessdata").getPath());
+                    cmdLine.addArgument("/Users/ivantha/Git/tessaract-ta/tessdata");
                     cmdLine.addArgument("--font");
                     cmdLine.addArgument("Iskoola Pota", false);
+
                     DefaultExecutor executor = new DefaultExecutor();
                     executor.setExitValue(0);
+
                     ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
                     executor.setWatchdog(watchdog);
+
+                    Map<String, String> customEnvironment = null;
                     try {
-                        int exitValue = executor.execute(cmdLine);
+                        customEnvironment = EnvironmentUtils.getProcEnvironment();
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    customEnvironment.put("PANGOCAIRO_BACKEND", "fc");
+
+                    try {
+                        int exitValue = executor.execute(cmdLine, customEnvironment);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

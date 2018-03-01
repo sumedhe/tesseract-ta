@@ -3,11 +3,14 @@ App.class
 common/Session.class
 configuration/ConfigurationFile.class
 component/ocr/OCRTask.class
+component/ocr/OCRController$1.class
 component/ocr/OCRController.class
 component/ComponentFactory$1.class
 configuration/ConfigurationHandler.class
+component/comparison/ComparisonController.class
 component/ComponentFactory.class
 component/settings/SettingsController.class
 component/Component.class
 component/Controller.class
+common/OSValidator.class
 component/ComponentFactory$ComponentName.class
