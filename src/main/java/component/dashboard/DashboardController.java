@@ -25,6 +25,10 @@ public class DashboardController implements Controller {
     @FXML
     private Button ocrButton;
     @FXML
+    private Button dictionaryButton;
+    @FXML
+    private Button confusionMatrixButton;
+    @FXML
     private Button settingsButton;
 
     private static final Duration WORKSPACE_ANIMATE_TIME = Duration.millis(400);
@@ -32,6 +36,10 @@ public class DashboardController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ocrButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.OCR_COMPONENT).getParent()));
+
+        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.DICTIONARY_COMPONENT).getParent()));
+
+        confusionMatrixButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.CONFUSION_MATRIX_COMPONENT).getParent()));
 
         settingsButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.SETTINGS_COMPONENT).getParent()));
 

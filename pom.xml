@@ -37,6 +37,22 @@
                 <targetPath>component/ocr</targetPath>
             </resource>
             <resource>
+                <directory>src/main/java/component/dictionary</directory>
+                <includes>
+                    <include>dictionary.fxml</include>
+                    <include>dictionary.css</include>
+                </includes>
+                <targetPath>component/dictionary</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/java/component/confusionmatrix</directory>
+                <includes>
+                    <include>confusionMatrix.fxml</include>
+                    <include>confusionMatrix.css</include>
+                </includes>
+                <targetPath>component/confusionmatrix</targetPath>
+            </resource>
+            <resource>
                 <directory>src/main/java/component/settings</directory>
                 <includes>
                     <include>settings.fxml</include>

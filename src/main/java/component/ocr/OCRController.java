@@ -3,8 +3,6 @@ package component.ocr;
 import component.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -13,10 +11,10 @@ import javafx.stage.Stage;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
-import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.exec.environment.EnvironmentUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -53,39 +51,36 @@ public class OCRController implements Controller {
             }
         });
 
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                for(OCRTask ocrTask: ocrTasks){
-                    CommandLine cmdLine = new CommandLine("text2image");
-                    cmdLine.addArgument("--text");
-                    cmdLine.addArgument(ocrTask.getInputPath());
-                    cmdLine.addArgument("--outputbase");
-                    cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
-                    cmdLine.addArgument("--fonts_dir");
-                    cmdLine.addArgument("/Users/ivantha/Git/tessaract-ta/tessdata");
-                    cmdLine.addArgument("--font");
-                    cmdLine.addArgument("Iskoola Pota", false);
+        startButton.setOnAction(event -> {
+            for(OCRTask ocrTask: ocrTasks){
+                CommandLine cmdLine = new CommandLine("text2image");
+                cmdLine.addArgument("--text");
+                cmdLine.addArgument(ocrTask.getInputPath());
+                cmdLine.addArgument("--outputbase");
+                cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
+                cmdLine.addArgument("--fonts_dir");
+                cmdLine.addArgument("/Users/ivantha/Git/tessaract-ta/tessdata");
+                cmdLine.addArgument("--font");
+                cmdLine.addArgument("Iskoola Pota", false);
 
-                    DefaultExecutor executor = new DefaultExecutor();
-                    executor.setExitValue(0);
+                DefaultExecutor executor = new DefaultExecutor();
+                executor.setExitValue(0);
 
-                    ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
-                    executor.setWatchdog(watchdog);
+                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
+                executor.setWatchdog(watchdog);
 
-                    Map<String, String> customEnvironment = null;
-                    try {
-                        customEnvironment = EnvironmentUtils.getProcEnvironment();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    customEnvironment.put("PANGOCAIRO_BACKEND", "fc");
+                Map<String, String> customEnvironment = null;
+                try {
+                    customEnvironment = EnvironmentUtils.getProcEnvironment();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                customEnvironment.put("PANGOCAIRO_BACKEND", "fc");
 
-                    try {
-                        int exitValue = executor.execute(cmdLine, customEnvironment);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    int exitValue = executor.execute(cmdLine, customEnvironment);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

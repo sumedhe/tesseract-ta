@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="674.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.ocr.OCRController">
+<AnchorPane prefHeight="674.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.ocr.OCRController">
    <children>
       <Button fx:id="startButton" layoutX="453.0" layoutY="339.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="133.0" text="START" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <ListView layoutX="14.0" layoutY="98.0" prefHeight="528.0" prefWidth="363.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="98.0" />
+      <ListView fx:id="tasksListView" layoutX="14.0" layoutY="98.0" prefHeight="528.0" prefWidth="363.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="98.0" />
       <Button fx:id="selectAllButton" layoutX="284.0" layoutY="357.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Select All" AnchorPane.bottomAnchor="18.0" />
       <TitledPane layoutX="406.0" layoutY="98.0" prefHeight="290.0" prefWidth="254.0" text="Options">
          <content>
