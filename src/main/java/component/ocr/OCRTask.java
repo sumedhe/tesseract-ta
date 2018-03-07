@@ -1,5 +1,7 @@
 package component.ocr;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class OCRTask {
     private String id;
     private String name;
@@ -25,6 +27,10 @@ public class OCRTask {
     }
 
     public String getName() {
+        return FilenameUtils.removeExtension(name);
+    }
+
+    public String getNameWithExtension(){
         return name;
     }
 

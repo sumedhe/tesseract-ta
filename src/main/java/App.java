@@ -2,10 +2,7 @@ import component.ComponentFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
 
 import static component.ComponentFactory.ComponentName.DASHBOARD_COMPONENT;
 

@@ -32,18 +32,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="text2imageRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" />
+                  <Button fx:id="text2imageRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" />
                   <CheckBox fx:id="text2imageCheckBox" mnemonicParsing="false" selected="true" text="Text2Image" />
-                  <Button fx:id="ocrRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="comparisonRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="dictionaryRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button fx:id="ocrRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="comparisonRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="dictionaryRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <CheckBox fx:id="ocrCheckBox" mnemonicParsing="false" selected="true" text="OCR" GridPane.rowIndex="1" />
                   <CheckBox fx:id="comparisonCheckBox" mnemonicParsing="false" selected="true" text="Comparison" GridPane.rowIndex="2" />
                   <CheckBox fx:id="grammarCheckCheckBox" mnemonicParsing="false" selected="true" text="Grammar check" GridPane.rowIndex="4" />
                   <CheckBox fx:id="dictionaryCheckBox" mnemonicParsing="false" selected="true" text="Dictionary" GridPane.rowIndex="3" />
-                  <Button fx:id="grammarCheckRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button fx:id="grammarCheckRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <CheckBox fx:id="confusionMatrixCheckBox" mnemonicParsing="false" selected="true" text="Confusion matrix" GridPane.rowIndex="5" />
-                  <Button fx:id="confuseMatrixRunButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Button fx:id="confuseMatrixRunButton" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" text="RUN" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </content>
