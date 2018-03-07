@@ -1,6 +1,7 @@
 package component.dictionary;
 
 import common.ExcelLoader;
+import common.FileOperations;
 import component.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -78,6 +79,15 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 applyRules();
+            }
+        });
+
+        loadTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                // Load recognized text file
+                FileOperations fo = new FileOperations();
+                contentTextArea.setText(fo.openFile("sample.txt"));
             }
         });
 
