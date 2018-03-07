@@ -27,4 +27,8 @@ hs_err_pid*
 .DS_Store
 workspace.xml
 
+# Build files
 target
+
+# Configuration file
+config.properties
