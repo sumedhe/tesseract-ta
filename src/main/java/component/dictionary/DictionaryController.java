@@ -35,6 +35,20 @@ public class DictionaryController implements Controller{
     @FXML
     private Button browseButton;
 
+    @FXML
+    private Button loadTextButton;
+
+    @FXML
+    private Button applyRulesButton;
+
+    @FXML
+    private Button checkAmbiguitiesButton;
+
+    @FXML
+    private Button grammarCheckButton;
+
+
+
     String RuleArray[][];
 
     @Override
@@ -51,7 +65,7 @@ public class DictionaryController implements Controller{
                     String selectedText = contentTextArea.getSelectedText();
                     String unicodeString = "";
                     for (char c: selectedText.toCharArray()){
-                        unicodeString += "\\u" + Integer.toHexString(c | 0x10000).substring(1) + ": " + c + "\n";
+                        unicodeString += "\\u" + Integer.toHexString(c | 0x10000).substring(1) + ": " + "\n";
                     }
 
                     tooltip.setText(unicodeString);
@@ -60,7 +74,7 @@ public class DictionaryController implements Controller{
             }
         });
 
-        browseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        applyRulesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 applyRules();

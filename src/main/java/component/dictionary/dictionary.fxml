@@ -6,12 +6,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="599.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dictionary.DictionaryController">
+<AnchorPane prefHeight="675.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dictionary.DictionaryController">
    <children>
-      <TextArea fx:id="contentTextArea" layoutX="21.0" layoutY="87.0" prefHeight="466.0" prefWidth="701.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="87.0" />
-      <TextField layoutX="20.0" layoutY="41.0" prefHeight="25.0" prefWidth="610.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="41.0" />
+      <TextArea fx:id="contentTextArea" layoutX="21.0" layoutY="108.0" prefHeight="498.0" prefWidth="915.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="108.0" />
+      <TextField layoutX="20.0" layoutY="41.0" prefHeight="25.0" prefWidth="610.0" promptText="rules.xls" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="41.0" />
       <Button fx:id="browseButton" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="41.0" />
       <Label layoutX="20.0" layoutY="19.0" text="Dictionary" />
+      <Label layoutX="21.0" layoutY="82.0" prefHeight="15.0" prefWidth="66.0" text="Content" />
+      <Button fx:id="grammarCheckButton" layoutX="800.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Grammar Check" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="checkAmbiguitiesButton" layoutX="657.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Check Ambiguities" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="157.0" />
+      <Button fx:id="applyRulesButton" layoutX="548.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Apply Rules" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="303.0" />
+      <Button fx:id="loadTextButton" layoutX="432.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Load Text" />
    </children>
 </AnchorPane>
