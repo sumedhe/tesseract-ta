@@ -60,6 +60,12 @@ public class DictionaryController implements Controller{
             }
         });
 
+        browseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                applyRules();
+            }
+        });
 
 
     }
@@ -72,6 +78,28 @@ public class DictionaryController implements Controller{
     @Override
     public void onRefresh() {
 
+    }
+
+    // Apply Rules
+    public void applyRules(){
+        // Load Rules
+        ExcelLoader excelLoader = new ExcelLoader("rules.xls");
+        String[][] rules = excelLoader.loadData();
+        for (String[] ss : rules){
+            System.out.println(ss[0] + " " + ss[1]);
+        }
+
+        // Load text
+        String contentText = contentTextArea.getText();
+
+        // Find and fix
+        for (String[] rule: rules){
+            if (rule[0] != null && rule[1] != null){
+                contentText = contentText.replaceAll(rule[0], rule[1]);
+            }
+        }
+
+        contentTextArea.setText(contentText);
     }
 
 }
