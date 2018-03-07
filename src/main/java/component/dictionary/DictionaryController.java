@@ -1,25 +1,41 @@
 package component.dictionary;
 
+import common.ExcelLoader;
 import component.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
 
 public class DictionaryController implements Controller{
     @FXML
     private TextArea contentTextArea;
 
     private Tooltip tooltip;
+
+    @FXML
+    private Button browseButton;
+
+    String RuleArray[][];
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +59,8 @@ public class DictionaryController implements Controller{
                 }
             }
         });
+
+
 
     }
 
