@@ -36,7 +36,7 @@ public class ExcelLoader {
             // Load the sheet
             POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(this.fileName));
             HSSFWorkbook wb = new HSSFWorkbook(fs);
-            HSSFSheet sheet = wb.getSheetAt(0);
+            HSSFSheet sheet = wb.getSheetAt(this.sheetIndex);
             HSSFRow row;
             HSSFCell cell;
 

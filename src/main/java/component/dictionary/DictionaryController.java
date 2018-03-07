@@ -23,8 +23,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
-
+import java.util.*;
 
 
 public class DictionaryController implements Controller{
@@ -49,8 +48,11 @@ public class DictionaryController implements Controller{
     private Button grammarCheckButton;
 
 
+    String outputText;
 
-    String RuleArray[][];
+    String RuleArray[][], ambiguousChars[][];
+
+    Set<String> dictionaryWordList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,19 +77,69 @@ public class DictionaryController implements Controller{
             }
         });
 
-        applyRulesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                applyRules();
-            }
-        });
 
+        // On click Load Text button
         loadTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // Load recognized text file
-                FileOperations fo = new FileOperations();
-                contentTextArea.setText(fo.openFile("sample.txt"));
+                loadOutputText();
+            }
+        });
+
+
+        // On click Apply Rules button
+        applyRulesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                // Load Rules
+                ExcelLoader excelLoader = new ExcelLoader("rules.xls");
+                String[][] rules = excelLoader.loadData();
+
+                // Load text
+                loadOutputText();
+
+                // Find and fix
+                for (String[] rule: rules){
+                    if (rule[0] != null && rule[1] != null){
+                        outputText = outputText.replaceAll(rule[0], rule[1]);
+                    }
+                }
+
+                saveOutputText();
+            }
+        });
+
+
+        // On click Check Ambiguities button
+        checkAmbiguitiesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                loadDictionaryWords();
+                loadOutputText();
+                String[] outputWords = outputText.split(" ");
+
+                loadAmbiguoursChars();
+
+                // Check for the words in the dictionary
+                for (String word: outputWords){
+                    // If not the word in dictionary
+                    if (!dictionaryWordList.contains(word)){
+                        // Check for ambiguous options
+                        for (String[] s: ambiguousChars){
+                            if (s[0] != null && word.contains(s[0])){
+                                String newWord = word.replaceAll(s[0], s[1]);
+                                // Check for newWord in dictionary
+                                if (dictionaryWordList.contains(newWord)){
+                                    // Replace by new word
+                                    outputText = outputText.replaceAll(word, newWord);
+                                    System.out.println("Fixing Ambiguity: " + word + " by " + newWord);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                saveOutputText();
             }
         });
 
@@ -104,26 +156,61 @@ public class DictionaryController implements Controller{
 
     }
 
-    // Apply Rules
-    public void applyRules(){
-        // Load Rules
+    // Load recognnized text
+    public void loadOutputText(){
+        // Load recognized text file
+        FileOperations fo = new FileOperations();
+        outputText = fo.openFile("sample.txt");
+
+        contentTextArea.setText(outputText);
+    }
+
+    public void saveOutputText(){
+        // TODO: Save
+
+        contentTextArea.setText(outputText);
+    }
+
+
+    // Load Dictionary words
+    public void loadDictionaryWords(){
+        // Load data
         ExcelLoader excelLoader = new ExcelLoader("rules.xls");
-        String[][] rules = excelLoader.loadData();
-        for (String[] ss : rules){
-            System.out.println(ss[0] + " " + ss[1]);
-        }
+        excelLoader.setSheetIndex(2); // Sheet 2: Dictionary words
+        String[][] data = excelLoader.loadData();
 
-        // Load text
-        String contentText = contentTextArea.getText();
-
-        // Find and fix
-        for (String[] rule: rules){
-            if (rule[0] != null && rule[1] != null){
-                contentText = contentText.replaceAll(rule[0], rule[1]);
+        int wordCount = 0;
+        String[] tempList = new String[data.length * data[0].length];
+        for (String[] row: data){
+            for (String val: row){
+                if (val != null){
+                    tempList[wordCount] = val;
+                    wordCount++;
+                }
             }
         }
 
-        contentTextArea.setText(contentText);
+        // Create hashset of words
+        dictionaryWordList = new HashSet<String>(Arrays.asList(Arrays.copyOfRange(tempList, 0, wordCount)));
+
+    }
+
+    // Load Ambiguours rules
+    public void loadAmbiguoursChars(){
+        // Load data
+        ExcelLoader excelLoader = new ExcelLoader("rules.xls");
+        excelLoader.setSheetIndex(1); // Sheet 1: Ambiguous characters
+        ambiguousChars = excelLoader.loadData();
+    }
+
+    // TMP
+    public void showArray(String[][] data){
+        for (String[] r: data){
+            for (String c: r){
+                System.out.print(c);
+            }
+            System.out.println();
+        }
     }
 
 }
