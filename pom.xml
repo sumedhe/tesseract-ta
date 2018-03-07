@@ -37,12 +37,12 @@
                 <targetPath>component/ocr</targetPath>
             </resource>
             <resource>
-                <directory>src/main/java/component/dictionary</directory>
+                <directory>src/main/java/component/comparison</directory>
                 <includes>
-                    <include>dictionary.fxml</include>
-                    <include>dictionary.css</include>
+                    <include>comparison.fxml</include>
+                    <include>comparison.css</include>
                 </includes>
-                <targetPath>component/dictionary</targetPath>
+                <targetPath>component/comparison</targetPath>
             </resource>
             <resource>
                 <directory>src/main/java/component/confusionmatrix</directory>
@@ -51,6 +51,22 @@
                     <include>confusionMatrix.css</include>
                 </includes>
                 <targetPath>component/confusionmatrix</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/java/component/dictionary</directory>
+                <includes>
+                    <include>dictionary.fxml</include>
+                    <include>dictionary.css</include>
+                </includes>
+                <targetPath>component/dictionary</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/java/component/grammarcheck</directory>
+                <includes>
+                    <include>grammarCheck.fxml</include>
+                    <include>grammarCheck.css</include>
+                </includes>
+                <targetPath>component/grammarcheck</targetPath>
             </resource>
             <resource>
                 <directory>src/main/java/component/settings</directory>

@@ -1,69 +1,29 @@
 package configuration;
 
-import java.io.*;
-import java.util.Properties;
-
 public class ConfigurationHandler {
-    private final String path = "config.properties";
-    private FileInputStream fileInputStream = null;
-    private Properties properties = null;
+    private static ConfigurationFile configurationFile = new ConfigurationFile();
 
     public ConfigurationHandler() {
-        this.createIfNotExists();
-        this.initialize();
-
-        if (properties.isEmpty()) {
-            assert properties.isEmpty();
-            this.setDefaultConfigurations();
-        }
+        ConfigurationHandler.configurationFile = new ConfigurationFile();
     }
 
-    private void createIfNotExists() {
-        File file = new File(path);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static String getStageTitle() {
+        return configurationFile.getProperty("stage_title");
     }
 
-    private void initialize() {
-        try {
-            fileInputStream = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        properties = new Properties();
-        try {
-            properties.load(fileInputStream);
-            fileInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void setStageTitle(String stageTitle) {
+        configurationFile.setProperty("stage_title", stageTitle);
     }
 
-    public void setDefaultConfigurations() {
-        this.setProperty("stage_title", "Tessaract Test Automation System");
+    public static String getWorkspacePath() {
+        return configurationFile.getProperty("workspace_path");
     }
 
-    public void setProperty(String property, String value) {
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        properties.setProperty(property, value);
-        try {
-            properties.store(out, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void setWorkspacePath(String workspacePath) {
+        configurationFile.setProperty("workspace_path", workspacePath);
     }
 
-    public String getProperty(String property) {
-        return properties.getProperty(property);
+    public static void setDefaultConfig() {
+        configurationFile.setDefaultConfigurations();
     }
 }

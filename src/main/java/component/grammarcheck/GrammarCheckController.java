@@ -1,11 +1,11 @@
-package component.comparison;
+package component.grammarcheck;
 
 import component.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ComparisonController implements Controller{
+public class GrammarCheckController implements Controller{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

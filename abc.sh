@@ -1,1 +1,0 @@
-text2image --text /Users/ivantha/Downloads/lakbima3/sin.testtext.txt --outputbase /Users/ivantha/Downloads/lakbima3/sin.testtext --fonts_dir /Users/ivantha/Git/tessaract-ta/tessdata --font "Iskoola Pota"

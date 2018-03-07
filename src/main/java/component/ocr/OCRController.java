@@ -1,31 +1,70 @@
 package component.ocr;
 
+import common.Formatter;
+import common.OCROperation;
 import component.Controller;
+import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.ExecuteWatchdog;
-import org.apache.commons.exec.environment.EnvironmentUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class OCRController implements Controller {
 
     @FXML
+    private TextField workspaceTextField;
+    @FXML
+    private Button changeButton;
+
+    @FXML
+    private CheckBox text2imageCheckBox;
+    @FXML
+    private Button text2imageRunButton;
+    @FXML
+    private CheckBox ocrCheckBox;
+    @FXML
+    private Button ocrRunButton;
+    @FXML
+    private CheckBox comparisonCheckBox;
+    @FXML
+    private Button comparisonRunButton;
+    @FXML
+    private CheckBox confusionMatrixCheckBox;
+    @FXML
+    private Button confuseMatrixRunButton;
+    @FXML
+    private CheckBox dictionaryCheckBox;
+    @FXML
+    private Button dictionaryRunButton;
+    @FXML
+    private CheckBox grammarCheckCheckBox;
+    @FXML
+    private Button grammarCheckRunButton;
+
+    @FXML
     private ListView<OCRTask> tasksListView;
     @FXML
     private Button addButton;
+    @FXML
+    private Button removeButton;
+    @FXML
+    private Button removeAllButton;
+
     @FXML
     private Button startButton;
 
@@ -36,6 +75,19 @@ public class OCRController implements Controller {
         ocrTasks = FXCollections.observableList(new ArrayList<OCRTask>());
         tasksListView.setItems(ocrTasks);
 
+        // Set previous workspace
+        workspaceTextField.setText(ConfigurationHandler.getWorkspacePath());
+
+        // Change workspace
+        changeButton.setOnAction(event -> {
+            DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Select workspace");
+            File selectedDirectory = chooser.showDialog(changeButton.getScene().getWindow());
+            workspaceTextField.setText(selectedDirectory.getAbsolutePath());
+            ConfigurationHandler.setWorkspacePath(selectedDirectory.getAbsolutePath());
+        });
+
+        // Add task
         addButton.setOnAction(event -> {
             Stage stage = (Stage) addButton.getScene().getWindow();
 
@@ -51,36 +103,87 @@ public class OCRController implements Controller {
             }
         });
 
+        // Remove task
+        removeButton.setOnAction(event -> ocrTasks.remove(tasksListView.getSelectionModel().getSelectedIndex()));
+
+        // Remove all tasks
+        removeAllButton.setOnAction(event -> ocrTasks.clear());
+
+        // Run Text2Image tasks
+        text2imageRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Text2Image");
+        });
+
+        // Run OCR tasks
+        ocrRunButton.setOnAction(event -> {
+           // To do
+            System.out.println("OCR");
+        });
+
+        // Run Comparison tasks
+        comparisonRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Comparison");
+        });
+
+        // Run Dictionary tasks
+        dictionaryRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Dictionary");
+        });
+
+        // Run Grammar tasks
+        grammarCheckRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Grammar");
+        });
+
+        // Run Confusion Matrix tasks
+        confuseMatrixRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Confusion Matrix");
+        });
+
         startButton.setOnAction(event -> {
             for(OCRTask ocrTask: ocrTasks){
-                CommandLine cmdLine = new CommandLine("text2image");
-                cmdLine.addArgument("--text");
-                cmdLine.addArgument(ocrTask.getInputPath());
-                cmdLine.addArgument("--outputbase");
-                cmdLine.addArgument(ocrTask.getInputPath().substring(0, ocrTask.getInputPath().lastIndexOf(File.separator)) + "/sin.testtext");
-                cmdLine.addArgument("--fonts_dir");
-                cmdLine.addArgument("/Users/ivantha/Git/tessaract-ta/tessdata");
-                cmdLine.addArgument("--font");
-                cmdLine.addArgument("Iskoola Pota", false);
+                String outputDirectoryPath = Formatter.formatOutputDirectory(workspaceTextField.getText(), ocrTask.getName());
 
-                DefaultExecutor executor = new DefaultExecutor();
-                executor.setExitValue(0);
+                // Create the output directory if it doesn't exist
+                File file = new File(outputDirectoryPath);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
 
-                ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
-                executor.setWatchdog(watchdog);
-
-                Map<String, String> customEnvironment = null;
+                // Copy the input file to output directory
                 try {
-                    customEnvironment = EnvironmentUtils.getProcEnvironment();
+                    FileUtils.copyFile(new File(ocrTask.getInputPath()), new File(outputDirectoryPath + "/input.txt"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                customEnvironment.put("PANGOCAIRO_BACKEND", "fc");
 
-                try {
-                    int exitValue = executor.execute(cmdLine, customEnvironment);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if(text2imageCheckBox.isSelected()){
+                    OCROperation.text2Image(ocrTask.getInputPath(),outputDirectoryPath + "/out");
+                }
+
+                if(ocrCheckBox.isSelected()){
+                    OCROperation.ocr(outputDirectoryPath + "out.tif",outputDirectoryPath + "/output");
+                }
+
+                if(comparisonCheckBox.isSelected()){
+
+                }
+
+                if(confusionMatrixCheckBox.isSelected()){
+
+                }
+
+                if(dictionaryCheckBox.isSelected()){
+
+                }
+
+                if(grammarCheckCheckBox.isSelected()){
+
                 }
             }
         });

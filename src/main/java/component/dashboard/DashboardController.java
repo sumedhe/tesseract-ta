@@ -25,9 +25,13 @@ public class DashboardController implements Controller {
     @FXML
     private Button ocrButton;
     @FXML
-    private Button dictionaryButton;
+    private Button comparisonButton;
     @FXML
     private Button confusionMatrixButton;
+    @FXML
+    private Button dictionaryButton;
+    @FXML
+    private Button grammarCheckButton;
     @FXML
     private Button settingsButton;
 
@@ -37,9 +41,13 @@ public class DashboardController implements Controller {
     public void initialize(URL location, ResourceBundle resources) {
         ocrButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.OCR_COMPONENT).getParent()));
 
-        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.DICTIONARY_COMPONENT).getParent()));
+        comparisonButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.COMPARISON_COMPONENT).getParent()));
 
         confusionMatrixButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.CONFUSION_MATRIX_COMPONENT).getParent()));
+
+        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.DICTIONARY_COMPONENT).getParent()));
+
+        grammarCheckButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.GRAMMAR_CHECK_COMPONENT).getParent()));
 
         settingsButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.SETTINGS_COMPONENT).getParent()));
 
