@@ -25,6 +25,8 @@ public class DashboardController implements Controller {
     @FXML
     private Button ocrButton;
     @FXML
+    private Button comparisonButton;
+    @FXML
     private Button confusionMatrixButton;
     @FXML
     private Button dictionaryButton;
@@ -38,6 +40,8 @@ public class DashboardController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ocrButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.OCR_COMPONENT).getParent()));
+
+        comparisonButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.COMPARISON_COMPONENT).getParent()));
 
         confusionMatrixButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.CONFUSION_MATRIX_COMPONENT).getParent()));
 

@@ -37,6 +37,14 @@
                 <targetPath>component/ocr</targetPath>
             </resource>
             <resource>
+                <directory>src/main/java/component/comparison</directory>
+                <includes>
+                    <include>comparison.fxml</include>
+                    <include>comparison.css</include>
+                </includes>
+                <targetPath>component/comparison</targetPath>
+            </resource>
+            <resource>
                 <directory>src/main/java/component/confusionmatrix</directory>
                 <includes>
                     <include>confusionMatrix.fxml</include>

@@ -44,6 +44,10 @@ public class OCRController implements Controller {
     @FXML
     private Button comparisonRunButton;
     @FXML
+    private CheckBox confusionMatrixCheckBox;
+    @FXML
+    private Button confuseMatrixRunButton;
+    @FXML
     private CheckBox dictionaryCheckBox;
     @FXML
     private Button dictionaryRunButton;
@@ -51,10 +55,6 @@ public class OCRController implements Controller {
     private CheckBox grammarCheckCheckBox;
     @FXML
     private Button grammarCheckRunButton;
-    @FXML
-    private CheckBox confusionMatrixCheckBox;
-    @FXML
-    private Button confuseMatrixRunButton;
 
     @FXML
     private ListView<OCRTask> tasksListView;
@@ -174,15 +174,15 @@ public class OCRController implements Controller {
 
                 }
 
+                if(confusionMatrixCheckBox.isSelected()){
+
+                }
+
                 if(dictionaryCheckBox.isSelected()){
 
                 }
 
                 if(grammarCheckCheckBox.isSelected()){
-
-                }
-
-                if(confusionMatrixCheckBox.isSelected()){
 
                 }
             }

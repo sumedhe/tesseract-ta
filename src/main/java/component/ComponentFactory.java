@@ -14,6 +14,7 @@ public class ComponentFactory {
     public enum ComponentName {
         DASHBOARD_COMPONENT,
         OCR_COMPONENT,
+        COMPARISON_COMPONENT,
         CONFUSION_MATRIX_COMPONENT,
         DICTIONARY_COMPONENT,
         GRAMMAR_CHECK_COMPONENT,
@@ -31,6 +32,9 @@ public class ComponentFactory {
                     break;
                 case OCR_COMPONENT:
                     initialize(OCR_COMPONENT, "/component/ocr/ocr.fxml");
+                    break;
+                case COMPARISON_COMPONENT:
+                    initialize(COMPARISON_COMPONENT, "/component/comparison/comparison.fxml");
                     break;
                 case CONFUSION_MATRIX_COMPONENT:
                     initialize(CONFUSION_MATRIX_COMPONENT, "/component/confusionmatrix/confusionMatrix.fxml");
