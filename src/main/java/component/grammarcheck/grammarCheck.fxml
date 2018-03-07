@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="component.grammarcheck.GrammarCheckController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="599.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dictionary.DictionaryController">
+   <children>
+      <TextArea fx:id="contentTextArea" layoutX="18.0" layoutY="24.0" prefHeight="551.0" prefWidth="696.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="24.0" />
+   </children>
 </AnchorPane>

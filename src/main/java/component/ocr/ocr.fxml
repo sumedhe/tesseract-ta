@@ -49,7 +49,7 @@
          </content>
       </TitledPane>
       <Label layoutX="14.0" layoutY="75.0" text="Tests" />
-      <TextField fx:id="workspaceTextField" layoutX="14.0" layoutY="41.0" prefHeight="27.0" prefWidth="811.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="98.0" />
+      <TextField fx:id="workspaceTextField" editable="false" layoutX="14.0" layoutY="41.0" prefHeight="27.0" prefWidth="811.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="98.0" />
       <Button fx:id="changeButton" layoutX="805.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Change" AnchorPane.rightAnchor="14.0" />
       <Label layoutX="14.0" layoutY="20.0" text="Workspace" />
       <Button fx:id="setTrainedDataButton" layoutX="489.0" layoutY="405.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="254.0" text="Set trained data" AnchorPane.bottomAnchor="243.0" AnchorPane.rightAnchor="290.0" />
