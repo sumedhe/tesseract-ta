@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.exec.CommandLine;
@@ -23,9 +25,44 @@ import java.util.ResourceBundle;
 public class OCRController implements Controller {
 
     @FXML
+    private TextField workspaceTextField;
+    @FXML
+    private Button changeButton;
+
+    @FXML
+    private CheckBox text2imageCheckBox;
+    @FXML
+    private Button text2imageRunButton;
+    @FXML
+    private CheckBox ocrCheckBox;
+    @FXML
+    private Button ocrRunButton;
+    @FXML
+    private CheckBox comparisonCheckBox;
+    @FXML
+    private Button comparisonRunButton;
+    @FXML
+    private CheckBox dictionaryCheckBox;
+    @FXML
+    private Button dictionaryRunButton;
+    @FXML
+    private CheckBox grammarCheckCheckBox;
+    @FXML
+    private Button grammarCheckRunButton;
+    @FXML
+    private CheckBox confusionMatrixCheckBox;
+    @FXML
+    private Button confuseMatrixRunButton;
+
+    @FXML
     private ListView<OCRTask> tasksListView;
     @FXML
     private Button addButton;
+    @FXML
+    private Button removeButton;
+    @FXML
+    private Button removeAllButton;
+
     @FXML
     private Button startButton;
 
