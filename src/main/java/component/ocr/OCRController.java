@@ -1,13 +1,18 @@
 package component.ocr;
 
+import com.github.difflib.DiffUtils;
+import com.github.difflib.algorithm.DiffException;
+import com.github.difflib.patch.Delta;
+import com.github.difflib.patch.Patch;
+import com.opencsv.CSVWriter;
+import googlediff.DiffMatchPatch;
+import googlediff.DiffMatchPatch.Diff;
 import common.Formatter;
 import common.OCROperation;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -20,9 +25,12 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class OCRController implements Controller {
 
@@ -55,6 +63,9 @@ public class OCRController implements Controller {
     private CheckBox grammarCheckCheckBox;
     @FXML
     private Button grammarCheckRunButton;
+
+    @FXML
+    private Button setTrainedDataButton;
 
     @FXML
     private ListView<OCRTask> tasksListView;
@@ -117,7 +128,7 @@ public class OCRController implements Controller {
 
         // Run OCR tasks
         ocrRunButton.setOnAction(event -> {
-           // To do
+            // To do
             System.out.println("OCR");
         });
 
@@ -146,13 +157,13 @@ public class OCRController implements Controller {
         });
 
         startButton.setOnAction(event -> {
-            for(OCRTask ocrTask: ocrTasks){
+            for (OCRTask ocrTask : ocrTasks) {
                 String outputDirectoryPath = Formatter.formatOutputDirectory(workspaceTextField.getText(), ocrTask.getName());
 
                 // Create the output directory if it doesn't exist
-                File file = new File(outputDirectoryPath);
-                if (!file.exists()) {
-                    file.mkdir();
+                File outputDirectory = new File(outputDirectoryPath);
+                if (!outputDirectory.exists()) {
+                    outputDirectory.mkdir();
                 }
 
                 // Copy the input file to output directory
@@ -162,30 +173,96 @@ public class OCRController implements Controller {
                     e.printStackTrace();
                 }
 
-                if(text2imageCheckBox.isSelected()){
-                    OCROperation.text2Image(ocrTask.getInputPath(),outputDirectoryPath + "/out");
+                if (text2imageCheckBox.isSelected()) {
+                    OCROperation.text2Image(ocrTask.getInputPath(), outputDirectoryPath + "/out");
                 }
 
-                if(ocrCheckBox.isSelected()){
-                    OCROperation.ocr(outputDirectoryPath + "out.tif",outputDirectoryPath + "/output");
+                if (ocrCheckBox.isSelected()) {
+                    OCROperation.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
                 }
 
-                if(comparisonCheckBox.isSelected()){
+                if (comparisonCheckBox.isSelected()) {
+                    try {
+                        byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
+                        String s1 = new String(encoded, Charset.defaultCharset());
+
+                        byte[] encoded2 = Files.readAllBytes(Paths.get(outputDirectoryPath + "/output.txt"));
+                        String s2 = new String(encoded2, Charset.defaultCharset());
+
+                        DiffMatchPatch difference = new DiffMatchPatch();
+                        LinkedList<Diff> deltas = difference.diff_main(s1, s2);
+
+                        String[] s1array = s1.split("[,\\s]");
+                        String[] s2array = s2.split("[,\\s]");
+
+                        try (
+                                Writer writer = Files.newBufferedWriter(Paths.get(outputDirectoryPath + "/diff_google.csv"));
+
+                                CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+                                        CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+                        ) {
+                            String[] headerRecord = {"C1", "C2", "Equality"};
+                            csvWriter.writeNext(headerRecord);
+
+                            for (Diff d : deltas) {
+                                if (d.operation == DiffMatchPatch.Operation.EQUAL) {
+                                    csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""),
+                                            d.text.replace("\n", "").replace("\r", ""), "Equal"});
+                                }
+                                else if (d.operation == DiffMatchPatch.Operation.INSERT){
+                                    csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""), "", "Insert"});
+                                }
+                                else if (d.operation == DiffMatchPatch.Operation.DELETE){
+                                    csvWriter.writeNext(new String[]{"", d.text.replace("\n", "").replace("\r", ""), "Delete"});
+                                }
+
+                            }
+
+                        }
+
+                        try (
+                                Writer writer = Files.newBufferedWriter(Paths.get(outputDirectoryPath + "/diff_diffutils.csv"));
+
+                                CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+                                        CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+                        ) {
+                            String[] headerRecord = {"Type", "Index", "Original", "Revised"};
+                            csvWriter.writeNext(headerRecord);
+
+                            List<String> original = Arrays.asList(s1array);
+                            List<String> revised = Arrays.asList(s2array);
+
+                            Patch<String> patch = DiffUtils.diff(original, revised);
+
+                            for (Delta delta : patch.getDeltas()) {
+                                csvWriter.writeNext(new String[]{delta.getType().toString(),
+                                        String.valueOf(delta.getOriginal().getPosition()),
+                                        delta.getOriginal().getLines().toString().replace(",", " "),
+                                        delta.getRevised().getLines().toString().replace(",", " ")});
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (DiffException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (confusionMatrixCheckBox.isSelected()) {
 
                 }
 
-                if(confusionMatrixCheckBox.isSelected()){
+                if (dictionaryCheckBox.isSelected()) {
 
                 }
 
-                if(dictionaryCheckBox.isSelected()){
-
-                }
-
-                if(grammarCheckCheckBox.isSelected()){
+                if (grammarCheckCheckBox.isSelected()) {
 
                 }
             }
+
+            System.exit(0);
         });
     }
 
