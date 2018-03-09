@@ -1,12 +1,5 @@
 package component.ocr;
 
-import com.github.difflib.DiffUtils;
-import com.github.difflib.algorithm.DiffException;
-import com.github.difflib.patch.Delta;
-import com.github.difflib.patch.Patch;
-import com.opencsv.CSVWriter;
-import googlediff.DiffMatchPatch;
-import googlediff.DiffMatchPatch.Diff;
 import common.Formatter;
 import common.OCROperation;
 import component.Controller;
@@ -25,12 +18,9 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class OCRController implements Controller {
 
@@ -56,13 +46,17 @@ public class OCRController implements Controller {
     @FXML
     private Button confuseMatrixRunButton;
     @FXML
-    private CheckBox dictionaryCheckBox;
+    private CheckBox applyRulesCheckBox;
     @FXML
-    private Button dictionaryRunButton;
+    private Button applyRulesRunButton;
     @FXML
-    private CheckBox grammarCheckCheckBox;
+    private CheckBox ambiguitiesCheckBox;
     @FXML
-    private Button grammarCheckRunButton;
+    private Button ambiguitiesRunButton;
+    @FXML
+    private CheckBox legitimacyCheckBox;
+    @FXML
+    private Button legitimacyRunButton;
 
     @FXML
     private Button setTrainedDataButton;
@@ -138,22 +132,28 @@ public class OCRController implements Controller {
             System.out.println("Comparison");
         });
 
-        // Run Dictionary tasks
-        dictionaryRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Dictionary");
-        });
-
-        // Run Grammar tasks
-        grammarCheckRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Grammar");
-        });
-
         // Run Confusion Matrix tasks
         confuseMatrixRunButton.setOnAction(event -> {
             // To do
             System.out.println("Confusion Matrix");
+        });
+
+        // Run Apply rules tasks
+        applyRulesRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Apply rules");
+        });
+
+        // Run Ambiguities tasks
+        ambiguitiesRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Ambiguities");
+        });
+
+        // Run Legitimacy tasks
+        legitimacyRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Legitimacy");
         });
 
         startButton.setOnAction(event -> {
@@ -182,82 +182,22 @@ public class OCRController implements Controller {
                 }
 
                 if (comparisonCheckBox.isSelected()) {
-                    try {
-                        byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
-                        String s1 = new String(encoded, Charset.defaultCharset());
-
-                        byte[] encoded2 = Files.readAllBytes(Paths.get(outputDirectoryPath + "/output.txt"));
-                        String s2 = new String(encoded2, Charset.defaultCharset());
-
-                        DiffMatchPatch difference = new DiffMatchPatch();
-                        LinkedList<Diff> deltas = difference.diff_main(s1, s2);
-
-                        String[] s1array = s1.split("[,\\s]");
-                        String[] s2array = s2.split("[,\\s]");
-
-                        try (
-                                Writer writer = Files.newBufferedWriter(Paths.get(outputDirectoryPath + "/diff_google.csv"));
-
-                                CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                                        CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-                        ) {
-                            String[] headerRecord = {"C1", "C2", "Equality"};
-                            csvWriter.writeNext(headerRecord);
-
-                            for (Diff d : deltas) {
-                                if (d.operation == DiffMatchPatch.Operation.EQUAL) {
-                                    csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""),
-                                            d.text.replace("\n", "").replace("\r", ""), "Equal"});
-                                }
-                                else if (d.operation == DiffMatchPatch.Operation.INSERT){
-                                    csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""), "", "Insert"});
-                                }
-                                else if (d.operation == DiffMatchPatch.Operation.DELETE){
-                                    csvWriter.writeNext(new String[]{"", d.text.replace("\n", "").replace("\r", ""), "Delete"});
-                                }
-
-                            }
-
-                        }
-
-                        try (
-                                Writer writer = Files.newBufferedWriter(Paths.get(outputDirectoryPath + "/diff_diffutils.csv"));
-
-                                CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                                        CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-                        ) {
-                            String[] headerRecord = {"Type", "Index", "Original", "Revised"};
-                            csvWriter.writeNext(headerRecord);
-
-                            List<String> original = Arrays.asList(s1array);
-                            List<String> revised = Arrays.asList(s2array);
-
-                            Patch<String> patch = DiffUtils.diff(original, revised);
-
-                            for (Delta delta : patch.getDeltas()) {
-                                csvWriter.writeNext(new String[]{delta.getType().toString(),
-                                        String.valueOf(delta.getOriginal().getPosition()),
-                                        delta.getOriginal().getLines().toString().replace(",", " "),
-                                        delta.getRevised().getLines().toString().replace(",", " ")});
-                            }
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (DiffException e) {
-                        e.printStackTrace();
-                    }
+                    OCROperation.diff(outputDirectoryPath);
                 }
 
                 if (confusionMatrixCheckBox.isSelected()) {
 
                 }
 
-                if (dictionaryCheckBox.isSelected()) {
+                if (applyRulesCheckBox.isSelected()) {
 
                 }
 
-                if (grammarCheckCheckBox.isSelected()) {
+                if (ambiguitiesCheckBox.isSelected()) {
+
+                }
+
+                if (legitimacyCheckBox.isSelected()) {
 
                 }
             }
