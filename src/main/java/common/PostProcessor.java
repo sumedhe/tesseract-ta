@@ -1,4 +1,4 @@
-package component.dictionary;
+package common;
 
 import java.util.Set;
 
