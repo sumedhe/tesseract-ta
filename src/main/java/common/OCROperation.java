@@ -57,10 +57,10 @@ public class OCROperation {
         }
     }
 
-    public static void ocr(String inputPath, String outputPath){
+    public static void ocr(String inputPath, String outputPath, String tessdataDir){
         CommandLine cmdLine = new CommandLine("tesseract");
         cmdLine.addArgument("--tessdata-dir");
-        cmdLine.addArgument("./");
+        cmdLine.addArgument(tessdataDir);
         cmdLine.addArgument(inputPath);
         cmdLine.addArgument(outputPath);
         cmdLine.addArgument("-l");
