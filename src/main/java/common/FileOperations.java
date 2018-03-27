@@ -11,7 +11,6 @@ public class FileOperations {
 
     }
 
-
     public String openFile(String fileName) {
         String line = null;
         String text = "";

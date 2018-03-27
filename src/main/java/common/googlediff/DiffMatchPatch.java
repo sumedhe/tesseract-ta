@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package googlediff;
+package common.googlediff;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
