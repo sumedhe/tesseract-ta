@@ -44,5 +44,6 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.wumpz:diffutils:2.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jgit:org.eclipse.jgit:4.4.1.201607150455-r" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:15.0" level="project" />
   </component>
 </module>

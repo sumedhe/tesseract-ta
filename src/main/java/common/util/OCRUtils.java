@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class OcrUtils {
+public class OCRUtils {
 
     public static void ocr(String inputPath, String outputPath, String tessdataDir){
         CommandLine cmdLine = new CommandLine("tesseract");

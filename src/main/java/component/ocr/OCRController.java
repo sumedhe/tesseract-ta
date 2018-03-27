@@ -1,7 +1,7 @@
 package component.ocr;
 
 import common.Formatter;
-import common.util.OcrUtils;
+import common.util.OCRUtils;
 import common.util.DiffUtils;
 import common.util.ImageUtils;
 import component.Controller;
@@ -197,7 +197,7 @@ public class OCRController implements Controller {
                 }
 
                 if (ocrCheckBox.isSelected()) {
-                    OcrUtils.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
+                    OCRUtils.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
                 }
 
                 if (comparisonCheckBox.isSelected()) {
