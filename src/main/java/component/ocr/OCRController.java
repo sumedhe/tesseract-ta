@@ -6,8 +6,6 @@ import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -48,13 +46,20 @@ public class OCRController implements Controller {
     @FXML
     private Button confuseMatrixRunButton;
     @FXML
-    private CheckBox dictionaryCheckBox;
+    private CheckBox applyRulesCheckBox;
     @FXML
-    private Button dictionaryRunButton;
+    private Button applyRulesRunButton;
     @FXML
-    private CheckBox grammarCheckCheckBox;
+    private CheckBox ambiguitiesCheckBox;
     @FXML
-    private Button grammarCheckRunButton;
+    private Button ambiguitiesRunButton;
+    @FXML
+    private CheckBox legitimacyCheckBox;
+    @FXML
+    private Button legitimacyRunButton;
+
+    @FXML
+    private Button setTrainedDataButton;
 
     @FXML
     private ListView<OCRTask> tasksListView;
@@ -117,7 +122,7 @@ public class OCRController implements Controller {
 
         // Run OCR tasks
         ocrRunButton.setOnAction(event -> {
-           // To do
+            // To do
             System.out.println("OCR");
         });
 
@@ -127,32 +132,38 @@ public class OCRController implements Controller {
             System.out.println("Comparison");
         });
 
-        // Run Dictionary tasks
-        dictionaryRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Dictionary");
-        });
-
-        // Run Grammar tasks
-        grammarCheckRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Grammar");
-        });
-
         // Run Confusion Matrix tasks
         confuseMatrixRunButton.setOnAction(event -> {
             // To do
             System.out.println("Confusion Matrix");
         });
 
+        // Run Apply rules tasks
+        applyRulesRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Apply rules");
+        });
+
+        // Run Ambiguities tasks
+        ambiguitiesRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Ambiguities");
+        });
+
+        // Run Legitimacy tasks
+        legitimacyRunButton.setOnAction(event -> {
+            // To do
+            System.out.println("Legitimacy");
+        });
+
         startButton.setOnAction(event -> {
-            for(OCRTask ocrTask: ocrTasks){
+            for (OCRTask ocrTask : ocrTasks) {
                 String outputDirectoryPath = Formatter.formatOutputDirectory(workspaceTextField.getText(), ocrTask.getName());
 
                 // Create the output directory if it doesn't exist
-                File file = new File(outputDirectoryPath);
-                if (!file.exists()) {
-                    file.mkdir();
+                File outputDirectory = new File(outputDirectoryPath);
+                if (!outputDirectory.exists()) {
+                    outputDirectory.mkdir();
                 }
 
                 // Copy the input file to output directory
@@ -162,30 +173,36 @@ public class OCRController implements Controller {
                     e.printStackTrace();
                 }
 
-                if(text2imageCheckBox.isSelected()){
-                    OCROperation.text2Image(ocrTask.getInputPath(),outputDirectoryPath + "/out");
+                if (text2imageCheckBox.isSelected()) {
+                    OCROperation.text2Image(ocrTask.getInputPath(), outputDirectoryPath + "/out");
                 }
 
-                if(ocrCheckBox.isSelected()){
-                    OCROperation.ocr(outputDirectoryPath + "out.tif",outputDirectoryPath + "/output");
+                if (ocrCheckBox.isSelected()) {
+                    OCROperation.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
                 }
 
-                if(comparisonCheckBox.isSelected()){
-
+                if (comparisonCheckBox.isSelected()) {
+                    OCROperation.diff(outputDirectoryPath);
                 }
 
-                if(confusionMatrixCheckBox.isSelected()){
-
-                }
-
-                if(dictionaryCheckBox.isSelected()){
+                if (confusionMatrixCheckBox.isSelected()) {
 
                 }
 
-                if(grammarCheckCheckBox.isSelected()){
+                if (applyRulesCheckBox.isSelected()) {
+
+                }
+
+                if (ambiguitiesCheckBox.isSelected()) {
+
+                }
+
+                if (legitimacyCheckBox.isSelected()) {
 
                 }
             }
+
+            System.exit(0);
         });
     }
 

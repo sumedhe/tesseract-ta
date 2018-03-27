@@ -17,8 +17,6 @@
                         <Button fx:id="comparisonButton" mnemonicParsing="false" text="Comparison" />
                         <Button fx:id="confusionMatrixButton" mnemonicParsing="false" text="Confusion Matrix" />
                         <Button fx:id="dictionaryButton" mnemonicParsing="false" text="Dictionary" />
-                        <Button fx:id="grammarCheckButton" mnemonicParsing="false" text="Grammar check" />
-                        <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" />
                      </children>
                   </VBox>
                </children></AnchorPane>

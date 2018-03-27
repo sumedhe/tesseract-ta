@@ -60,22 +60,6 @@
                 </includes>
                 <targetPath>component/dictionary</targetPath>
             </resource>
-            <resource>
-                <directory>src/main/java/component/grammarcheck</directory>
-                <includes>
-                    <include>grammarCheck.fxml</include>
-                    <include>grammarCheck.css</include>
-                </includes>
-                <targetPath>component/grammarcheck</targetPath>
-            </resource>
-            <resource>
-                <directory>src/main/java/component/settings</directory>
-                <includes>
-                    <include>settings.fxml</include>
-                    <include>settings.css</include>
-                </includes>
-                <targetPath>component/settings</targetPath>
-            </resource>
         </resources>
     </build>
     <dependencies>
@@ -106,9 +90,23 @@
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.13-beta1</version>
+            <artifactId>poi</artifactId>
+            <version>3.15</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.15</version>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.wumpz</groupId>
+            <artifactId>diffutils</artifactId>
+            <version>2.2</version>
+        </dependency>
     </dependencies>
 </project>
