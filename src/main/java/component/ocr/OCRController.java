@@ -6,11 +6,11 @@ import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -75,6 +75,8 @@ public class OCRController implements Controller {
 
     private ObservableList<OCRTask> ocrTasks;
 
+    private String tessdataDir = "./";
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ocrTasks = FXCollections.observableList(new ArrayList<OCRTask>());
@@ -113,6 +115,23 @@ public class OCRController implements Controller {
 
         // Remove all tasks
         removeAllButton.setOnAction(event -> ocrTasks.clear());
+
+        // Set trained data
+        // Should select a folder with an individual file
+        setTrainedDataButton.setOnAction(event -> {
+            Stage stage = (Stage) setTrainedDataButton.getScene().getWindow();
+
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Open Trained-data Directory");
+            File selectedDirectory = directoryChooser.showDialog(stage);
+            if (selectedDirectory != null && new File(selectedDirectory, "sin.traineddata").exists()) {
+                tessdataDir = selectedDirectory.getAbsolutePath();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "The directory should contain a sin.traineddata file", ButtonType.OK);
+                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                alert.show();
+            }
+        });
 
         // Run Text2Image tasks
         text2imageRunButton.setOnAction(event -> {
@@ -178,7 +197,7 @@ public class OCRController implements Controller {
                 }
 
                 if (ocrCheckBox.isSelected()) {
-                    OCROperation.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
+                    OCROperation.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
                 }
 
                 if (comparisonCheckBox.isSelected()) {
