@@ -3,14 +3,19 @@ package component.dictionary;
 import common.ExcelLoader;
 import common.FileOperations;
 import component.Controller;
+import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -26,10 +31,13 @@ public class DictionaryController implements Controller{
 
 
     @FXML
-    private TextArea contentTextArea;
+    private Button browseButton;
 
     @FXML
-    private Button browseButton;
+    private TextField rulesPathTextField;
+
+    @FXML
+    private TextArea contentTextArea;
 
     @FXML
     private Button loadTextButton;
@@ -61,6 +69,22 @@ public class DictionaryController implements Controller{
 
         fileName = "rules.xls";
 
+        // Set previous Rules filename
+        rulesPathTextField.setText(ConfigurationHandler.getRulesPath());
+
+        // Browse rules filename
+        browseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                FileChooser chooser = new FileChooser();
+                chooser.setTitle("Select Rules sheet");
+                File selectedDirectory = chooser.showOpenDialog(browseButton.getScene().getWindow());
+                rulesPathTextField.setText(selectedDirectory.getAbsolutePath());
+                ConfigurationHandler.setRulesPath(selectedDirectory.getAbsolutePath());
+            }
+        });
+
+        
         // Show unicode view popup
         contentTextArea.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -100,17 +124,7 @@ public class DictionaryController implements Controller{
 
                 // Load text
                 loadOutputText();
-
-                // Find and fix
-                for (String[] rule: rules){
-                    if (rule[0] != null && rule[1] != null){
-                        if (outputText.contains(rule[0])){
-                            outputText = outputText.replaceAll(rule[0], rule[1]);
-                            System.out.println("Fixed Mandatory: " + rule[0] + " => " + rule[1]);
-                        }
-                    }
-                }
-
+                outputText = PostProcessor.fixMandatory(outputText, rules);
                 saveOutputText();
             }
         });
@@ -122,29 +136,8 @@ public class DictionaryController implements Controller{
             public void handle(MouseEvent mouseEvent) {
                 loadDictionaryWords();
                 loadOutputText();
-                String[] outputWords = outputText.split(" ");
-
                 loadAmbiguityChars();
-
-                // Check for the words in the dictionary
-                for (String word: outputWords){
-                    // If not the word in dictionary
-                    if (!dictionaryWordList.contains(word)){
-                        // Check for ambiguous options
-                        for (String[] s: ambiguousChars){
-                            if (s[0] != null && word.contains(s[0])){
-                                String newWord = word.replaceAll(s[0], s[1]);
-                                // Check for newWord in dictionary
-                                if (dictionaryWordList.contains(newWord)){
-                                    // Replace by new word
-                                    outputText = outputText.replaceAll(word, newWord);
-                                    System.out.println("Fixed Ambiguity: " + word + " => " + newWord);
-                                }
-                            }
-                        }
-                    }
-                }
-
+                outputText = PostProcessor.fixAmbiguity(outputText, ambiguousChars,  dictionaryWordList);
                 saveOutputText();
             }
         });
@@ -156,29 +149,8 @@ public class DictionaryController implements Controller{
                 loadVowelsAndModifiers();
 
                 loadOutputText();
-                String[] words = outputText.split(" ");
-                for (String word : words){
-                    if (word.length() > 0) {
-                        // Check whether the word starting with a vowel modifier
-                        for (String m : modifiers){
-                            if (word.substring(0, 1).equals(m)){
-                                System.out.println("Legitimacy error: Modifier (" + m + " in " + word + ")");
-                            }
-                        }
-
-                        // Check whether the word contains a vowel in the middle
-                        for (int i = 1; i<word.length(); i++){
-                            for (String m : vowels){
-                                if (m != null && word.charAt(i) == m.charAt(0)){
-                                    System.out.println("Legitimacy error: Vowel (" + m + " in " + word + ")");
-                                }
-                            }
-                        }
-
-                    }
-                }
-
-
+                String report = PostProcessor.checkLegitimacy(outputText, vowels, modifiers);
+                System.out.println(report);
                 saveOutputText();
             }
         });

@@ -23,6 +23,14 @@ public class ConfigurationHandler {
         configurationFile.setProperty("workspace_path", workspacePath);
     }
 
+    public static String getRulesPath(){
+        return configurationFile.getProperty("rules_path");
+    }
+
+    public static void setRulesPath(String rulesPath){
+        configurationFile.setProperty("rules_path", rulesPath);
+    }
+
     public static void setDefaultConfig() {
         configurationFile.setDefaultConfigurations();
     }
