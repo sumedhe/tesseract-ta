@@ -20,112 +20,240 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DiffUtils {
-    public static void diff(String outputDirectoryPath){
-        try {
-            byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
-            String s1 = new String(encoded, Charset.defaultCharset());
 
-            byte[] encoded2 = Files.readAllBytes(Paths.get(outputDirectoryPath + "/output.txt"));
-            String s2 = new String(encoded2, Charset.defaultCharset());
+    public static void diffUtilsLib(String outputDirectoryPath) throws IOException, DiffException {
+        Workbook workbook = new XSSFWorkbook();
 
-            DiffMatchPatch difference = new DiffMatchPatch();
-            LinkedList<DiffMatchPatch.Diff> deltas = difference.diff_main(s1, s2);
+        Sheet sheet = workbook.createSheet("Diff analysis - Utils lib");
+        sheet.setColumnWidth(0, 4000);
+        sheet.setColumnWidth(1, 4000);
+        sheet.setColumnWidth(2, 10000);
+        sheet.setColumnWidth(3, 10000);
 
-            try (
-                    Writer writer = Files.newBufferedWriter(Paths.get(outputDirectoryPath + "/diff_google.csv"));
+        Row header = sheet.createRow(0);
 
-                    CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                            CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-            ) {
-                String[] headerRecord = {"C1", "C2", "Equality"};
-                csvWriter.writeNext(headerRecord);
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-                for (DiffMatchPatch.Diff d : deltas) {
-                    if (d.operation == DiffMatchPatch.Operation.EQUAL) {
-                        csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""),
-                                d.text.replace("\n", "").replace("\r", ""), "Equal"});
-                    }
-                    else if (d.operation == DiffMatchPatch.Operation.INSERT){
-                        csvWriter.writeNext(new String[]{d.text.replace("\n", "").replace("\r", ""), "", "Insert"});
-                    }
-                    else if (d.operation == DiffMatchPatch.Operation.DELETE){
-                        csvWriter.writeNext(new String[]{"", d.text.replace("\n", "").replace("\r", ""), "Delete"});
-                    }
-                }
-            }
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 12);
+        font.setBold(true);
+        headerStyle.setFont(font);
 
-            Workbook workbook = new XSSFWorkbook();
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Type");
+        headerCell.setCellStyle(headerStyle);
 
-            Sheet sheet = workbook.createSheet("Diff analysis");
-            sheet.setColumnWidth(0, 4000);
-            sheet.setColumnWidth(1, 4000);
-            sheet.setColumnWidth(2, 10000);
-            sheet.setColumnWidth(3, 10000);
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Index");
+        headerCell.setCellStyle(headerStyle);
 
-            Row header = sheet.createRow(0);
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Original");
+        headerCell.setCellStyle(headerStyle);
 
-            CellStyle headerStyle = workbook.createCellStyle();
-            headerStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        headerCell = header.createCell(3);
+        headerCell.setCellValue("Revised");
+        headerCell.setCellStyle(headerStyle);
 
-            XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-            font.setFontName("Arial");
-            font.setFontHeightInPoints((short) 12);
-            font.setBold(true);
-            headerStyle.setFont(font);
+        byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
+        String s1 = new String(encoded, Charset.defaultCharset());
+        String[] s1array = s1.split("[,\\s]");
+        List<String> inputText = Arrays.asList(s1array);
 
-            Cell headerCell = header.createCell(0);
-            headerCell.setCellValue("Type");
-            headerCell.setCellStyle(headerStyle);
+        byte[] encoded2 = Files.readAllBytes(Paths.get(outputDirectoryPath + "/output.txt"));
+        String s2 = new String(encoded2, Charset.defaultCharset());
+        String[] s2array = s2.split("[,\\s]");
+        List<String> outputText = Arrays.asList(s2array);
 
-            headerCell = header.createCell(1);
-            headerCell.setCellValue("Index");
-            headerCell.setCellStyle(headerStyle);
+        Patch<String> patch = com.github.difflib.DiffUtils.diff(inputText, outputText);
 
-            headerCell = header.createCell(2);
-            headerCell.setCellValue("Original");
-            headerCell.setCellStyle(headerStyle);
+        int i =  2;
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+        for (Delta delta : patch.getDeltas()) {
+            Row row = sheet.createRow(i++);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(delta.getType().toString());
 
-            headerCell = header.createCell(3);
-            headerCell.setCellValue("Revised");
-            headerCell.setCellStyle(headerStyle);
+            cell = row.createCell(1);
+            cell.setCellValue(delta.getOriginal().getPosition());
 
-            String[] s1array = s1.split("[,\\s]");
-            String[] s2array = s2.split("[,\\s]");
+            cell = row.createCell(2);
+            cell.setCellValue(delta.getOriginal().getLines().toString());
+            cell.setCellStyle(style);
 
-            List<String> original = Arrays.asList(s1array);
-            List<String> revised = Arrays.asList(s2array);
+            cell = row.createCell(3);
+            cell.setCellValue(delta.getRevised().getLines().toString());
+            cell.setCellStyle(style);
+        }
 
-            Patch<String> patch = com.github.difflib.DiffUtils.diff(original, revised);
+        FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/diff_utilslib.xlsx");
+        workbook.write(outputStream);
+        workbook.close();
+    }
 
-            int i =  2;
-            CellStyle style = workbook.createCellStyle();
-            style.setWrapText(true);
-            for (Delta delta : patch.getDeltas()) {
-                Row row = sheet.createRow(i++);
+    public static void diffGoogle(String outputDirectoryPath) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Diff analysis - Google");
+        sheet.setColumnWidth(0, 10000);
+        sheet.setColumnWidth(1, 10000);
+        sheet.setColumnWidth(2, 4000);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 12);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Input");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Output");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Type");
+        headerCell.setCellStyle(headerStyle);
+
+        byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
+        String s1 = new String(encoded, Charset.defaultCharset());
+
+        byte[] encoded2 = Files.readAllBytes(Paths.get(outputDirectoryPath + "/output.txt"));
+        String s2 = new String(encoded2, Charset.defaultCharset());
+
+        DiffMatchPatch difference = new DiffMatchPatch();
+        LinkedList<DiffMatchPatch.Diff> deltas = difference.diff_main(s1, s2);
+
+        int i =  2;
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(false);
+        for (DiffMatchPatch.Diff d : deltas) {
+            Row row = sheet.createRow(i++);
+            if (d.operation == DiffMatchPatch.Operation.EQUAL) {
                 Cell cell = row.createCell(0);
-                cell.setCellValue(delta.getType().toString());
+                cell.setCellValue("[" + d.text + "]");
+                cell.setCellStyle(style);
 
                 cell = row.createCell(1);
-                cell.setCellValue(delta.getOriginal().getPosition());
+                cell.setCellValue("[" + d.text + "]");
+                cell.setCellStyle(style);
 
                 cell = row.createCell(2);
-                cell.setCellValue(delta.getOriginal().getLines().toString());
-                cell.setCellStyle(style);
-
-                cell = row.createCell(3);
-                cell.setCellValue(delta.getRevised().getLines().toString());
+                cell.setCellValue("Equal");
                 cell.setCellStyle(style);
             }
+            else if (d.operation == DiffMatchPatch.Operation.INSERT){
+                Cell cell = row.createCell(0);
+                cell.setCellValue("[" + d.text + "]");
+                cell.setCellStyle(style);
 
-            FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/diff.xlsx");
-            workbook.write(outputStream);
-            workbook.close();
+                cell = row.createCell(1);
+                cell.setCellValue("[]");
+                cell.setCellStyle(style);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DiffException e) {
-            e.printStackTrace();
+                cell = row.createCell(2);
+                cell.setCellValue("Insert");
+                cell.setCellStyle(style);
+            }
+            else if (d.operation == DiffMatchPatch.Operation.DELETE){
+                Cell cell = row.createCell(0);
+                cell.setCellValue("[]");
+                cell.setCellStyle(style);
+
+                cell = row.createCell(1);
+                cell.setCellValue("[" + d.text + "]");
+                cell.setCellStyle(style);
+
+                cell = row.createCell(2);
+                cell.setCellValue("Delete");
+                cell.setCellStyle(style);
+            }
         }
+
+        FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/diff_google.xlsx");
+        workbook.write(outputStream);
+        workbook.close();
+
+    }
+
+    public static void comparison(String outputDirectoryPath) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Comparison");
+        sheet.setColumnWidth(0, 4000);
+        sheet.setColumnWidth(1, 20000);
+        sheet.setColumnWidth(2, 20000);
+
+        Row header = sheet.createRow(0);
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
+        font.setFontName("Arial");
+        font.setFontHeightInPoints((short) 12);
+        font.setBold(true);
+        headerStyle.setFont(font);
+
+        Cell headerCell = header.createCell(0);
+        headerCell.setCellValue("Index");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(1);
+        headerCell.setCellValue("Input");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(2);
+        headerCell.setCellValue("Output");
+        headerCell.setCellStyle(headerStyle);
+
+        List<String> original = Files.readAllLines(Paths.get(outputDirectoryPath + "/input.txt"));
+        List<String> revised = Files.readAllLines(Paths.get(outputDirectoryPath + "/output.txt"));
+
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+
+        int rowNum = 2;
+        for(int i = 0; i < Math.max(original.size(), revised.size()); i++){
+            Row row = sheet.createRow(rowNum++);
+        }
+
+        rowNum = 2;
+        for(int i = 0; i < original.size(); i++){
+            Row row = sheet.getRow(rowNum++);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(i);
+
+            cell = row.createCell(1);
+            cell.setCellValue(original.get(i));
+        }
+
+        rowNum = 2;
+        for(int i = 0; i < revised.size(); i++){
+            Row row = sheet.getRow(rowNum++);
+            Cell cell = row.createCell(2);
+            cell.setCellValue(revised.get(i));
+        }
+
+        FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/line_comparison.xlsx");
+        workbook.write(outputStream);
+        workbook.close();
+    }
+
+    public static void diff(String outputDirectoryPath){
+
     }
 }
