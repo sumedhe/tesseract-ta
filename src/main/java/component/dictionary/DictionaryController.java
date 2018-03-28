@@ -41,6 +41,9 @@ public class DictionaryController implements Controller{
     @FXML
     private Button verifyCharactersButton;
 
+    @FXML
+    private Button clearLogButton;
+
     private final String tessconfigDir = "./tessconfig/";
 
     @Override
@@ -89,6 +92,15 @@ public class DictionaryController implements Controller{
             public void handle(MouseEvent mouseEvent) {
                 LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
+            }
+        });
+
+        // Clear Log
+        clearLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                LangUtils.clearLog(ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText("");
             }
         });
 

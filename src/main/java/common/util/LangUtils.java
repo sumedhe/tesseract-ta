@@ -16,9 +16,7 @@ public class LangUtils {
 
     private final static String LOG_FILE_NAME = "postfix_log.txt";
 
-
     private static String logBrief = "";
-
 
     public LangUtils(){
 
@@ -118,7 +116,6 @@ public class LangUtils {
 
         logBrief += "Check Legitimacy: " + errorCount + " errors found...\n";
         saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
-        saveFile(outputFilename, text);
     }
 
 
@@ -126,10 +123,6 @@ public class LangUtils {
         return logBrief;
     }
 
-
-    public static void clearLog(){
-        logBrief = "";
-    }
 
     // Load recognnized text
     public static String openFile(String fileName){
@@ -154,6 +147,11 @@ public class LangUtils {
 
     public static void saveLog(String fileName, String text){
         saveFile(fileName, openFile(fileName) + text);
+    }
+
+    public static void clearLog(String outputDirectoryPath){
+        logBrief = "";
+        saveFile(outputDirectoryPath + LOG_FILE_NAME, "");
     }
 
 
