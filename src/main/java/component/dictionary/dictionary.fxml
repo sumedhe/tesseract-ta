@@ -2,24 +2,40 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="675.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dictionary.DictionaryController">
    <children>
-      <TextArea fx:id="contentTextArea" layoutX="21.0" layoutY="108.0" prefHeight="498.0" prefWidth="915.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="108.0">
+      <Label layoutX="20.0" layoutY="19.0" prefHeight="15.0" prefWidth="595.0" text="Language Rules: tessdata/lang_rules.xls         Log Report: tessdata/log_report.txt">
          <font>
-            <Font size="20.0" />
-         </font></TextArea>
-      <TextField fx:id="rulesPathTextField" editable="false" layoutX="20.0" layoutY="41.0" prefHeight="25.0" prefWidth="610.0" promptText="rules.xls" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="41.0" />
-      <Button fx:id="browseButton" layoutX="645.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="41.0" />
-      <Label layoutX="20.0" layoutY="19.0" text="Dictionary" />
-      <Label layoutX="21.0" layoutY="82.0" prefHeight="15.0" prefWidth="66.0" text="Content" />
-      <Button fx:id="checkLegitimacyButton" layoutX="800.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Check Legitimacy" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="14.0" />
-      <Button fx:id="fixAmbiguityButton" layoutX="657.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Fix Ambiguity" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="157.0" />
-      <Button fx:id="fixMandatoryButton" layoutX="548.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Fix Mandatory" AnchorPane.bottomAnchor="33.0" AnchorPane.rightAnchor="303.0" />
-      <Button fx:id="loadTextButton" layoutX="404.0" layoutY="617.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Load Text" />
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <TextField fx:id="outputPathTextField" editable="false" layoutX="20.0" layoutY="76.0" prefHeight="25.0" prefWidth="824.0" promptText="sin.outtext.txt" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="76.0" />
+      <Button fx:id="browseOutputTextButton" layoutX="856.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="76.0" />
+      <Label layoutX="20.0" layoutY="50.0" text="Output text" />
+      <TitledPane animated="false" layoutX="491.0" layoutY="136.0" prefHeight="337.0" prefWidth="427.0" text="Log  !Full report: tessdata/log_report.txt">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="logLabel" alignment="TOP_LEFT" layoutX="10.4" layoutY="-0.5999999999999996" minWidth="-Infinity" prefHeight="190.0" prefWidth="351.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="20.0" layoutY="136.0" prefHeight="185.0" prefWidth="427.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="149.0" prefWidth="425.0">
+               <children>
+                  <Button fx:id="checkLegitimacyButton" layoutX="222.0" layoutY="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="136.0" text="Check Legitimacy" />
+                  <Button fx:id="fixAmbiguityButton" layoutX="51.0" layoutY="80.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="136.0" text="Fix Ambiguity" />
+                  <Button fx:id="fixMandatoryButton" layoutX="51.0" layoutY="31.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="136.0" text="Fix Mandatory" />
+                  <Button fx:id="verifyCharactersButton" disable="true" layoutX="222.0" layoutY="80.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="136.0" text="Verify Characters" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
    </children>
 </AnchorPane>

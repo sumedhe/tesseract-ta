@@ -1,0 +1,18 @@
+
+Fixed Mandatory:
+
+
+Fixed Ambiguity:
+
+
+Legitimacy Errors:
+  1: Modifier (් in ්ය)
+  2: Vowel    (අ in කඅ)
+  3: Vowel    (අ in ඊටඅවුරුදු)
+
+Fixed Mandatory:
+
+
+Legitimacy Errors:
+  1: Vowel    (අ in ඊටඅවුරුදු)
+
