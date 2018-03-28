@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package googlediff;
+package common.googlediff;
 
 import junit.framework.TestCase;
 
@@ -28,9 +28,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import googlediff.DiffMatchPatch.Diff;
-import googlediff.DiffMatchPatch.LinesToCharsResult;
-import googlediff.DiffMatchPatch.Patch;
+import common.googlediff.DiffMatchPatch.Diff;
+import common.googlediff.DiffMatchPatch.LinesToCharsResult;
+import common.googlediff.DiffMatchPatch.Patch;
 
 public class DiffMatchPatchTest extends TestCase {
 

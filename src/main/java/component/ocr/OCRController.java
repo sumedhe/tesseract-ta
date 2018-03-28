@@ -1,13 +1,13 @@
 package component.ocr;
 
 import common.Formatter;
-import common.OCROperation;
+import common.util.OCRUtils;
+import common.util.DiffUtils;
+import common.util.ImageUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
@@ -193,15 +193,15 @@ public class OCRController implements Controller {
                 }
 
                 if (text2imageCheckBox.isSelected()) {
-                    OCROperation.text2Image(ocrTask.getInputPath(), outputDirectoryPath + "/out");
+                    ImageUtils.text2Image(ocrTask.getInputPath(), outputDirectoryPath + "/out");
                 }
 
                 if (ocrCheckBox.isSelected()) {
-                    OCROperation.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
+                    OCRUtils.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
                 }
 
                 if (comparisonCheckBox.isSelected()) {
-                    OCROperation.diff(outputDirectoryPath);
+                    DiffUtils.diff(outputDirectoryPath);
                 }
 
                 if (confusionMatrixCheckBox.isSelected()) {
