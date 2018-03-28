@@ -1,114 +1,67 @@
 package component.dictionary;
 
-import common.ExcelLoader;
 import common.FileOperations;
+import common.LanguageRules;
 import common.PostProcessor;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 
 
 public class DictionaryController implements Controller{
 
-    // Sheet indexes
-    private static final int MANDATORY_SHEET = 0;
-    private static final int AMBIGUITY_SHEET = 1;
-    private static final int DICTIONARY_SHEET = 2;
-    private static final int VOWELS_SHEET = 3;
-    private static final int MODIFIERS_SHEET = 4;
-
-
-    @FXML
-    private Button browseButton;
-
     @FXML
     private TextField rulesPathTextField;
+    @FXML
+    private Button browseRulesButton;
 
     @FXML
-    private TextArea contentTextArea;
+    private TextField outputPathTextField;
+    @FXML
+    private Button browseOutputTextButton;
 
     @FXML
-    private Button loadTextButton;
+    private Label logLabel;
 
     @FXML
     private Button fixMandatoryButton;
-
     @FXML
     private Button fixAmbiguityButton;
-
     @FXML
     private Button checkLegitimacyButton;
+    @FXML
+    private Button verifyCharactersButton;
 
-    private Tooltip tooltip;
+    private final String logPath = "tessdata/log_report.txt";
 
-
-    String fileName;
-    String outputText;
-
-    String RuleArray[][], ambiguousChars[][];
-    String vowels[], modifiers[];
-    Set<String> dictionaryWordList;
+    private final String languageRulesPath = "tessdata/lang_rules.xls";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tooltip = new Tooltip();
-        tooltip.autoHideProperty().setValue(true);
-        contentTextArea.setTooltip(tooltip);
+        // Set previous filenames
+        outputPathTextField.setText(ConfigurationHandler.getOutputTextPath());
 
-        fileName = "rules.xls";
+        LanguageRules.loadLanguageData(languageRulesPath);
 
-        // Set previous Rules filename
-        rulesPathTextField.setText(ConfigurationHandler.getRulesPath());
-
-        // Browse rules filename
-        browseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        // Browse rules rulesFileName
+        browseOutputTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 FileChooser chooser = new FileChooser();
-                chooser.setTitle("Select Rules sheet");
-                File selectedDirectory = chooser.showOpenDialog(browseButton.getScene().getWindow());
-                rulesPathTextField.setText(selectedDirectory.getAbsolutePath());
-                ConfigurationHandler.setRulesPath(selectedDirectory.getAbsolutePath());
-            }
-        });
-
-
-        // Show unicode view popup
-        contentTextArea.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                MouseButton button = mouseEvent.getButton();
-                if (button == MouseButton.MIDDLE || (button == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2)){
-                    String selectedText = contentTextArea.getSelectedText();
-                    String unicodeString = "";
-                    for (char c: selectedText.toCharArray()){
-                        unicodeString += "\\u" + Integer.toHexString(c | 0x10000).substring(1) + ": " + "\n";
-                    }
-
-                    tooltip.setText(unicodeString);
-                    tooltip.show(contentTextArea, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-                }
-            }
-        });
-
-
-        // On click Load Text button
-        loadTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                loadOutputText();
+                chooser.setTitle("Select output file");
+                File selectedDirectory = chooser.showOpenDialog(browseOutputTextButton.getScene().getWindow());
+                outputPathTextField.setText(selectedDirectory.getAbsolutePath());
+                ConfigurationHandler.setOutputTextPath(selectedDirectory.getAbsolutePath());
             }
         });
 
@@ -117,15 +70,12 @@ public class DictionaryController implements Controller{
         fixMandatoryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // Load Rules
-                ExcelLoader excelLoader = new ExcelLoader(fileName);
-                excelLoader.setSheetIndex(MANDATORY_SHEET);
-                String[][] rules = excelLoader.loadData();
-
                 // Load text
-                loadOutputText();
-                outputText = PostProcessor.fixMandatory(outputText, rules);
-                saveOutputText();
+                String text = loadOutputText();
+                text = PostProcessor.fixMandatory(text, LanguageRules.getMandatoryRules());
+                logLabel.setText(PostProcessor.getLogBrief());
+                saveOutputText(text);
+                saveLog(PostProcessor.getLog());
             }
         });
 
@@ -134,11 +84,11 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                loadDictionaryWords();
-                loadOutputText();
-                loadAmbiguityChars();
-                outputText = PostProcessor.fixAmbiguity(outputText, ambiguousChars,  dictionaryWordList);
-                saveOutputText();
+                String text = loadOutputText();
+                text = PostProcessor.fixAmbiguity(text, LanguageRules.getAmbiguousChars(),  LanguageRules.getDictionaryWordList());
+                logLabel.setText(PostProcessor.getLogBrief());
+                saveOutputText(text);
+                saveLog(PostProcessor.getLog());
             }
         });
 
@@ -146,12 +96,11 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                loadVowelsAndModifiers();
-
-                loadOutputText();
-                String report = PostProcessor.checkLegitimacy(outputText, vowels, modifiers);
-                System.out.println(report);
-                saveOutputText();
+                String text = loadOutputText();
+                String log = PostProcessor.checkLegitimacy(text, LanguageRules.getVowels(), LanguageRules.getModifiers());
+                System.out.println(log);
+                logLabel.setText(PostProcessor.getLogBrief());
+                saveLog(PostProcessor.getLog());
             }
         });
 
@@ -169,76 +118,40 @@ public class DictionaryController implements Controller{
     }
 
     // Load recognnized text
-    public void loadOutputText(){
+    public String loadOutputText(){
         // Load recognized text file
         FileOperations fo = new FileOperations();
-        outputText = fo.openFile("sample.txt");
-
-        contentTextArea.setText(outputText);
-        System.out.println("Loaded output text");
+        return fo.openFile(ConfigurationHandler.getOutputTextPath());
     }
 
-    public void saveOutputText(){
-        // TODO: Save
-
-        contentTextArea.setText(outputText);
-    }
-
-
-    // Load Dictionary words
-    public void loadDictionaryWords(){
-        // Load data
-        ExcelLoader excelLoader = new ExcelLoader(fileName);
-        excelLoader.setSheetIndex(DICTIONARY_SHEET);
-        String[][] data = excelLoader.loadData();
-
-        int wordCount = 0;
-        String[] tempList = new String[data.length * data[0].length];
-        for (String[] row: data){
-            for (String val: row){
-                if (val != null){
-                    tempList[wordCount] = val;
-                    wordCount++;
-                }
-            }
-        }
-
-        // Create hashset of words
-        dictionaryWordList = new HashSet<String>(Arrays.asList(Arrays.copyOfRange(tempList, 0, wordCount)));
-
-    }
-
-    // Load Ambiguours rules
-    public void loadAmbiguityChars(){
-        // Load data
-        ExcelLoader excelLoader = new ExcelLoader(fileName);
-        excelLoader.setSheetIndex(AMBIGUITY_SHEET);
-        ambiguousChars = excelLoader.loadData();
-    }
-
-
-    // Load vowels and modifiers
-    public void loadVowelsAndModifiers(){
-        // Load data
-        String[][] data;
-        ExcelLoader excelLoader = new ExcelLoader(fileName);
-
-        // Load vowels
-        excelLoader.setSheetIndex(VOWELS_SHEET);
-        data = excelLoader.loadData();
-        vowels = new String[data.length];
-        for (int i=0; i<data.length; i++){
-            if (data[i][0] != null) vowels[i] = data[i][0];
-        }
-
-        // Load modifiers
-        excelLoader.setSheetIndex(MODIFIERS_SHEET);
-        data = excelLoader.loadData();
-        modifiers = new String[data.length];
-        for (int i=0; i<data.length; i++){
-            if (data[i][0] != null) modifiers[i] = data[i][0];
+    public void saveOutputText(String text){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(ConfigurationHandler.getOutputTextPath(), "UTF-8");
+            writer.println(text);
+            writer.close();
+            System.out.println(text);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
+
+    public void saveLog(String text){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(logPath, "UTF-8");
+            writer.println(text);
+            writer.close();
+            System.out.println(text);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // TMP
     public void showArray(String[][] data){
