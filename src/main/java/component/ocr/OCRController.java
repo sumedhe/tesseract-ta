@@ -1,6 +1,8 @@
 package component.ocr;
 
 import common.Formatter;
+import common.LanguageData;
+import common.util.LangUtils;
 import common.util.OCRUtils;
 import common.util.DiffUtils;
 import common.util.ImageUtils;
@@ -14,6 +16,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.codec.language.bm.Lang;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -46,17 +49,17 @@ public class OCRController implements Controller {
     @FXML
     private Button confuseMatrixRunButton;
     @FXML
-    private CheckBox applyRulesCheckBox;
+    private CheckBox fixMandatoryCheckBox;
     @FXML
-    private Button applyRulesRunButton;
+    private Button fixMandatoryRunButton;
     @FXML
-    private CheckBox ambiguitiesCheckBox;
+    private CheckBox fixAmbiguityCheckBox;
     @FXML
-    private Button ambiguitiesRunButton;
+    private Button fixAmbiguityRunButton;
     @FXML
-    private CheckBox legitimacyCheckBox;
+    private CheckBox checkLegitimacyCheckBox;
     @FXML
-    private Button legitimacyRunButton;
+    private Button checkLegitimacyRunButton;
 
     @FXML
     private Button setTrainedDataButton;
@@ -75,7 +78,7 @@ public class OCRController implements Controller {
 
     private ObservableList<OCRTask> ocrTasks;
 
-    private String tessdataDir = "./";
+    private String tessdataDir = "./tessdata/";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -158,19 +161,19 @@ public class OCRController implements Controller {
         });
 
         // Run Apply rules tasks
-        applyRulesRunButton.setOnAction(event -> {
+        fixMandatoryRunButton.setOnAction(event -> {
             // To do
             System.out.println("Apply rules");
         });
 
         // Run Ambiguities tasks
-        ambiguitiesRunButton.setOnAction(event -> {
+        fixAmbiguityRunButton.setOnAction(event -> {
             // To do
             System.out.println("Ambiguities");
         });
 
         // Run Legitimacy tasks
-        legitimacyRunButton.setOnAction(event -> {
+        checkLegitimacyRunButton.setOnAction(event -> {
             // To do
             System.out.println("Legitimacy");
         });
@@ -208,16 +211,19 @@ public class OCRController implements Controller {
 
                 }
 
-                if (applyRulesCheckBox.isSelected()) {
+                // Preparing for Post Process
+                LanguageData.loadLanguageData(tessdataDir + "lang_data.xls");
 
+                if (fixAmbiguityCheckBox.isSelected()) {
+                    LangUtils.fixAmbiguity(outputDirectoryPath + "output.txt", tessdataDir);
                 }
 
-                if (ambiguitiesCheckBox.isSelected()) {
-
+                if (fixMandatoryCheckBox.isSelected()) {
+                    LangUtils.fixMandatory(outputDirectoryPath + "output.txt", tessdataDir);
                 }
 
-                if (legitimacyCheckBox.isSelected()) {
-
+                if (checkLegitimacyCheckBox.isSelected()) {
+                    LangUtils.checkLegitimacy(outputDirectoryPath + "output.txt", tessdataDir);
                 }
             }
 

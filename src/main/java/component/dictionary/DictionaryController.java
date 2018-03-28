@@ -1,8 +1,8 @@
 package component.dictionary;
 
 import common.FileOperations;
-import common.LanguageRules;
-import common.PostProcessor;
+import common.LanguageData;
+import common.util.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
@@ -44,14 +44,16 @@ public class DictionaryController implements Controller{
 
     private final String logPath = "tessdata/log_report.txt";
 
-    private final String languageRulesPath = "tessdata/lang_rules.xls";
+    private final String languageRulesPath = "tessdata/lang_data.xls";
+
+    private final String tessdataDir = "./tessdata/";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Set previous filenames
         outputPathTextField.setText(ConfigurationHandler.getOutputTextPath());
 
-        LanguageRules.loadLanguageData(languageRulesPath);
+        LanguageData.loadLanguageData(languageRulesPath);
 
         // Browse rules rulesFileName
         browseOutputTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -71,11 +73,8 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 // Load text
-                String text = loadOutputText();
-                text = PostProcessor.fixMandatory(text, LanguageRules.getMandatoryRules());
-                logLabel.setText(PostProcessor.getLogBrief());
-                saveOutputText(text);
-                saveLog(PostProcessor.getLog());
+                LangUtils.fixMandatory(outputPathTextField.getText(), tessdataDir);
+                logLabel.setText(LangUtils.getLogBrief());
             }
         });
 
@@ -84,11 +83,8 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String text = loadOutputText();
-                text = PostProcessor.fixAmbiguity(text, LanguageRules.getAmbiguousChars(),  LanguageRules.getDictionaryWordList());
-                logLabel.setText(PostProcessor.getLogBrief());
-                saveOutputText(text);
-                saveLog(PostProcessor.getLog());
+                LangUtils.fixAmbiguity(outputPathTextField.getText(), tessdataDir);
+                logLabel.setText(LangUtils.getLogBrief());
             }
         });
 
@@ -96,11 +92,8 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                String text = loadOutputText();
-                String log = PostProcessor.checkLegitimacy(text, LanguageRules.getVowels(), LanguageRules.getModifiers());
-                System.out.println(log);
-                logLabel.setText(PostProcessor.getLogBrief());
-                saveLog(PostProcessor.getLog());
+                LangUtils.checkLegitimacy(outputPathTextField.getText(), tessdataDir);
+                logLabel.setText(LangUtils.getLogBrief());
             }
         });
 
@@ -115,52 +108,6 @@ public class DictionaryController implements Controller{
     @Override
     public void onRefresh() {
 
-    }
-
-    // Load recognnized text
-    public String loadOutputText(){
-        // Load recognized text file
-        FileOperations fo = new FileOperations();
-        return fo.openFile(ConfigurationHandler.getOutputTextPath());
-    }
-
-    public void saveOutputText(String text){
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(ConfigurationHandler.getOutputTextPath(), "UTF-8");
-            writer.println(text);
-            writer.close();
-            System.out.println(text);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveLog(String text){
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(logPath, "UTF-8");
-            writer.println(text);
-            writer.close();
-            System.out.println(text);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // TMP
-    public void showArray(String[][] data){
-        for (String[] r: data){
-            for (String c: r){
-                System.out.print(c);
-            }
-            System.out.println();
-        }
     }
 
 

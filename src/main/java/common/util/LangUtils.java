@@ -1,27 +1,36 @@
-package common;
+package common.util;
 
+import common.FileOperations;
+import common.LanguageData;
+import configuration.ConfigurationHandler;
 import javafx.scene.control.Label;
+import org.apache.commons.codec.language.bm.Lang;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.OpenOption;
 import java.util.Set;
 
-public class PostProcessor {
+public class LangUtils {
 
     private static String logBrief = "";
-    private static String log = "";
+    private static String logFileName = "log_report.txt";
 
 
-    public PostProcessor(){
+    public LangUtils(){
 
     }
 
     // Apply Mandatory Rules
-    public static String fixMandatory(String text, String[][] rules){
-        log += "Fixed Mandatory:\n";
+    public static void fixMandatory(String outputFilename, String tessdataDir){
+        String text = openFile(outputFilename);
+        String log = "Fixed Mandatory:\n";
 
         int fixCount = 0;
 
         // Find and fix
-        for (String[] rule: rules){
+        for (String[] rule: LanguageData.getMandatoryRules()){
             if (rule[0] != null && rule[1] != null){
                 if (text.contains(rule[0])){
                     text = text.replaceAll(rule[0], rule[1]);
@@ -32,14 +41,20 @@ public class PostProcessor {
         }
 
         logBrief += "Fix Mandatory: " + fixCount + " types found...\n";
-        return text;
+
+        saveLog(tessdataDir + logFileName, log);
+        saveFile(outputFilename, text);
     }
 
     // Check and fix Ambiguities
-    public static String fixAmbiguity(String text, String[][] ambiguousChars, Set<String> dictionaryWordList){
-        log += "\nFixed Ambiguity:\n";
+    public static void fixAmbiguity(String outputFilename, String tessdataDir){
+        String text = openFile(outputFilename);
+        String[][] ambiguousChars = LanguageData.getAmbiguousChars();
+        Set<String> dictionaryWordList = LanguageData.getDictionaryWordList();
 
+        String log = "\nFixed Ambiguity:\n";
         int fixCount = 0;
+
         String[] outputWords = text.split(" ");
 
         // Check for the words in the dictionary
@@ -63,15 +78,18 @@ public class PostProcessor {
         }
 
         logBrief += "Fix Ambiguity: " + fixCount + " types found...\n";
-        return text;
+        saveLog(tessdataDir + logFileName, log);
+        saveFile(outputFilename, text);
     }
 
     // Check legitimacy
-    public static String checkLegitimacy(String text, String[] vowels, String[] modifiers){
-        log += "\nLegitimacy Errors:\n";
-        int errorCount = 0;
+    public static void checkLegitimacy(String outputFilename, String tessdataDir){
+        String text = openFile(outputFilename);
+        String[] vowels = LanguageData.getVowels();
+        String[] modifiers = LanguageData.getModifiers();
 
-//        text.replace("\n", "");
+        String log = "\nLegitimacy Errors:\n";
+        int errorCount = 0;
 
         text = text.replace("\n", " ").replace("\r", " ");
         String[] words = text.split(" ");
@@ -96,7 +114,8 @@ public class PostProcessor {
         }
 
         logBrief += "Check Legitimacy: " + errorCount + " errors found...\n";
-        return errorCount + " " + log;
+        saveLog(tessdataDir + logFileName, log);
+        saveFile(outputFilename, text);
     }
 
 
@@ -104,12 +123,34 @@ public class PostProcessor {
         return logBrief;
     }
 
-    public static String getLog(){
-        return log;
-    }
 
     public static void clearLog(){
         logBrief = "";
+    }
+
+    // Load recognnized text
+    public static String openFile(String fileName){
+        // Load recognized text file
+        FileOperations fo = new FileOperations();
+        return fo.openFile(fileName);
+    }
+
+    public static void saveFile(String fileName, String text){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(fileName, "UTF-8");
+            writer.println(text);
+            writer.close();
+            System.out.println(text);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveLog(String fileName, String text){
+        saveFile(fileName, openFile(fileName) + text);
     }
 
 

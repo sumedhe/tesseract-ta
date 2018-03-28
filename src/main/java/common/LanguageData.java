@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LanguageRules {
+public class LanguageData {
 
     // Sheet indexes
     private static final int MANDATORY_SHEET = 0;
@@ -20,7 +20,7 @@ public class LanguageRules {
     private static String vowels[], modifiers[];
     private static Set<String> dictionaryWordList;
 
-    public LanguageRules(){
+    public LanguageData(){
 
     }
 
