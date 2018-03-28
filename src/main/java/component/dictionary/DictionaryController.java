@@ -1,6 +1,5 @@
 package component.dictionary;
 
-import common.FileOperations;
 import common.LanguageData;
 import common.util.LangUtils;
 import component.Controller;
@@ -11,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 
 import java.io.*;
 import java.net.URL;
@@ -26,9 +25,9 @@ public class DictionaryController implements Controller{
     private Button browseRulesButton;
 
     @FXML
-    private TextField outputPathTextField;
+    private TextField outputDirectoryTextField;
     @FXML
-    private Button browseOutputTextButton;
+    private Button browseOutputDirectoryButton;
 
     @FXML
     private Label logLabel;
@@ -42,28 +41,24 @@ public class DictionaryController implements Controller{
     @FXML
     private Button verifyCharactersButton;
 
-    private final String logPath = "tessdata/log_report.txt";
-
-    private final String languageRulesPath = "tessdata/lang_data.xls";
-
-    private final String tessdataDir = "./tessdata/";
+    private final String tessconfigDir = "./tessconfig/";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Set previous filenames
-        outputPathTextField.setText(ConfigurationHandler.getOutputTextPath());
+        outputDirectoryTextField.setText(ConfigurationHandler.getOutputDirectoryPath());
 
-        LanguageData.loadLanguageData(languageRulesPath);
+        LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
 
         // Browse rules rulesFileName
-        browseOutputTextButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        browseOutputDirectoryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                FileChooser chooser = new FileChooser();
-                chooser.setTitle("Select output file");
-                File selectedDirectory = chooser.showOpenDialog(browseOutputTextButton.getScene().getWindow());
-                outputPathTextField.setText(selectedDirectory.getAbsolutePath());
-                ConfigurationHandler.setOutputTextPath(selectedDirectory.getAbsolutePath());
+                DirectoryChooser chooser = new DirectoryChooser();
+                chooser.setTitle("Select Output Directory");
+                File selectedDirectory = chooser.showDialog(browseOutputDirectoryButton.getScene().getWindow());
+                ConfigurationHandler.setOutputDirecotryPath(selectedDirectory.getAbsolutePath() + "/");
+                outputDirectoryTextField.setText(ConfigurationHandler.getOutputDirectoryPath());
             }
         });
 
@@ -73,7 +68,7 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 // Load text
-                LangUtils.fixMandatory(outputPathTextField.getText(), tessdataDir);
+                LangUtils.fixMandatory(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
@@ -83,7 +78,7 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.fixAmbiguity(outputPathTextField.getText(), tessdataDir);
+                LangUtils.fixAmbiguity(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
@@ -92,7 +87,7 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.checkLegitimacy(outputPathTextField.getText(), tessdataDir);
+                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
