@@ -13,9 +13,9 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Label>
-      <TextField fx:id="outputPathTextField" editable="false" layoutX="20.0" layoutY="76.0" prefHeight="25.0" prefWidth="824.0" promptText="sin.outtext.txt" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="76.0" />
-      <Button fx:id="browseOutputTextButton" layoutX="856.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="76.0" />
-      <Label layoutX="20.0" layoutY="50.0" text="Output text" />
+      <TextField fx:id="outputDirectoryTextField" editable="false" layoutX="20.0" layoutY="76.0" prefHeight="25.0" prefWidth="824.0" promptText="output" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="76.0" />
+      <Button fx:id="browseOutputDirectoryButton" layoutX="856.0" layoutY="76.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="76.0" />
+      <Label layoutX="20.0" layoutY="50.0" text="Output Directory" />
       <TitledPane animated="false" layoutX="491.0" layoutY="136.0" prefHeight="337.0" prefWidth="427.0" text="Log  !Full report: tessdata/log_report.txt">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

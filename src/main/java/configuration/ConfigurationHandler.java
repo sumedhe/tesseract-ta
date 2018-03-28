@@ -24,12 +24,12 @@ public class ConfigurationHandler {
     }
 
 
-    public static void setOutputTextPath(String outputPath){
-        configurationFile.setProperty("output_text_path", outputPath);
+    public static void setOutputDirecotryPath(String outputPath){
+        configurationFile.setProperty("output_directory_path", outputPath);
     }
 
-    public static String getOutputTextPath(){
-        return configurationFile.getProperty("output_text_path");
+    public static String getOutputDirectoryPath(){
+        return configurationFile.getProperty("output_directory_path");
     }
 
     public static void setDefaultConfig() {

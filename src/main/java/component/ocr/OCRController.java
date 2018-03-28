@@ -79,7 +79,10 @@ public class OCRController implements Controller {
 
     private ObservableList<OCRTask> ocrTasks;
 
-    private String tessdataDir = "./tessdata/";
+    private String tessdataDir = "./";
+
+    private String tessconfigDir = "./tessconfig/";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -233,18 +236,18 @@ public class OCRController implements Controller {
                 }
 
                 // Preparing for Post Process
-                LanguageData.loadLanguageData(tessdataDir + "lang_data.xls");
+                LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    LangUtils.fixAmbiguity(outputDirectoryPath + "output.txt", tessdataDir);
+                    LangUtils.fixAmbiguity(outputDirectoryPath + "output.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    LangUtils.fixMandatory(outputDirectoryPath + "output.txt", tessdataDir);
+                    LangUtils.fixMandatory(outputDirectoryPath + "output.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    LangUtils.checkLegitimacy(outputDirectoryPath + "output.txt", tessdataDir);
+                    LangUtils.checkLegitimacy(outputDirectoryPath + "output.txt", outputDirectoryPath);
                 }
             }
 

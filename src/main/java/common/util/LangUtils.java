@@ -14,8 +14,10 @@ import java.util.Set;
 
 public class LangUtils {
 
+    private final static String LOG_FILE_NAME = "postfix_log.txt";
+
+
     private static String logBrief = "";
-    private static String logFileName = "log_report.txt";
 
 
     public LangUtils(){
@@ -23,7 +25,7 @@ public class LangUtils {
     }
 
     // Apply Mandatory Rules
-    public static void fixMandatory(String outputFilename, String tessdataDir){
+    public static void fixMandatory(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
         String log = "Fixed Mandatory:\n";
 
@@ -42,12 +44,13 @@ public class LangUtils {
 
         logBrief += "Fix Mandatory: " + fixCount + " types found...\n";
 
-        saveLog(tessdataDir + logFileName, log);
+        System.out.println(outputDirectoryPath);
+        saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
         saveFile(outputFilename, text);
     }
 
     // Check and fix Ambiguities
-    public static void fixAmbiguity(String outputFilename, String tessdataDir){
+    public static void fixAmbiguity(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
         String[][] ambiguousChars = LanguageData.getAmbiguousChars();
         Set<String> dictionaryWordList = LanguageData.getDictionaryWordList();
@@ -78,12 +81,12 @@ public class LangUtils {
         }
 
         logBrief += "Fix Ambiguity: " + fixCount + " types found...\n";
-        saveLog(tessdataDir + logFileName, log);
+        saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
         saveFile(outputFilename, text);
     }
 
     // Check legitimacy
-    public static void checkLegitimacy(String outputFilename, String tessdataDir){
+    public static void checkLegitimacy(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
         String[] vowels = LanguageData.getVowels();
         String[] modifiers = LanguageData.getModifiers();
@@ -114,7 +117,7 @@ public class LangUtils {
         }
 
         logBrief += "Check Legitimacy: " + errorCount + " errors found...\n";
-        saveLog(tessdataDir + logFileName, log);
+        saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
         saveFile(outputFilename, text);
     }
 
