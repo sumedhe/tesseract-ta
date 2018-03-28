@@ -1,5 +1,6 @@
 package component.ocr;
 
+import com.github.difflib.algorithm.DiffException;
 import common.Formatter;
 import common.LanguageData;
 import common.util.LangUtils;
@@ -207,6 +208,26 @@ public class OCRController implements Controller {
                 }
 
                 if (comparisonCheckBox.isSelected()) {
+                    try {
+                        DiffUtils.diffGoogle(outputDirectoryPath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        DiffUtils.diffUtilsLib(outputDirectoryPath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (DiffException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        DiffUtils.comparison(outputDirectoryPath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     DiffUtils.diff(outputDirectoryPath);
                 }
 

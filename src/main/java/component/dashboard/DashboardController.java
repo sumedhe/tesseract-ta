@@ -45,6 +45,9 @@ public class DashboardController implements Controller {
 
         Rectangle clipRectangle = new Rectangle(950, 675);
         workspaceAnchorPane.setClip(clipRectangle);
+
+        comparisonButton.setDisable(true);
+        confusionMatrixButton.setDisable(true);
     }
 
     @Override
