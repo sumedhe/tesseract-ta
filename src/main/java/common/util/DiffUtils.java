@@ -3,7 +3,6 @@ package common.util;
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.Delta;
 import com.github.difflib.patch.Patch;
-import com.opencsv.CSVWriter;
 import common.googlediff.DiffMatchPatch;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -11,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -105,27 +103,40 @@ public class DiffUtils {
 
         Row header = sheet.createRow(0);
 
-        CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        CellStyle headerCellStyle = workbook.createCellStyle();
+
+        CellStyle defaultCellStyle = workbook.createCellStyle();
+        defaultCellStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+        defaultCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        defaultCellStyle.setWrapText(true);
+
+        CellStyle deleteCellStyle = workbook.createCellStyle();
+        deleteCellStyle.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
+        deleteCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        deleteCellStyle.setWrapText(true);
+
+        CellStyle insertCellStyle = workbook.createCellStyle();
+        insertCellStyle.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        insertCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        insertCellStyle.setWrapText(true);
 
         XSSFFont font = ((XSSFWorkbook) workbook).createFont();
         font.setFontName("Arial");
         font.setFontHeightInPoints((short) 12);
         font.setBold(true);
-        headerStyle.setFont(font);
+        headerCellStyle.setFont(font);
 
         Cell headerCell = header.createCell(0);
-        headerCell.setCellValue("Input");
-        headerCell.setCellStyle(headerStyle);
+        headerCell.setCellValue("Input text");
+        headerCell.setCellStyle(headerCellStyle);
 
         headerCell = header.createCell(1);
-        headerCell.setCellValue("Output");
-        headerCell.setCellStyle(headerStyle);
+        headerCell.setCellValue("OCR output");
+        headerCell.setCellStyle(headerCellStyle);
 
         headerCell = header.createCell(2);
         headerCell.setCellValue("Type");
-        headerCell.setCellStyle(headerStyle);
+        headerCell.setCellStyle(headerCellStyle);
 
         byte[] encoded = Files.readAllBytes(Paths.get(outputDirectoryPath + "/input.txt"));
         String s1 = new String(encoded, Charset.defaultCharset());
@@ -137,50 +148,56 @@ public class DiffUtils {
         LinkedList<DiffMatchPatch.Diff> deltas = difference.diff_main(s2, s1);
 
         int i =  2;
-        CellStyle style = workbook.createCellStyle();
-        style.setWrapText(false);
         for (DiffMatchPatch.Diff d : deltas) {
             Row row = sheet.createRow(i++);
-            System.out.println(d.toString());
+
+            d.text = d.text
+                    .replace("¶", "<p>")
+                    .replace("\n", "<n>")
+                    .replace("\t", "<t>")
+                    .replace("\r", "<r>")
+                    .replace("\b", "<b>")
+                    .replace(" ", "<s>");
+            System.out.println(d.text);
 
             if (d.operation == DiffMatchPatch.Operation.EQUAL) {
                 Cell cell = row.createCell(0);
-                cell.setCellValue("[" + d.text + "]");
-                cell.setCellStyle(style);
+                cell.setCellValue(d.text);
+                cell.setCellStyle(defaultCellStyle);
 
                 cell = row.createCell(1);
-                cell.setCellValue("[" + d.text + "]");
-                cell.setCellStyle(style);
+                cell.setCellValue(d.text);
+                cell.setCellStyle(defaultCellStyle);
 
                 cell = row.createCell(2);
                 cell.setCellValue("Equal");
-                cell.setCellStyle(style);
+                cell.setCellStyle(defaultCellStyle);
             }
             else if (d.operation == DiffMatchPatch.Operation.INSERT){
                 Cell cell = row.createCell(0);
-                cell.setCellValue("[" + d.text + "]");
-                cell.setCellStyle(style);
+                cell.setCellValue(d.text);
+                cell.setCellStyle(insertCellStyle);
 
                 cell = row.createCell(1);
-                cell.setCellValue("[]");
-                cell.setCellStyle(style);
+                cell.setCellValue("");
+                cell.setCellStyle(insertCellStyle);
 
                 cell = row.createCell(2);
                 cell.setCellValue("Insert");
-                cell.setCellStyle(style);
+                cell.setCellStyle(insertCellStyle);
             }
             else if (d.operation == DiffMatchPatch.Operation.DELETE){
                 Cell cell = row.createCell(0);
-                cell.setCellValue("[]");
-                cell.setCellStyle(style);
+                cell.setCellValue("");
+                cell.setCellStyle(deleteCellStyle);
 
                 cell = row.createCell(1);
-                cell.setCellValue("[" + d.text + "]");
-                cell.setCellStyle(style);
+                cell.setCellValue(d.text);
+                cell.setCellStyle(deleteCellStyle);
 
                 cell = row.createCell(2);
                 cell.setCellValue("Delete");
-                cell.setCellStyle(style);
+                cell.setCellStyle(deleteCellStyle);
             }
         }
 

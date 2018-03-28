@@ -86,6 +86,10 @@ public class OCRController implements Controller {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fixMandatoryCheckBox.setSelected(false);
+        fixAmbiguityCheckBox.setSelected(false);
+        checkLegitimacyCheckBox.setSelected(false);
+
         ocrTasks = FXCollections.observableList(new ArrayList<OCRTask>());
         tasksListView.setItems(ocrTasks);
 
