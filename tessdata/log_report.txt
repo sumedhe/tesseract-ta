@@ -16,3 +16,71 @@ Fixed Mandatory:
 Legitimacy Errors:
   1: Vowel    (අ in ඊටඅවුරුදු)
 
+
+Fixed Ambiguity:
+
+Fixed Mandatory:
+ 1: Fixed Mandatory: ත්ර => ත්‍ර
+
+
+Legitimacy Errors:
+  1: Vowel    (අ in සමහරඅයකොපමණ)
+  2: Vowel    (අ in ශරීරඅභ්‍යන්තරයේ)
+  3: Vowel    (අ in හුස්මඅරගෙන)
+  4: Vowel    (අ in සිරුරේඅනවශ්‍ය)
+  5: Vowel    (අ in ක්‍රමඅද)
+  6: Vowel    (අ in සමහරුඅධික)
+  7: Vowel    (අ in පුළුවන්තරමම්අල)
+  8: Vowel    (අ in ජඅඩු)
+
+
+Fixed Ambiguity:
+
+Fixed Mandatory:
+ 1: Fixed Mandatory: ත්ර => ත්‍ර
+
+
+Legitimacy Errors:
+  1: Vowel    (අ in සමහරඅයකොපමණ)
+  2: Vowel    (අ in ශරීරඅභ්‍යන්තරයේ)
+  3: Vowel    (අ in හුස්මඅරගෙන)
+  4: Vowel    (අ in සිරුරේඅනවශ්‍ය)
+  5: Vowel    (අ in ක්‍රමඅද)
+  6: Vowel    (අ in සමහරුඅධික)
+  7: Vowel    (අ in පුළුවන්තරමම්අල)
+  8: Vowel    (අ in ජඅඩු)
+
+
+Fixed Ambiguity:
+
+Fixed Mandatory:
+ 1: Fixed Mandatory: ත්ර => ත්‍ර
+
+
+Legitimacy Errors:
+  1: Vowel    (අ in සමහරඅයකොපමණ)
+  2: Vowel    (අ in ශරීරඅභ්‍යන්තරයේ)
+  3: Vowel    (අ in හුස්මඅරගෙන)
+  4: Vowel    (අ in සිරුරේඅනවශ්‍ය)
+  5: Vowel    (අ in ක්‍රමඅද)
+  6: Vowel    (අ in සමහරුඅධික)
+  7: Vowel    (අ in පුළුවන්තරමම්අල)
+  8: Vowel    (අ in ජඅඩු)
+
+
+Fixed Ambiguity:
+
+Fixed Mandatory:
+ 1: Fixed Mandatory: ත්ර => ත්‍ර
+
+
+Legitimacy Errors:
+  1: Vowel    (අ in සමහරඅයකොපමණ)
+  2: Vowel    (අ in ශරීරඅභ්‍යන්තරයේ)
+  3: Vowel    (අ in හුස්මඅරගෙන)
+  4: Vowel    (අ in සිරුරේඅනවශ්‍ය)
+  5: Vowel    (අ in ක්‍රමඅද)
+  6: Vowel    (අ in සමහරුඅධික)
+  7: Vowel    (අ in පුළුවන්තරමම්අල)
+  8: Vowel    (අ in ජඅඩු)
+

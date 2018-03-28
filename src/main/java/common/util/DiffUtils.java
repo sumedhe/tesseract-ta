@@ -134,13 +134,15 @@ public class DiffUtils {
         String s2 = new String(encoded2, Charset.defaultCharset());
 
         DiffMatchPatch difference = new DiffMatchPatch();
-        LinkedList<DiffMatchPatch.Diff> deltas = difference.diff_main(s1, s2);
+        LinkedList<DiffMatchPatch.Diff> deltas = difference.diff_main(s2, s1);
 
         int i =  2;
         CellStyle style = workbook.createCellStyle();
         style.setWrapText(false);
         for (DiffMatchPatch.Diff d : deltas) {
             Row row = sheet.createRow(i++);
+            System.out.println(d.toString());
+
             if (d.operation == DiffMatchPatch.Operation.EQUAL) {
                 Cell cell = row.createCell(0);
                 cell.setCellValue("[" + d.text + "]");
@@ -193,8 +195,8 @@ public class DiffUtils {
 
         Sheet sheet = workbook.createSheet("Comparison");
         sheet.setColumnWidth(0, 4000);
-        sheet.setColumnWidth(1, 20000);
-        sheet.setColumnWidth(2, 20000);
+        sheet.setColumnWidth(1, 15000);
+        sheet.setColumnWidth(2, 15000);
 
         Row header = sheet.createRow(0);
 
