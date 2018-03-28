@@ -243,15 +243,15 @@ public class OCRController implements Controller {
                 LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    LangUtils.fixAmbiguity(outputDirectoryPath + "output.txt", outputDirectoryPath);
+                    LangUtils.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    LangUtils.fixMandatory(outputDirectoryPath + "output.txt", outputDirectoryPath);
+                    LangUtils.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    LangUtils.checkLegitimacy(outputDirectoryPath + "output.txt", outputDirectoryPath);
+                    LangUtils.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
             }
 

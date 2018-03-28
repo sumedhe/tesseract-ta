@@ -71,7 +71,7 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 // Load text
-                LangUtils.fixMandatory(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
+                LangUtils.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
@@ -81,7 +81,7 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.fixAmbiguity(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
+                LangUtils.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
@@ -90,7 +90,7 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "output.txt", ConfigurationHandler.getOutputDirectoryPath());
+                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });

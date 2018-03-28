@@ -35,14 +35,11 @@ public class LangUtils {
                 if (text.contains(rule[0])){
                     text = text.replaceAll(rule[0], rule[1]);
                     log += " " + (++fixCount) + ": Fixed Mandatory: " + rule[0] + " => " + rule[1] + "\n";
-                    System.out.println(" Fixed Mandatory: " + rule[0] + " => " + rule[1]);
                 }
             }
         }
 
         logBrief += "Fix Mandatory: " + fixCount + " types found...\n";
-
-        System.out.println(outputDirectoryPath);
         saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
         saveFile(outputFilename, text);
     }
@@ -56,7 +53,7 @@ public class LangUtils {
         String log = "\nFixed Ambiguity:\n";
         int fixCount = 0;
 
-        String[] outputWords = text.split(" ");
+        String[] outputWords = splitWords(text);
 
         // Check for the words in the dictionary
         for (String word: outputWords){
@@ -71,7 +68,6 @@ public class LangUtils {
                             // Replace by new word
                             text = text.replaceAll(word, newWord);
                             log += " " + (++fixCount) + ": Fixed Ambiguity: " + word + " => " + newWord + "\n";
-                            System.out.println(" Fixed Ambiguity: " + word + " => " + newWord);
                         }
                     }
                 }
@@ -92,8 +88,7 @@ public class LangUtils {
         String log = "\nLegitimacy Errors:\n";
         int errorCount = 0;
 
-        text = text.replace("\n", " ").replace("\r", " ");
-        String[] words = text.split(" ");
+        String[] words = splitWords(text);
         for (String word : words){
             if (word.length() > 0) {
                 // Check whether the word starting with a vowel modifier
@@ -137,7 +132,6 @@ public class LangUtils {
             writer = new PrintWriter(fileName, "UTF-8");
             writer.println(text);
             writer.close();
-            System.out.println(text);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -152,6 +146,10 @@ public class LangUtils {
     public static void clearLog(String outputDirectoryPath){
         logBrief = "";
         saveFile(outputDirectoryPath + LOG_FILE_NAME, "");
+    }
+
+    public static String[] splitWords(String text){
+        return text.replace("\n", " ").replace("\r", " ").split(" ");
     }
 
 

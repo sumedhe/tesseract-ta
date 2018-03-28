@@ -8,35 +8,20 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 
 public class ExcelLoader {
 
-    private String fileName;
-
-    private String RuleArray[][];
-
-    private int sheetIndex;
-
-    public ExcelLoader(String fileName){
-        this.fileName = fileName;
-    }
-
-    public void setFileName(String fileName){
-        this.fileName = fileName;
-    }
-
-    public void setSheetIndex(int sheetIndex){
-        this.sheetIndex = sheetIndex;
-    }
-
-    public String[][] loadData(){
-        int rows, cols;
+    public static String[][] loadAsArray(String fileName, int sheetIndex){
+        String data[][]= {{}};
 
         try {
+            int rows, cols;
+
             // Load the sheet
-            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(this.fileName));
+            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fileName));
             HSSFWorkbook wb = new HSSFWorkbook(fs);
-            HSSFSheet sheet = wb.getSheetAt(this.sheetIndex);
+            HSSFSheet sheet = wb.getSheetAt(sheetIndex);
             HSSFRow row;
             HSSFCell cell;
 
@@ -48,14 +33,14 @@ public class ExcelLoader {
             }
 
             // Load data to array
-            RuleArray = new String[rows+1][2];
+            data = new String[rows+1][2];
             for (int r = 0; r < rows; r++) {
                 row = sheet.getRow(r);
                 if (row != null) {
                     for (int c = 0; c < cols; c++) {
                         cell = row.getCell((short) c);
                         if (cell != null) {
-                            RuleArray[r][c] = cell.getStringCellValue();
+                            data[r][c] = cell.getStringCellValue();
                         }
                     }
                 }
@@ -65,6 +50,39 @@ public class ExcelLoader {
             e.printStackTrace();
         }
 
-        return RuleArray;
+        return data;
+    }
+
+    public static HashSet<String> loadAsHashSet(String fileName, int sheetIndex, int cols){
+        HashSet<String> data = new HashSet<String>();
+
+        // Load the sheet
+        try {
+            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fileName));
+            HSSFWorkbook wb = null;
+            wb = new HSSFWorkbook(fs);
+            HSSFSheet sheet = wb.getSheetAt(sheetIndex);
+            HSSFRow row;
+            HSSFCell cell;
+
+            // Load data
+            int rows = sheet.getPhysicalNumberOfRows();
+            for (int i=0; i<rows; i++){
+                row = sheet.getRow(i);
+                if (row != null){
+                    for (int j=0; j<cols; j++){
+                        cell = row.getCell((short) j);
+                        if (cell != null && !cell.getStringCellValue().equals("")){
+                            data.add(cell.getStringCellValue());
+                        }
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return data;
     }
 }
