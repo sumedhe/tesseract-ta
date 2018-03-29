@@ -38,6 +38,8 @@ public class DictionaryController implements Controller{
 
     @FXML
     private Button clearLogButton;
+    @FXML
+    private Button reloadLanguageDataButton;
 
     private final String tessconfigDir = "./tessconfig/";
 
@@ -105,6 +107,14 @@ public class DictionaryController implements Controller{
             public void handle(MouseEvent mouseEvent) {
                 LangUtils.clearLog(ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText("");
+            }
+        });
+
+        // Reload Language Data
+        reloadLanguageDataButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
             }
         });
 

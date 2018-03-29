@@ -10,4 +10,9 @@ public class Formatter {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return outputWorkspacePath + "/" + simpleDateFormat.format(timestamp) + "_" + inputFileName + "/";
     }
+
+    public static String formatLogTimestamp(){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return simpleDateFormat.format(timestamp);
+    }
 }

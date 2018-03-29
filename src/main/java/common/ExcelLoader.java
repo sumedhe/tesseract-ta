@@ -73,7 +73,7 @@ public class ExcelLoader {
                     for (int j=0; j<cols; j++){
                         cell = row.getCell((short) j);
                         if (cell != null && !cell.getStringCellValue().equals("")){
-                            data.add(cell.getStringCellValue());
+                            data.add(cell.getStringCellValue().trim());
                         }
                     }
                 }

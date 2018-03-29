@@ -1,7 +1,9 @@
 package common.util;
 
 import common.FileOperations;
+import common.Formatter;
 import common.LanguageData;
+import common.TextOperations;
 import configuration.ConfigurationHandler;
 import javafx.scene.control.Label;
 import org.apache.commons.codec.language.bm.Lang;
@@ -10,7 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.OpenOption;
+import java.util.List;
 import java.util.Set;
+
+import static common.TextOperations.splitWords;
 
 public class LangUtils {
 
@@ -25,7 +30,7 @@ public class LangUtils {
     // Apply Mandatory Rules
     public static void fixMandatory(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
-        String log = "Fixed Mandatory:\n";
+        String log = Formatter.formatLogTimestamp() + ": Fixed Mandatory\n";
 
         int fixCount = 0;
 
@@ -50,7 +55,7 @@ public class LangUtils {
         String[][] ambiguousChars = LanguageData.getAmbiguousChars();
         Set<String> dictionaryWordList = LanguageData.getDictionaryWordList();
 
-        String log = "\nFixed Ambiguity:\n";
+        String log = Formatter.formatLogTimestamp() + ": Fixed Ambiguity\n";
         int fixCount = 0;
 
         String[] outputWords = splitWords(text);
@@ -83,10 +88,10 @@ public class LangUtils {
     public static void checkLegitimacy(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
 
-        String log = "\nLegitimacy Errors:\n";
+        String log = Formatter.formatLogTimestamp() + ": Legitimacy Errors\n";
         int errorCount = 0;
 
-        String[] words = splitWords(text);
+        String[] words = TextOperations.splitWords(text);
         for (String word : words){
             if (word.length() > 0) {
                 // Check whether the word starting with a vowel modifier
@@ -111,23 +116,20 @@ public class LangUtils {
     public static void checkExBlocks(String outputFilename, String outputDirectoryPath){
         String[] words = splitWords(openFile(outputFilename));
 
+        String log = Formatter.formatLogTimestamp() + ": ExBlock Errors\n";
+        int errorCount = 0;
+
         for (String word : words){
-//            System.out.println(word);
-            int start = 0;
-            boolean skip = false;
-            for (int i=0; i<word.length(); i++){
-
-//              System.out.println(Integer.toHexString(word.charAt(i) | 0x10000).substring(1));
-                if (word.charAt(i) != '\u200D') {
-                    if (i + 1 == word.length() ||  !(LanguageData.isModifier(word.charAt(i+1)) || word.charAt(i+1) == '\u200D')) {
-                        String letter = word.substring(start, i + 1);
-                        System.out.println(letter);
-                        start = i + 1;
-                    }
+            List<String> letters = TextOperations.splitLetters(word);
+            for (String letter : letters){
+                if (!LanguageData.isInExtendedBlock(letter) && !Character.isDigit(letter.charAt(0))){
+                    log += "  " + (++errorCount) + ": " + letter + " in " + letter + "\n";
                 }
-
             }
         }
+
+        logBrief += "Check ExBlocks: " + errorCount + " errors found...\n";
+        saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
     }
 
 
@@ -163,10 +165,6 @@ public class LangUtils {
     public static void clearLog(String outputDirectoryPath){
         logBrief = "";
         saveFile(outputDirectoryPath + LOG_FILE_NAME, "");
-    }
-
-    public static String[] splitWords(String text){
-        return text.replace("\n", " ").replace("\r", " ").split(" ");
     }
 
 
