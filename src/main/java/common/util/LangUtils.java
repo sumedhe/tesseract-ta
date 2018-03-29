@@ -58,13 +58,13 @@ public class LangUtils {
         // Check for the words in the dictionary
         for (String word: outputWords){
             // If not the word in dictionary
-            if (!dictionaryWordList.contains(word)){
+            if (!LanguageData.isInDictionary(word)){
                 // Check for ambiguous options
                 for (String[] s: ambiguousChars){
                     if (s[0] != null && word.contains(s[0])){
                         String newWord = word.replaceAll(s[0], s[1]);
                         // Check for newWord in dictionary
-                        if (dictionaryWordList.contains(newWord)){
+                        if (LanguageData.isInDictionary(newWord)){
                             // Replace by new word
                             text = text.replaceAll(word, newWord);
                             log += " " + (++fixCount) + ": Fixed Ambiguity: " + word + " => " + newWord + "\n";
@@ -82,8 +82,6 @@ public class LangUtils {
     // Check legitimacy
     public static void checkLegitimacy(String outputFilename, String outputDirectoryPath){
         String text = openFile(outputFilename);
-        String[] vowels = LanguageData.getVowels();
-        String[] modifiers = LanguageData.getModifiers();
 
         String log = "\nLegitimacy Errors:\n";
         int errorCount = 0;
@@ -92,18 +90,14 @@ public class LangUtils {
         for (String word : words){
             if (word.length() > 0) {
                 // Check whether the word starting with a vowel modifier
-                for (String m : modifiers){
-                    if (word.substring(0, 1).equals(m)){
-                        log += "  " + (++errorCount) + ": Modifier (" + m + " in " + word + ")\n";
-                    }
+                    if (LanguageData.isModifier(word.charAt(0))){
+                    log += "  " + (++errorCount) + ": Modifier (" + word.charAt(0) + " in " + word + ")\n";
                 }
 
                 // Check whether the word contains a vowel in the middle
                 for (int i = 1; i<word.length(); i++){
-                    for (String m : vowels){
-                        if (m != null && word.charAt(i) == m.charAt(0)){
-                            log += "  " + (++errorCount) + ": Vowel    (" + m + " in " + word + ")\n";
-                        }
+                    if (LanguageData.isVowel(word.charAt(i))){
+                        log += "  " + (++errorCount) + ": Vowel    (" + word.charAt(i) + " in " + word + ")\n";
                     }
                 }
             }
@@ -111,6 +105,29 @@ public class LangUtils {
 
         logBrief += "Check Legitimacy: " + errorCount + " errors found...\n";
         saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
+    }
+
+    // Verify letters with Extended Blocks
+    public static void checkExBlocks(String outputFilename, String outputDirectoryPath){
+        String[] words = splitWords(openFile(outputFilename));
+
+        for (String word : words){
+//            System.out.println(word);
+            int start = 0;
+            boolean skip = false;
+            for (int i=0; i<word.length(); i++){
+
+//              System.out.println(Integer.toHexString(word.charAt(i) | 0x10000).substring(1));
+                if (word.charAt(i) != '\u200D') {
+                    if (i + 1 == word.length() ||  !(LanguageData.isModifier(word.charAt(i+1)) || word.charAt(i+1) == '\u200D')) {
+                        String letter = word.substring(start, i + 1);
+                        System.out.println(letter);
+                        start = i + 1;
+                    }
+                }
+
+            }
+        }
     }
 
 

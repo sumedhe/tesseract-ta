@@ -28,7 +28,7 @@
                   <Button fx:id="checkLegitimacyButton" layoutX="222.0" layoutY="31.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="136.0" text="Check Legitimacy" />
                   <Button fx:id="fixAmbiguityButton" layoutX="51.0" layoutY="80.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="136.0" text="Fix Ambiguity" />
                   <Button fx:id="fixMandatoryButton" layoutX="51.0" layoutY="31.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="136.0" text="Fix Mandatory" />
-                  <Button fx:id="verifyCharactersButton" disable="true" layoutX="222.0" layoutY="80.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="136.0" text="Verify Characters" />
+                  <Button fx:id="checkExBlocksButton" layoutX="222.0" layoutY="80.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="136.0" text="Check ExBlocks" />
                </children>
             </AnchorPane>
         </content>

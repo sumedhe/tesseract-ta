@@ -20,11 +20,6 @@ import java.util.*;
 public class DictionaryController implements Controller{
 
     @FXML
-    private TextField rulesPathTextField;
-    @FXML
-    private Button browseRulesButton;
-
-    @FXML
     private TextField outputDirectoryTextField;
     @FXML
     private Button browseOutputDirectoryButton;
@@ -39,7 +34,7 @@ public class DictionaryController implements Controller{
     @FXML
     private Button checkLegitimacyButton;
     @FXML
-    private Button verifyCharactersButton;
+    private Button checkExBlocksButton;
 
     @FXML
     private Button clearLogButton;
@@ -91,6 +86,15 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(LangUtils.getLogBrief());
+            }
+        });
+
+        // Check Extended blocks
+        checkExBlocksButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                LangUtils.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText(LangUtils.getLogBrief());
             }
         });
