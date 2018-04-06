@@ -161,3 +161,8 @@ target
 
 # Configuration file
 config.properties
+
+# Docker
+ocr-files/
+pkg/
+temp/
