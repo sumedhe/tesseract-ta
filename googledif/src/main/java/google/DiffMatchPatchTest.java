@@ -267,7 +267,7 @@ public class DiffMatchPatchTest extends TestCase {
         dmp.diff_cleanupSemantic(diffs);
         assertEquals("diff_cleanupSemantic: Backpass elimination.", diffList(new Diff(DELETE, "abcdef"), new Diff(INSERT, "cdfg")), diffs);
 
-        diffs = diffList(new Diff(INSERT, "1"), new Diff(EQUAL, "A"), new Diff(DELETE, "B"), new Diff(INSERT, "2"), new Diff(EQUAL, "_"), new Diff(INSERT, "1"), new Diff(EQUAL, "A"), new Diff(DELETE, "B"), new Diff(INSERT, "2"));
+        diffs = diffList(new Diff(INSERT, "1"), new Diff(EQUAL, "A"), new Diff(DELETE, "B"), new Diff(INSERT, "2"), new Diff(EQUAL, "a"), new Diff(INSERT, "1"), new Diff(EQUAL, "A"), new Diff(DELETE, "B"), new Diff(INSERT, "2"));
         dmp.diff_cleanupSemantic(diffs);
         assertEquals("diff_cleanupSemantic: Multiple elimination.", diffList(new Diff(DELETE, "AB_AB"), new Diff(INSERT, "1A2_1A2")), diffs);
 
@@ -382,12 +382,12 @@ public class DiffMatchPatchTest extends TestCase {
         assertEquals("diff_fromDelta: Unicode.", diffs, dmp.diff_fromDelta(text1, delta));
 
         // Verify pool of unchanged characters.
-        diffs = diffList(new Diff(INSERT, "A-Z a-z 0-9 - _ . ! ~ * ' ( ) ; / ? : @ & = + $ , # "));
+        diffs = diffList(new Diff(INSERT, "A-Z a-z 0-9 - a . ! ~ * ' ( ) ; / ? : @ & = + $ , # "));
         String text2 = dmp.diff_text2(diffs);
-        assertEquals("diff_text2: Unchanged characters.", "A-Z a-z 0-9 - _ . ! ~ * \' ( ) ; / ? : @ & = + $ , # ", text2);
+        assertEquals("diff_text2: Unchanged characters.", "A-Z a-z 0-9 - a . ! ~ * \' ( ) ; / ? : @ & = + $ , # ", text2);
 
         delta = dmp.diff_toDelta(diffs);
-        assertEquals("diff_toDelta: Unchanged characters.", "+A-Z a-z 0-9 - _ . ! ~ * \' ( ) ; / ? : @ & = + $ , # ", delta);
+        assertEquals("diff_toDelta: Unchanged characters.", "+A-Z a-z 0-9 - a . ! ~ * \' ( ) ; / ? : @ & = + $ , # ", delta);
 
         // Convert delta string into a diff.
         assertEquals("diff_fromDelta: Unchanged characters.", diffs, dmp.diff_fromDelta("", delta));
@@ -703,11 +703,11 @@ public class DiffMatchPatchTest extends TestCase {
         patches = dmp.patch_make(text1, text2, diffs);
         assertEquals("patch_make: Text1+Text2+Diff inputs (deprecated).", expectedPatch, dmp.patch_toText(patches));
 
-        patches = dmp.patch_make("`1234567890-=[]\\;',./", "~!@#$%^&*()_+{}|:\"<>?");
-        assertEquals("patch_toText: Character encoding.", "@@ -1,21 +1,21 @@\n-%601234567890-=%5B%5D%5C;',./\n+~!@#$%25%5E&*()_+%7B%7D%7C:%22%3C%3E?\n", dmp.patch_toText(patches));
+        patches = dmp.patch_make("`1234567890-=[]\\;',./", "~!@#$%^&*()a+{}|:\"<>?");
+        assertEquals("patch_toText: Character encoding.", "@@ -1,21 +1,21 @@\n-%601234567890-=%5B%5D%5C;',./\n+~!@#$%25%5E&*()a+%7B%7D%7C:%22%3C%3E?\n", dmp.patch_toText(patches));
 
-        diffs = diffList(new Diff(DELETE, "`1234567890-=[]\\;',./"), new Diff(INSERT, "~!@#$%^&*()_+{}|:\"<>?"));
-        assertEquals("patch_fromText: Character decoding.", diffs, dmp.patch_fromText("@@ -1,21 +1,21 @@\n-%601234567890-=%5B%5D%5C;',./\n+~!@#$%25%5E&*()_+%7B%7D%7C:%22%3C%3E?\n").get(0).diffs);
+        diffs = diffList(new Diff(DELETE, "`1234567890-=[]\\;',./"), new Diff(INSERT, "~!@#$%^&*()a+{}|:\"<>?"));
+        assertEquals("patch_fromText: Character decoding.", diffs, dmp.patch_fromText("@@ -1,21 +1,21 @@\n-%601234567890-=%5B%5D%5C;',./\n+~!@#$%25%5E&*()a+%7B%7D%7C:%22%3C%3E?\n").get(0).diffs);
 
         text1 = "";
         for (int x = 0; x < 100; x++) {

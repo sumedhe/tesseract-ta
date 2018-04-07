@@ -1,11 +1,11 @@
 package component.general;
 
+import a.Formatter;
+import a.LangUtils;
+import a.LanguageData;
 import com.github.difflib.algorithm.DiffException;
-import common._.Formatter;
-import common._.LanguageData;
 import common.DiffService;
 import common.ImageService;
-import common._.LangUtils;
 import common.OCRService;
 import component.Controller;
 import configuration.ConfigurationHandler;
@@ -126,60 +126,42 @@ public class GeneralController implements Controller {
         // Set trained data
         // Should select a folder with an individual file
         setTrainedDataButton.setOnAction(event -> {
-//            Stage stage = (Stage) setTrainedDataButton.getScene().getWindow();
-//
-//            DirectoryChooser directoryChooser = new DirectoryChooser();
-//            directoryChooser.setTitle("Open Trained-data Directory");
-//            File selectedDirectory = directoryChooser.showDialog(stage);
-//            if (selectedDirectory != null && new File(selectedDirectory, "sin.traineddata").exists()) {
-//                tessdataDir = selectedDirectory.getAbsolutePath();
-//            }else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR, "The directory should contain a sin.traineddata file", ButtonType.OK);
-//                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-//                alert.show();
-//            }
+            // TODO: 4/7/18  
         });
 
         // Run Text2Image tasks
         text2imageRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Text2Image");
+            // TODO: 4/7/18  
         });
 
         // Run OCR tasks
         ocrRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("OCR");
+            // TODO: 4/7/18  
         });
 
         // Run Comparison tasks
         comparisonRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Comparison");
+            // TODO: 4/7/18  
         });
 
         // Run Confusion Matrix tasks
         confuseMatrixRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Confusion Matrix");
+            // TODO: 4/7/18  
         });
 
         // Run Apply rules tasks
         fixMandatoryRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Apply rules");
+            // TODO: 4/7/18
         });
 
         // Run Ambiguities tasks
         fixAmbiguityRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Ambiguities");
+            // TODO: 4/7/18  
         });
 
         // Run Legitimacy tasks
         checkLegitimacyRunButton.setOnAction(event -> {
-            // To do
-            System.out.println("Legitimacy");
+            // TODO: 4/7/18  
         });
 
         startButton.setOnAction(event -> {
@@ -232,7 +214,7 @@ public class GeneralController implements Controller {
                 }
 
                 if (confusionMatrixCheckBox.isSelected()) {
-
+                    // TODO: 4/7/18
                 }
 
                 // Preparing for Post Process
