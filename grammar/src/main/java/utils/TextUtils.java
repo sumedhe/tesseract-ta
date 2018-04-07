@@ -1,9 +1,9 @@
-package _;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextOperations {
+public class TextUtils {
 
     private final static char ZERO_WIDTH_JOINER = '\u200D';
 
@@ -26,7 +26,7 @@ public class TextOperations {
         for (int i=0; i<text.length(); i++){
             if (text.charAt(i) != ZERO_WIDTH_JOINER) { // Ignore zoro width characters
                 // If next char starts _ new letter
-                if (i + 1 == text.length() ||  !(LanguageData.isModifier(text.charAt(i+1)) || text.charAt(i+1) == ZERO_WIDTH_JOINER)) {
+                if (i + 1 == text.length() ||  !(LangUtils.isModifier(text.charAt(i+1)) || text.charAt(i+1) == ZERO_WIDTH_JOINER)) {
                     String letter = text.substring(start, i + 1);
                     letters.add(letter);
                     start = i + 1;

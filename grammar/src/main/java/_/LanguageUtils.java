@@ -1,18 +1,23 @@
 package _;
 
+import _.FileOperations;
+import _.Formatter;
+import utils.LangUtils;
+import utils.TextUtils;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 
-public class LangUtils {
+public class LanguageUtils {
 
     private final static String LOG_FILE_NAME = "postfix_log.txt";
 
     private static String logBrief = "";
 
-    public LangUtils() {
+    public LanguageUtils() {
 
     }
 
@@ -24,7 +29,7 @@ public class LangUtils {
         int fixCount = 0;
 
         // Find and fix
-        for (String[] rule : LanguageData.getMandatoryRules()) {
+        for (String[] rule : LangUtils.getMandatoryRules()) {
             if (rule[0] != null && rule[1] != null) {
                 if (text.contains(rule[0])) {
                     text = text.replaceAll(rule[0], rule[1]);
@@ -41,24 +46,24 @@ public class LangUtils {
     // Check and fix Ambiguities
     public static void fixAmbiguity(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
-        String[][] ambiguousChars = LanguageData.getAmbiguousChars();
-        Set<String> dictionaryWordList = LanguageData.getDictionaryWordList();
+        String[][] ambiguousChars = LangUtils.getAmbiguousChars();
+        Set<String> dictionaryWordList = LangUtils.getDictionaryWordList();
 
         String log = Formatter.formatLogTimestamp() + ": Fixed Ambiguity\n";
         int fixCount = 0;
 
-        String[] outputWords = TextOperations.splitWords(text);
+        String[] outputWords = TextUtils.splitWords(text);
 
         // Check for the words in the dictionary
         for (String word : outputWords) {
             // If not the word in dictionary
-            if (!LanguageData.isInDictionary(word)) {
+            if (!LangUtils.isInDictionary(word)) {
                 // Check for ambiguous options
                 for (String[] s : ambiguousChars) {
                     if (s[0] != null && word.contains(s[0])) {
                         String newWord = word.replaceAll(s[0], s[1]);
                         // Check for newWord in dictionary
-                        if (LanguageData.isInDictionary(newWord)) {
+                        if (LangUtils.isInDictionary(newWord)) {
                             // Replace by new word
                             text = text.replaceAll(word, newWord);
                             log += " " + (++fixCount) + ": Fixed Ambiguity: " + word + " => " + newWord + "\n";
@@ -80,17 +85,17 @@ public class LangUtils {
         String log = Formatter.formatLogTimestamp() + ": Legitimacy Errors\n";
         int errorCount = 0;
 
-        String[] words = TextOperations.splitWords(text);
+        String[] words = TextUtils.splitWords(text);
         for (String word : words) {
             if (word.length() > 0) {
                 // Check whether the word starting with _ vowel modifier
-                if (LanguageData.isModifier(word.charAt(0))) {
+                if (LangUtils.isModifier(word.charAt(0))) {
                     log += "  " + (++errorCount) + ": Modifier (" + word.charAt(0) + " in " + word + ")\n";
                 }
 
                 // Check whether the word contains _ vowel in the middle
                 for (int i = 1; i < word.length(); i++) {
-                    if (LanguageData.isVowel(word.charAt(i))) {
+                    if (LangUtils.isVowel(word.charAt(i))) {
                         log += "  " + (++errorCount) + ": Vowel    (" + word.charAt(i) + " in " + word + ")\n";
                     }
                 }
@@ -103,15 +108,15 @@ public class LangUtils {
 
     // Verify letters with Extended Blocks
     public static void checkExBlocks(String outputFilename, String outputDirectoryPath) {
-        String[] words = TextOperations.splitWords(openFile(outputFilename));
+        String[] words = TextUtils.splitWords(openFile(outputFilename));
 
         String log = Formatter.formatLogTimestamp() + ": ExBlock Errors\n";
         int errorCount = 0;
 
         for (String word : words) {
-            List<String> letters = TextOperations.splitLetters(word);
+            List<String> letters = TextUtils.splitLetters(word);
             for (String letter : letters) {
-                if (!LanguageData.isInExtendedBlock(letter) && !Character.isDigit(letter.charAt(0))) {
+                if (!LangUtils.isInExtendedBlock(letter) && !Character.isDigit(letter.charAt(0))) {
                     log += "  " + (++errorCount) + ": " + letter + " in " + letter + "\n";
                 }
             }

@@ -1,7 +1,7 @@
 package component.dictionary;
 
-import _.LangUtils;
-import _.LanguageData;
+import _.LanguageUtils;
+import utils.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
@@ -48,7 +48,7 @@ public class DictionaryController implements Controller{
         // Set previous filenames
         outputDirectoryTextField.setText(ConfigurationHandler.getOutputDirectoryPath());
 
-        LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
+        LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
         // Browse rules rulesFileName
         browseOutputDirectoryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -68,8 +68,8 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 // Load text
-                LangUtils.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LangUtils.getLogBrief());
+                LanguageUtils.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(LanguageUtils.getLogBrief());
             }
         });
 
@@ -78,8 +78,8 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LangUtils.getLogBrief());
+                LanguageUtils.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(LanguageUtils.getLogBrief());
             }
         });
 
@@ -87,8 +87,8 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-//                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-//                logLabel.setText(LangUtils.getLogBrief());
+//                LanguageUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+//                logLabel.setText(LanguageUtils.getLogBrief());
 
 
 
@@ -107,8 +107,8 @@ public class DictionaryController implements Controller{
         checkExBlocksButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LangUtils.getLogBrief());
+                LanguageUtils.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(LanguageUtils.getLogBrief());
             }
         });
 
@@ -116,7 +116,7 @@ public class DictionaryController implements Controller{
         clearLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.clearLog(ConfigurationHandler.getOutputDirectoryPath());
+                LanguageUtils.clearLog(ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText("");
             }
         });
@@ -125,7 +125,7 @@ public class DictionaryController implements Controller{
         reloadLanguageDataButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
+                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
             }
         });
 

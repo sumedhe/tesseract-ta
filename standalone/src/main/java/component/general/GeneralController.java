@@ -1,11 +1,8 @@
 package component.general;
 
-import _.LangUtils;
-import _.LanguageData;
-import common.DiffService;
-import common.Formatter;
-import common.ImageService;
-import common.OCRService;
+import _.LanguageUtils;
+import common.*;
+import utils.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import diff.DiffReportService;
@@ -205,18 +202,18 @@ public class GeneralController implements Controller {
                 }
 
                 // Preparing for Post Process
-                LanguageData.loadLanguageData(tessconfigDir + "lang_data.xls");
+                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    LangUtils.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    LanguageUtils.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    LangUtils.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    LanguageUtils.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    LangUtils.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    LanguageUtils.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
             }
 

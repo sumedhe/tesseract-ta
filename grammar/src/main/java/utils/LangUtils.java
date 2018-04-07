@@ -1,9 +1,11 @@
-package _;
+package utils;
+
+import _.ExcelLoader;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class LanguageData {
+public class LangUtils {
 
     // Sheet indexes
     private static final int MANDATORY_SHEET  = 0;
@@ -21,7 +23,7 @@ public class LanguageData {
     private static HashSet<String> dictionaryWordList;
     private static HashSet<String> extendedBlocks;
 
-    public LanguageData(){
+    public LangUtils(){
 
     }
 
