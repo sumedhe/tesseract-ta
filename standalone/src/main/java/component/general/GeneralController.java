@@ -1,8 +1,12 @@
 package component.general;
 
 import common.GrammarService;
-import common.*;
 import utils.LangUtils;
+import common.DiffService;
+import common.DiffService.CustomDiff;
+import common.Formatter;
+import common.ImageService;
+import common.OCRService;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import diff.DiffReportService;
@@ -10,7 +14,10 @@ import google.DiffMatchPatch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GeneralController implements Controller {
@@ -190,8 +197,11 @@ public class GeneralController implements Controller {
 
                 if (comparisonCheckBox.isSelected()) {
                     try {
-                        LinkedList<DiffMatchPatch.Diff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
-                        DiffReportService.generateDefault(deltas, outputDirectoryPath);
+                        List<CustomDiff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
+                        DiffReportService.generateDefault(deltas, outputDirectoryPath, "diff_google");
+
+                        DiffService.formatDiff(deltas);
+                        DiffReportService.generateDefault(deltas, outputDirectoryPath, "diff_formatted");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

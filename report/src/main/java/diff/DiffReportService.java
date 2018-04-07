@@ -1,19 +1,17 @@
 package diff;
 
-import google.DiffMatchPatch;
+import common.DiffService.CustomDiff;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class DiffReportService {
 
-    public static void generateDefault(LinkedList<DiffMatchPatch.Diff> deltas, String outputDirectoryPath) throws IOException {
+    public static void generateDefault(List<CustomDiff> deltas, String outputDirectoryPath, String outputFileName) throws IOException {
         Workbook workbook = new XSSFWorkbook();
 
         Sheet sheet = workbook.createSheet("Diff analysis - Google");
@@ -58,8 +56,8 @@ public class DiffReportService {
         headerCell.setCellValue("Type");
         headerCell.setCellStyle(headerCellStyle);
 
-        int i = 2;
-        for (DiffMatchPatch.Diff d : deltas) {
+        int i = 1;
+        for (CustomDiff d : deltas) {
             Row row = sheet.createRow(i++);
 
             d.text = d.text
@@ -69,48 +67,54 @@ public class DiffReportService {
                     .replace("\r", "<r>")
                     .replace("\b", "<b>")
                     .replace(" ", "<s>");
-            System.out.println(d.text);
 
-            if (d.operation == DiffMatchPatch.Operation.EQUAL) {
-                Cell cell = row.createCell(0);
-                cell.setCellValue(d.text);
-                cell.setCellStyle(defaultCellStyle);
+            switch (d.operation) {
+                case EQUAL: {
+                    Cell cell = row.createCell(0);
+                    cell.setCellValue(d.text);
+                    cell.setCellStyle(defaultCellStyle);
 
-                cell = row.createCell(1);
-                cell.setCellValue(d.text);
-                cell.setCellStyle(defaultCellStyle);
+                    cell = row.createCell(1);
+                    cell.setCellValue(d.text);
+                    cell.setCellStyle(defaultCellStyle);
 
-                cell = row.createCell(2);
-                cell.setCellValue("Equal");
-                cell.setCellStyle(defaultCellStyle);
-            } else if (d.operation == DiffMatchPatch.Operation.INSERT) {
-                Cell cell = row.createCell(0);
-                cell.setCellValue(d.text);
-                cell.setCellStyle(insertCellStyle);
+                    cell = row.createCell(2);
+                    cell.setCellValue(d.description);
+                    cell.setCellStyle(defaultCellStyle);
+                    break;
+                }
+                case INSERT: {
+                    Cell cell = row.createCell(0);
+                    cell.setCellValue(d.text);
+                    cell.setCellStyle(insertCellStyle);
 
-                cell = row.createCell(1);
-                cell.setCellValue("");
-                cell.setCellStyle(insertCellStyle);
+                    cell = row.createCell(1);
+                    cell.setCellValue("");
+                    cell.setCellStyle(insertCellStyle);
 
-                cell = row.createCell(2);
-                cell.setCellValue("Insert");
-                cell.setCellStyle(insertCellStyle);
-            } else if (d.operation == DiffMatchPatch.Operation.DELETE) {
-                Cell cell = row.createCell(0);
-                cell.setCellValue("");
-                cell.setCellStyle(deleteCellStyle);
+                    cell = row.createCell(2);
+                    cell.setCellValue(d.description);
+                    cell.setCellStyle(insertCellStyle);
+                    break;
+                }
+                case DELETE: {
+                    Cell cell = row.createCell(0);
+                    cell.setCellValue("");
+                    cell.setCellStyle(deleteCellStyle);
 
-                cell = row.createCell(1);
-                cell.setCellValue(d.text);
-                cell.setCellStyle(deleteCellStyle);
+                    cell = row.createCell(1);
+                    cell.setCellValue(d.text);
+                    cell.setCellStyle(deleteCellStyle);
 
-                cell = row.createCell(2);
-                cell.setCellValue("Delete");
-                cell.setCellStyle(deleteCellStyle);
+                    cell = row.createCell(2);
+                    cell.setCellValue(d.description);
+                    cell.setCellStyle(deleteCellStyle);
+                    break;
+                }
             }
         }
 
-        FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/diff_google.xlsx");
+        FileOutputStream outputStream = new FileOutputStream(outputDirectoryPath + "/" + outputFileName + ".xlsx");
         workbook.write(outputStream);
         workbook.close();
     }

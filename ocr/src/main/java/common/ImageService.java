@@ -10,6 +10,10 @@ import java.util.Map;
 
 public class ImageService {
 
+    /**
+     * @param inputPath
+     * @param outputPath
+     */
     @Deprecated
     public static void text2ImageLocal(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("text2image");
@@ -43,6 +47,10 @@ public class ImageService {
         }
     }
 
+    /**
+     * @param inputPath
+     * @param outputPath
+     */
     public static void text2ImageDocker(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");

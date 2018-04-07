@@ -10,6 +10,10 @@ import java.util.Map;
 
 public class OCRService {
 
+    /**
+     * @param inputPath
+     * @param outputPath
+     */
     @Deprecated
     public static void ocrLocal(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("tesseract");
@@ -43,6 +47,10 @@ public class OCRService {
         }
     }
 
+    /**
+     * @param inputPath
+     * @param outputPath
+     */
     public static void ocrDocker(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");

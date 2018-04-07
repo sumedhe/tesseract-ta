@@ -4,8 +4,6 @@ import component.ComponentFactory;
 import component.Controller;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -31,7 +29,7 @@ public class DashboardController implements Controller {
     @FXML
     private Button confusionMatrixButton;
     @FXML
-    private Button dictionaryButton;
+    private Button grammarButton;
 
     private static final Duration WORKSPACE_ANIMATE_TIME = Duration.millis(400);
 
@@ -45,11 +43,12 @@ public class DashboardController implements Controller {
 
         confusionMatrixButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.CONFUSION_MATRIX_COMPONENT).getParent()));
 
-        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.GRAMMAR_COMPONENT).getParent()));
+        grammarButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.GRAMMAR_COMPONENT).getParent()));
 
         Rectangle clipRectangle = new Rectangle(950, 675);
         workspaceAnchorPane.setClip(clipRectangle);
 
+        ocrButton.setDisable(true);
         comparisonButton.setDisable(true);
         confusionMatrixButton.setDisable(true);
     }
