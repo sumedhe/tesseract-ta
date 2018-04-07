@@ -98,6 +98,13 @@ public class GrammarService {
                         log += "  " + (++errorCount) + ": Vowel    (" + word.charAt(i) + " in " + word + ")\n";
                     }
                 }
+
+                // Check HalKirima error
+                if (word.length() > 1){
+                    if (word.charAt(1) == '\u0DCA' && (word.length() < 3 || word.charAt(2) != '\u200D')){
+                        log += "  " + (++errorCount) + ": HalKirima    (in " + word + ")\n";
+                    }
+                }
             }
         }
 
