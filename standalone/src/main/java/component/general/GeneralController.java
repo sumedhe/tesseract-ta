@@ -1,6 +1,6 @@
 package component.general;
 
-import _.LanguageUtils;
+import common.GrammarService;
 import common.*;
 import utils.LangUtils;
 import component.Controller;
@@ -205,15 +205,15 @@ public class GeneralController implements Controller {
                 LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    LanguageUtils.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    LanguageUtils.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    GrammarService.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    LanguageUtils.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+                    GrammarService.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
             }
 

@@ -1,4 +1,4 @@
-package _;
+package common;
 
 import _.FileOperations;
 import _.Formatter;
@@ -11,13 +11,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 
-public class LanguageUtils {
+public class GrammarService {
 
     private final static String LOG_FILE_NAME = "postfix_log.txt";
 
     private static String logBrief = "";
 
-    public LanguageUtils() {
+    public GrammarService() {
 
     }
 

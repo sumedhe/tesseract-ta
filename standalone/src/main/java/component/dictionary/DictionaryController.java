@@ -1,6 +1,6 @@
 package component.dictionary;
 
-import _.LanguageUtils;
+import common.GrammarService;
 import utils.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
@@ -68,8 +68,8 @@ public class DictionaryController implements Controller{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 // Load text
-                LanguageUtils.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LanguageUtils.getLogBrief());
+                GrammarService.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(GrammarService.getLogBrief());
             }
         });
 
@@ -78,8 +78,8 @@ public class DictionaryController implements Controller{
         fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LanguageUtils.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LanguageUtils.getLogBrief());
+                GrammarService.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(GrammarService.getLogBrief());
             }
         });
 
@@ -87,8 +87,8 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-//                LanguageUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-//                logLabel.setText(LanguageUtils.getLogBrief());
+//                GrammarService.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+//                logLabel.setText(GrammarService.getLogBrief());
 
 
 
@@ -107,8 +107,8 @@ public class DictionaryController implements Controller{
         checkExBlocksButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LanguageUtils.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LanguageUtils.getLogBrief());
+                GrammarService.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(GrammarService.getLogBrief());
             }
         });
 
@@ -116,7 +116,7 @@ public class DictionaryController implements Controller{
         clearLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LanguageUtils.clearLog(ConfigurationHandler.getOutputDirectoryPath());
+                GrammarService.clearLog(ConfigurationHandler.getOutputDirectoryPath());
                 logLabel.setText("");
             }
         });
