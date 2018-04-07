@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileLoader {
-    public FileLoader(){
+public class TxtLoader {
+    public TxtLoader(){
 
     }
 

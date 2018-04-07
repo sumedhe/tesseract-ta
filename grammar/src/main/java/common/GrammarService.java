@@ -1,7 +1,6 @@
 package common;
 
-import _.FileOperations;
-import _.Formatter;
+import io.TxtLoader;
 import utils.LangUtils;
 import utils.TextUtils;
 
@@ -24,7 +23,7 @@ public class GrammarService {
     // Apply Mandatory Rules
     public static void fixMandatory(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
-        String log = Formatter.formatLogTimestamp() + ": Fixed Mandatory\n";
+        String log = "Fixed Mandatory\n";
 
         int fixCount = 0;
 
@@ -49,7 +48,7 @@ public class GrammarService {
         String[][] ambiguousChars = LangUtils.getAmbiguousChars();
         Set<String> dictionaryWordList = LangUtils.getDictionaryWordList();
 
-        String log = Formatter.formatLogTimestamp() + ": Fixed Ambiguity\n";
+        String log = "Fixed Ambiguity\n";
         int fixCount = 0;
 
         String[] outputWords = TextUtils.splitWords(text);
@@ -82,7 +81,7 @@ public class GrammarService {
     public static void checkLegitimacy(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
 
-        String log = Formatter.formatLogTimestamp() + ": Legitimacy Errors\n";
+        String log = "Legitimacy Errors\n";
         int errorCount = 0;
 
         String[] words = TextUtils.splitWords(text);
@@ -110,7 +109,7 @@ public class GrammarService {
     public static void checkExBlocks(String outputFilename, String outputDirectoryPath) {
         String[] words = TextUtils.splitWords(openFile(outputFilename));
 
-        String log = Formatter.formatLogTimestamp() + ": ExBlock Errors\n";
+        String log = "ExBlock Errors\n";
         int errorCount = 0;
 
         for (String word : words) {
@@ -135,7 +134,7 @@ public class GrammarService {
     // Load recognnized text
     public static String openFile(String fileName) {
         // Load recognized text file
-        FileOperations fo = new FileOperations();
+        TxtLoader fo = new TxtLoader();
         return fo.openFile(fileName);
     }
 

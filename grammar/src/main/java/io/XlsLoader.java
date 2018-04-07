@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
 
-public class ExcelLoader {
+public class XlsLoader {
 
     public static String[][] loadAsArray(String fileName, int sheetIndex){
         String data[][]= {{}};
