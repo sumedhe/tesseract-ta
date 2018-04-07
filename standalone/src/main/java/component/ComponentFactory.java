@@ -17,7 +17,7 @@ public class ComponentFactory {
         OCR_COMPONENT,
         COMPARISON_COMPONENT,
         CONFUSION_MATRIX_COMPONENT,
-        DICTIONARY_COMPONENT,
+        GRAMMAR_COMPONENT,
         GRAMMAR_CHECK_COMPONENT,
         SETTINGS_COMPONENT;
     }
@@ -43,8 +43,8 @@ public class ComponentFactory {
                 case CONFUSION_MATRIX_COMPONENT:
                     initialize(CONFUSION_MATRIX_COMPONENT, "/component/confusionmatrix/confusionMatrix.fxml");
                     break;
-                case DICTIONARY_COMPONENT:
-                    initialize(DICTIONARY_COMPONENT, "/component/dictionary/dictionary.fxml");
+                case GRAMMAR_COMPONENT:
+                    initialize(GRAMMAR_COMPONENT, "/component/grammar/grammar.fxml");
                     break;
                 case GRAMMAR_CHECK_COMPONENT:
                     initialize(GRAMMAR_CHECK_COMPONENT, "/component/grammarcheck/grammarCheck.fxml");

@@ -61,12 +61,12 @@
                 <targetPath>component/confusionmatrix</targetPath>
             </resource>
             <resource>
-                <directory>src/main/java/component/dictionary</directory>
+                <directory>src/main/java/component/grammar</directory>
                 <includes>
-                    <include>dictionary.fxml</include>
-                    <include>dictionary.css</include>
+                    <include>grammar.fxml</include>
+                    <include>grammar.css</include>
                 </includes>
-                <targetPath>component/dictionary</targetPath>
+                <targetPath>component/grammar</targetPath>
             </resource>
         </resources>
     </build>

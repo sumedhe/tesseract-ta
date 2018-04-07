@@ -1,4 +1,4 @@
-package component.dictionary;
+package component.grammar;
 
 import common.GrammarService;
 import utils.LangUtils;
@@ -16,7 +16,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DictionaryController implements Controller{
+public class GrammarController implements Controller{
 
 
     @FXML
@@ -87,19 +87,8 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-//                GrammarService.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-//                logLabel.setText(GrammarService.getLogBrief());
-
-
-
-
-
-
-
-
-
-
-
+                GrammarService.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+                logLabel.setText(GrammarService.getLogBrief());
             }
         });
 

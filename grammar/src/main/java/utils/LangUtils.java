@@ -51,7 +51,7 @@ public class LangUtils {
         // Load extended blocks
         extendedBlocks = XlsLoader.loadAsHashSet(fileName, EXTENDED_BLOCKS_SHEET, EXTENDED_BLOCKS_COLS);
 
-        showLanguageDataInfo();
+        //showLanguageDataInfo();
     }
 
     // Get mandatory rules

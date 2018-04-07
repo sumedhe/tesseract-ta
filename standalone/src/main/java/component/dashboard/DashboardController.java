@@ -45,7 +45,7 @@ public class DashboardController implements Controller {
 
         confusionMatrixButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.CONFUSION_MATRIX_COMPONENT).getParent()));
 
-        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.DICTIONARY_COMPONENT).getParent()));
+        dictionaryButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.GRAMMAR_COMPONENT).getParent()));
 
         Rectangle clipRectangle = new Rectangle(950, 675);
         workspaceAnchorPane.setClip(clipRectangle);

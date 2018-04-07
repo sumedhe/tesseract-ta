@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="675.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.dictionary.DictionaryController">
+<AnchorPane prefHeight="675.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="component.grammar.GrammarController">
    <children>
       <TextField fx:id="outputDirectoryTextField" editable="false" layoutX="20.0" layoutY="63.0" prefHeight="25.0" prefWidth="824.0" promptText="output" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="63.0" />
       <Button fx:id="browseOutputDirectoryButton" layoutX="856.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Browse" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="63.0" />
