@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class OCRService {
 
+    @Deprecated
     public static void ocrLocal(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("tesseract");
         cmdLine.addArgument("--tessdata-dir");

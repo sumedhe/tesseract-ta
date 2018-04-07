@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public class ImageService {
+
+    @Deprecated
     public static void text2ImageLocal(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("text2image");
         cmdLine.addArgument("--text");
