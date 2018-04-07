@@ -77,5 +77,3 @@ RUN ${SCRIPTS_DIR}/repos_clone.sh
 RUN ${SCRIPTS_DIR}/tessdata_download.sh
 
 WORKDIR /home
-
-

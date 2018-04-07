@@ -5,4 +5,6 @@ services:
     image: tesseract4:latest
     container_name: tesseract4-container
     ports:
-       - 4022:22
+       - '4022:22'
+    volumes:
+        - /Users/ivantha:/Users/ivantha
