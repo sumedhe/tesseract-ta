@@ -16,7 +16,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-
 public class DictionaryController implements Controller{
 
     @FXML
@@ -87,8 +86,19 @@ public class DictionaryController implements Controller{
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LangUtils.getLogBrief());
+//                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+//                logLabel.setText(LangUtils.getLogBrief());
+
+
+
+
+
+
+
+
+
+
+
             }
         });
 
