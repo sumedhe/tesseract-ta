@@ -6,11 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tessaract-ta" />
+        <module name="googledif" />
+        <module name="ocr" />
+        <module name="report" />
+        <module name="standalone" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="tessaract-ta" target="1.8" />
+      <module name="googledif" target="1.8" />
+      <module name="ocr" target="1.8" />
+      <module name="report" target="1.8" />
+      <module name="standalone" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
