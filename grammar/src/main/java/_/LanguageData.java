@@ -49,6 +49,7 @@ public class LanguageData {
         // Load extended blocks
         extendedBlocks = ExcelLoader.loadAsHashSet(fileName, EXTENDED_BLOCKS_SHEET, EXTENDED_BLOCKS_COLS);
 
+        showLanguageDataInfo();
     }
 
     // Get mandatory rules
@@ -90,6 +91,17 @@ public class LanguageData {
     // Check whether _ letter in extended block (check validity of _ letter)
     public static boolean isInExtendedBlock(String letter){
         return extendedBlocks.contains(letter);
+    }
+
+    // Shot Language Data info
+    public static void showLanguageDataInfo(){
+        System.out.println("Mandatory rules: " + mandatoryRules.length);
+        System.out.println("Ambiguity rules: " + ambiguousChars.length);
+        System.out.println("Dictionary words: " + dictionaryWordList.size());
+        System.out.println("Vowels: " + vowels.size());
+        System.out.println("Consonants: " + consonants.size());
+        System.out.println("Modifiers: " + modifiers.size());
+        System.out.println("ExBlocks: " + extendedBlocks.size());
     }
 
 }

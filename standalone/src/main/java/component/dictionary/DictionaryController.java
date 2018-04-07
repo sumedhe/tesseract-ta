@@ -16,8 +16,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+public class DictionaryController implements Controller{
 
-public class DictionaryController implements Controller {
 
     @FXML
     private TextField outputDirectoryTextField;
@@ -87,8 +87,19 @@ public class DictionaryController implements Controller {
         checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(LangUtils.getLogBrief());
+//                LangUtils.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
+//                logLabel.setText(LangUtils.getLogBrief());
+
+
+
+
+
+
+
+
+
+
+
             }
         });
 
