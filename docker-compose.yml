@@ -1,4 +1,4 @@
 version: '3'
 services:
-  tesseract4cmp:
+  t4ubuntu:
     build: ./
