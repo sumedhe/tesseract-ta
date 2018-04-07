@@ -1,15 +1,15 @@
-package component.ocr;
+package component.general;
 
 import org.apache.commons.io.FilenameUtils;
 
-public class OCRTask {
+public class GeneralTask {
     private String id;
     private String name;
     private String inputPath;
     private String outputPath;
     private double progress;
 
-    public OCRTask(String inputPath) {
+    public GeneralTask(String inputPath) {
         this.inputPath = inputPath;
     }
 

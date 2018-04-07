@@ -13,6 +13,7 @@ public class ComponentFactory {
 
     public enum ComponentName {
         DASHBOARD_COMPONENT,
+        GENERAL_COMPONENT,
         OCR_COMPONENT,
         COMPARISON_COMPONENT,
         CONFUSION_MATRIX_COMPONENT,
@@ -29,6 +30,9 @@ public class ComponentFactory {
             switch (componentName) {
                 case DASHBOARD_COMPONENT:
                     initialize(DASHBOARD_COMPONENT, "/component/dashboard/dashboard.fxml");
+                    break;
+                case GENERAL_COMPONENT:
+                    initialize(GENERAL_COMPONENT, "/component/general/general.fxml");
                     break;
                 case OCR_COMPONENT:
                     initialize(OCR_COMPONENT, "/component/ocr/ocr.fxml");

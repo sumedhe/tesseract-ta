@@ -29,6 +29,14 @@
                 <targetPath>component/dashboard</targetPath>
             </resource>
             <resource>
+                <directory>src/main/java/component/general</directory>
+                <includes>
+                    <include>general.fxml</include>
+                    <include>general.css</include>
+                </includes>
+                <targetPath>component/general</targetPath>
+            </resource>
+            <resource>
                 <directory>src/main/java/component/ocr</directory>
                 <includes>
                     <include>ocr.fxml</include>
