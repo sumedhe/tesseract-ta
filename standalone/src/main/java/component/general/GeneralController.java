@@ -1,14 +1,15 @@
 package component.general;
 
-import a.Formatter;
-import a.LangUtils;
-import a.LanguageData;
-import com.github.difflib.algorithm.DiffException;
+import _.LangUtils;
+import _.LanguageData;
 import common.DiffService;
+import common.Formatter;
 import common.ImageService;
 import common.OCRService;
 import component.Controller;
 import configuration.ConfigurationHandler;
+import diff.DiffReportService;
+import google.DiffMatchPatch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class GeneralController implements Controller {
@@ -86,7 +88,7 @@ public class GeneralController implements Controller {
         fixAmbiguityCheckBox.setSelected(false);
         checkLegitimacyCheckBox.setSelected(false);
 
-        generalTasks = FXCollections.observableList(new ArrayList<GeneralTask>());
+        generalTasks = FXCollections.observableList(new ArrayList<>());
         tasksListView.setItems(generalTasks);
 
         // Set previous workspace
@@ -124,7 +126,7 @@ public class GeneralController implements Controller {
         removeAllButton.setOnAction(event -> generalTasks.clear());
 
         // Set trained data
-        // Should select a folder with an individual file
+        // Should select _ folder with an individual file
         setTrainedDataButton.setOnAction(event -> {
             // TODO: 4/7/18  
         });
@@ -191,26 +193,11 @@ public class GeneralController implements Controller {
 
                 if (comparisonCheckBox.isSelected()) {
                     try {
-                        DiffService.diffGoogle(outputDirectoryPath);
+                        LinkedList<DiffMatchPatch.Diff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
+                        DiffReportService.generateDefault(deltas, outputDirectoryPath);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    try {
-                        DiffService.diffUtilsLib(outputDirectoryPath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (DiffException e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        DiffService.comparison(outputDirectoryPath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    DiffService.diff(outputDirectoryPath);
                 }
 
                 if (confusionMatrixCheckBox.isSelected()) {

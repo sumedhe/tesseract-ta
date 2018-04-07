@@ -1,4 +1,4 @@
-package a;
+package _;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,28 +66,28 @@ public class LanguageData {
         return dictionaryWordList;
     }
 
-    // Check whether a char is a vowel
+    // Check whether _ char is _ vowel
     public static boolean isVowel(char character){
         return vowels.contains(String.valueOf(character));
     }
 
-    // Check whether a char is a consonant
+    // Check whether _ char is _ consonant
     public static boolean isConsonant(char character){
         return consonants.contains(String.valueOf(character));
     }
 
 
-    // Check whether a char is a modifier
+    // Check whether _ char is _ modifier
     public static boolean isModifier(char character){
         return modifiers.contains(String.valueOf(character));
     }
 
-    // Check whether a word in a dictionary
+    // Check whether _ word in _ dictionary
     public static boolean isInDictionary(String word){
         return dictionaryWordList.contains(word);
     }
 
-    // Check whether a letter in extended block (check validity of a letter)
+    // Check whether _ letter in extended block (check validity of _ letter)
     public static boolean isInExtendedBlock(String letter){
         return extendedBlocks.contains(letter);
     }

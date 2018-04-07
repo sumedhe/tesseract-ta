@@ -13,4 +13,4 @@ before_install:
   - sudo apt-get update
 
 script:
-  - docker-compose up
+  - docker-compose up -d

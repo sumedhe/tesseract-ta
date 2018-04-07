@@ -1,4 +1,4 @@
-package a;
+package _;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -83,12 +83,12 @@ public class LangUtils {
         String[] words = TextOperations.splitWords(text);
         for (String word : words) {
             if (word.length() > 0) {
-                // Check whether the word starting with a vowel modifier
+                // Check whether the word starting with _ vowel modifier
                 if (LanguageData.isModifier(word.charAt(0))) {
                     log += "  " + (++errorCount) + ": Modifier (" + word.charAt(0) + " in " + word + ")\n";
                 }
 
-                // Check whether the word contains a vowel in the middle
+                // Check whether the word contains _ vowel in the middle
                 for (int i = 1; i < word.length(); i++) {
                     if (LanguageData.isVowel(word.charAt(i))) {
                         log += "  " + (++errorCount) + ": Vowel    (" + word.charAt(i) + " in " + word + ")\n";
