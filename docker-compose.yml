@@ -1,4 +1,8 @@
 version: '3'
 services:
-  tesseract4cmp:
+  tesseract4:
     build: ./
+    image: tesseract4:latest
+    container_name: tesseract4-container
+    ports:
+       - 4022:22
