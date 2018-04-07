@@ -58,12 +58,20 @@ ENV TES_REPO_URL https://github.com/tesseract-ocr/tesseract.git
 ENV TES_SRC_DIR ${BASE_DIR}/tesseract
 ENV TESSDATA_PREFIX /usr/local/share/tessdata
 
+# Custom directories
+ENV TESSDATA_DIR /home/tessdata
+ENV TESSCONFIG_DIR /home/tessconfig
+
 RUN mkdir ${SCRIPTS_DIR}
 RUN mkdir ${PKG_DIR}
 RUN mkdir ${BASE_DIR}
 RUN mkdir ${TESSDATA_PREFIX}
+RUN mkdir ${TESSDATA_DIR}
+RUN mkdir ${TESSCONFIG_DIR}
 
 COPY ./container-scripts/* ${SCRIPTS_DIR}/
+COPY ./tessdata/* ${TESSDATA_DIR}/
+COPY ./tessconfig/* ${TESSCONFIG_DIR}/
 RUN chmod +x ${SCRIPTS_DIR}/*
 RUN ${SCRIPTS_DIR}/repos_clone.sh
 RUN ${SCRIPTS_DIR}/tessdata_download.sh

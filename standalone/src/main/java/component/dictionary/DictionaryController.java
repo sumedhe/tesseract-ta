@@ -1,7 +1,7 @@
 package component.dictionary;
 
-import common.LanguageData;
-import common.util.LangUtils;
+import common._.LanguageData;
+import common._.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;

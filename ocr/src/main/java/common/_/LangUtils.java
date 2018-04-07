@@ -1,9 +1,4 @@
-package common.util;
-
-import common.FileOperations;
-import common.Formatter;
-import common.LanguageData;
-import common.TextOperations;
+package common._;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

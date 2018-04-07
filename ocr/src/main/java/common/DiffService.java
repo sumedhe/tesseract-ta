@@ -1,4 +1,4 @@
-package common.util;
+package common;
 
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.Delta;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DiffUtils {
+public class DiffService {
 
     public static void diffUtilsLib(String outputDirectoryPath) throws IOException, DiffException {
         Workbook workbook = new XSSFWorkbook();

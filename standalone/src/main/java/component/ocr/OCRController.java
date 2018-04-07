@@ -1,12 +1,12 @@
 package component.ocr;
 
 import com.github.difflib.algorithm.DiffException;
-import common.Formatter;
-import common.LanguageData;
-import common.util.DiffUtils;
-import common.util.ImageUtils;
-import common.util.LangUtils;
-import common.util.OCRUtils;
+import common._.Formatter;
+import common._.LanguageData;
+import common.DiffService;
+import common.ImageService;
+import common._.LangUtils;
+import common.OCRService;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.collections.FXCollections;
@@ -78,8 +78,6 @@ public class OCRController implements Controller {
 
     private ObservableList<OCRTask> ocrTasks;
 
-    private String tessdataDir = "./";
-
     private String tessconfigDir = "./tessconfig/";
 
 
@@ -129,18 +127,18 @@ public class OCRController implements Controller {
         // Set trained data
         // Should select a folder with an individual file
         setTrainedDataButton.setOnAction(event -> {
-            Stage stage = (Stage) setTrainedDataButton.getScene().getWindow();
-
-            DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle("Open Trained-data Directory");
-            File selectedDirectory = directoryChooser.showDialog(stage);
-            if (selectedDirectory != null && new File(selectedDirectory, "sin.traineddata").exists()) {
-                tessdataDir = selectedDirectory.getAbsolutePath();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "The directory should contain a sin.traineddata file", ButtonType.OK);
-                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                alert.show();
-            }
+//            Stage stage = (Stage) setTrainedDataButton.getScene().getWindow();
+//
+//            DirectoryChooser directoryChooser = new DirectoryChooser();
+//            directoryChooser.setTitle("Open Trained-data Directory");
+//            File selectedDirectory = directoryChooser.showDialog(stage);
+//            if (selectedDirectory != null && new File(selectedDirectory, "sin.traineddata").exists()) {
+//                tessdataDir = selectedDirectory.getAbsolutePath();
+//            }else {
+//                Alert alert = new Alert(Alert.AlertType.ERROR, "The directory should contain a sin.traineddata file", ButtonType.OK);
+//                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//                alert.show();
+//            }
         });
 
         // Run Text2Image tasks
@@ -203,22 +201,22 @@ public class OCRController implements Controller {
                 }
 
                 if (text2imageCheckBox.isSelected()) {
-                    ImageUtils.text2Image(ocrTask.getInputPath(), outputDirectoryPath + "/out");
+                    ImageService.text2ImageDocker(ocrTask.getInputPath(), outputDirectoryPath + "/out");
                 }
 
                 if (ocrCheckBox.isSelected()) {
-                    OCRUtils.ocr(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output", tessdataDir);
+                    OCRService.ocrDocker(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
                 }
 
                 if (comparisonCheckBox.isSelected()) {
                     try {
-                        DiffUtils.diffGoogle(outputDirectoryPath);
+                        DiffService.diffGoogle(outputDirectoryPath);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     try {
-                        DiffUtils.diffUtilsLib(outputDirectoryPath);
+                        DiffService.diffUtilsLib(outputDirectoryPath);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (DiffException e) {
@@ -226,12 +224,12 @@ public class OCRController implements Controller {
                     }
 
                     try {
-                        DiffUtils.comparison(outputDirectoryPath);
+                        DiffService.comparison(outputDirectoryPath);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    DiffUtils.diff(outputDirectoryPath);
+                    DiffService.diff(outputDirectoryPath);
                 }
 
                 if (confusionMatrixCheckBox.isSelected()) {
