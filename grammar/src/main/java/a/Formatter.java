@@ -1,4 +1,4 @@
-package common._;
+package a;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ public class Formatter {
 
     public static String formatOutputDirectory(String outputWorkspacePath, String inputFileName){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        return outputWorkspacePath + "/" + simpleDateFormat.format(timestamp) + "_" + inputFileName + "/";
+        return outputWorkspacePath + "/" + simpleDateFormat.format(timestamp) + "a" + inputFileName + "/";
     }
 
     public static String formatLogTimestamp(){

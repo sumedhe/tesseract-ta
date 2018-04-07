@@ -23,6 +23,8 @@ public class DashboardController implements Controller {
     @FXML
     private AnchorPane workspaceAnchorPane;
     @FXML
+    private Button generalButton;
+    @FXML
     private Button ocrButton;
     @FXML
     private Button comparisonButton;
@@ -35,6 +37,8 @@ public class DashboardController implements Controller {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        generalButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.GENERAL_COMPONENT).getParent()));
+
         ocrButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.OCR_COMPONENT).getParent()));
 
         comparisonButton.setOnAction(event -> DashboardController.this.setWorkspace(ComponentFactory.getComponent(ComponentFactory.ComponentName.COMPARISON_COMPONENT).getParent()));
