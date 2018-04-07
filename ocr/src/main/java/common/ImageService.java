@@ -46,7 +46,7 @@ public class ImageService {
     public static void text2ImageDocker(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");
-        cmdLine.addArgument("t4cmp");
+        cmdLine.addArgument("tesseract4-container");
         cmdLine.addArgument("text2image");
         cmdLine.addArgument("--text");
         cmdLine.addArgument(inputPath);

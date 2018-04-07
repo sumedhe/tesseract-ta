@@ -1,4 +1,11 @@
 version: '3'
 services:
-  t4ubuntu:
+  tesseract4:
     build: ./
+    image: tesseract4:latest
+    container_name: tesseract4-container
+    ports:
+       - '4022:22'
+    volumes:
+        - /Users/ivantha:/Users/ivantha
+

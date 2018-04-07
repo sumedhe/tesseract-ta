@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="googledif" />
+        <module name="grammar" />
         <module name="ocr" />
         <module name="report" />
         <module name="standalone" />
@@ -14,6 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="googledif" target="1.8" />
+      <module name="grammar" target="1.8" />
       <module name="ocr" target="1.8" />
       <module name="report" target="1.8" />
       <module name="standalone" target="1.8" />

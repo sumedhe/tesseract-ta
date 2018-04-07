@@ -46,7 +46,7 @@ public class OCRService {
     public static void ocrDocker(String inputPath, String outputPath){
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");
-        cmdLine.addArgument("t4cmp");
+        cmdLine.addArgument("tesseract4-container");
         cmdLine.addArgument("tesseract");
         cmdLine.addArgument("--tessdata-dir");
         cmdLine.addArgument("/home/tessdata");
