@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/report/pom.xml" />
         <option value="$PROJECT_DIR$/ocr/pom.xml" />
         <option value="$PROJECT_DIR$/grammar/pom.xml" />
+        <option value="$PROJECT_DIR$/web/pom.xml" />
       </list>
     </option>
   </component>
