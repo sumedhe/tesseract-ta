@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class TxtLoader {
-    public TxtLoader(){
+public class TextReader {
+    public TextReader(){
 
     }
 
-    public String openFile(String fileName) {
+    public static String read(String fileName) {
         String line = null;
         String text = "";
 

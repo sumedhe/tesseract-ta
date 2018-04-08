@@ -1,6 +1,6 @@
 package common;
 
-import io.TxtLoader;
+import io.TextReader;
 import utils.LangUtils;
 import utils.TextUtils;
 
@@ -141,8 +141,8 @@ public class GrammarService {
     // Load recognnized text
     public static String openFile(String fileName) {
         // Load recognized text file
-        TxtLoader fo = new TxtLoader();
-        return fo.openFile(fileName);
+        TextReader fo = new TextReader();
+        return fo.read(fileName);
     }
 
     public static void saveFile(String fileName, String text) {

@@ -1,6 +1,6 @@
 package utils;
 
-import io.XlsLoader;
+import io.ExcelReader;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,25 +31,25 @@ public class LangUtils {
         String[][] data;
 
         // Load Mandatory Rules //
-        mandatoryRules = XlsLoader.loadAsArray(fileName, MANDATORY_SHEET);
+        mandatoryRules = ExcelReader.readAsArray(fileName, MANDATORY_SHEET);
 
         // Load Ambiguous Rules //
-        ambiguousChars = XlsLoader.loadAsArray(fileName, AMBIGUITY_SHEET);
+        ambiguousChars = ExcelReader.readAsArray(fileName, AMBIGUITY_SHEET);
 
         // Load dictionary words //
-        dictionaryWordList = XlsLoader.loadAsHashSet(fileName, DICTIONARY_SHEET, 2);
+        dictionaryWordList = ExcelReader.readAsHashSet(fileName, DICTIONARY_SHEET, 2);
 
         // Load vowels //
-        vowels = XlsLoader.loadAsHashSet(fileName, VOWELS_SHEET, 1);
+        vowels = ExcelReader.readAsHashSet(fileName, VOWELS_SHEET, 1);
 
         // Load consonants //
-        consonants = XlsLoader.loadAsHashSet(fileName, CONSONANTS_SHEET, 1);
+        consonants = ExcelReader.readAsHashSet(fileName, CONSONANTS_SHEET, 1);
 
         // Load modifiers //
-        modifiers = XlsLoader.loadAsHashSet(fileName, MODIFIERS_SHEET, 1);
+        modifiers = ExcelReader.readAsHashSet(fileName, MODIFIERS_SHEET, 1);
 
         // Load extended blocks
-        extendedBlocks = XlsLoader.loadAsHashSet(fileName, EXTENDED_BLOCKS_SHEET, EXTENDED_BLOCKS_COLS);
+        extendedBlocks = ExcelReader.readAsHashSet(fileName, EXTENDED_BLOCKS_SHEET, EXTENDED_BLOCKS_COLS);
 
         //showLanguageDataInfo();
     }

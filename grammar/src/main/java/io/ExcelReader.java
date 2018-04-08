@@ -10,9 +10,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
 
-public class XlsLoader {
+public class ExcelReader {
 
-    public static String[][] loadAsArray(String fileName, int sheetIndex){
+    public static String[][] readAsArray(String fileName, int sheetIndex){
         String data[][]= {{}};
 
         try {
@@ -53,7 +53,7 @@ public class XlsLoader {
         return data;
     }
 
-    public static HashSet<String> loadAsHashSet(String fileName, int sheetIndex, int cols){
+    public static HashSet<String> readAsHashSet(String fileName, int sheetIndex, int cols){
         HashSet<String> data = new HashSet<String>();
 
         // Load the sheet
