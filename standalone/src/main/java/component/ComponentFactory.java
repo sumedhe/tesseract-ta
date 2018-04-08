@@ -11,17 +11,6 @@ import static component.ComponentFactory.ComponentName.*;
 public class ComponentFactory {
     private static final HashMap<ComponentName, Component> COMPONENT_HASH_MAP = new HashMap<>();
 
-    public enum ComponentName {
-        DASHBOARD_COMPONENT,
-        GENERAL_COMPONENT,
-        OCR_COMPONENT,
-        COMPARISON_COMPONENT,
-        CONFUSION_MATRIX_COMPONENT,
-        GRAMMAR_COMPONENT,
-        GRAMMAR_CHECK_COMPONENT,
-        SETTINGS_COMPONENT;
-    }
-
     public ComponentFactory() {
     }
 
@@ -68,5 +57,16 @@ public class ComponentFactory {
             Component component = new Component(parent, controller);
             COMPONENT_HASH_MAP.put(componentName, component);
         }
+    }
+
+    public enum ComponentName {
+        DASHBOARD_COMPONENT,
+        GENERAL_COMPONENT,
+        OCR_COMPONENT,
+        COMPARISON_COMPONENT,
+        CONFUSION_MATRIX_COMPONENT,
+        GRAMMAR_COMPONENT,
+        GRAMMAR_CHECK_COMPONENT,
+        SETTINGS_COMPONENT;
     }
 }

@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 
 public class TextWriter {
     // Write text to a file
-    public static void write(String fileName, String text){
+    public static void write(String fileName, String text) {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(fileName, "UTF-8");
@@ -20,7 +20,7 @@ public class TextWriter {
     }
 
     // Append text to a file
-    public static void append(String fileName, String text){
+    public static void append(String fileName, String text) {
         write(fileName, TextReader.read(fileName) + '\n' + text);
     }
 }

@@ -15,14 +15,36 @@ public class DiffMatchPatchTest extends TestCase {
     private Operation EQUAL = Operation.EQUAL;
     private Operation INSERT = Operation.INSERT;
 
-    protected void setUp() {
-        // Create an instance of the google.DiffMatchPatch object.
-        dmp = new DiffMatchPatch();
+    // Construct the two texts which made up the diff originally.
+    private static String[] diff_rebuildtexts(LinkedList<Diff> diffs) {
+        String[] text = {"", ""};
+        for (Diff myDiff : diffs) {
+            if (myDiff.operation != Operation.INSERT) {
+                text[0] += myDiff.text;
+            }
+            if (myDiff.operation != Operation.DELETE) {
+                text[1] += myDiff.text;
+            }
+        }
+        return text;
     }
 
 
     //  DIFF TEST FUNCTIONS
 
+    // Private function for quickly building lists of diffs.
+    private static LinkedList<Diff> diffList(Diff... diffs) {
+        LinkedList<Diff> myDiffList = new LinkedList<Diff>();
+        for (Diff myDiff : diffs) {
+            myDiffList.add(myDiff);
+        }
+        return myDiffList;
+    }
+
+    protected void setUp() {
+        // Create an instance of the google.DiffMatchPatch object.
+        dmp = new DiffMatchPatch();
+    }
 
     public void testDiffCommonPrefix() {
         // Detect any common prefix.
@@ -413,6 +435,9 @@ public class DiffMatchPatchTest extends TestCase {
         assertEquals("Levenshtein with middle equality.", 7, dmp.diff_levenshtein(diffs));
     }
 
+
+    //  MATCH TEST FUNCTIONS
+
     public void testDiffBisect() {
         // Normal.
         String a = "cat";
@@ -516,10 +541,6 @@ public class DiffMatchPatchTest extends TestCase {
         }
     }
 
-
-    //  MATCH TEST FUNCTIONS
-
-
     public void testMatchAlphabet() {
         // Initialise the bitmasks for Bitap.
         Map<Character, Integer> bitmask;
@@ -535,6 +556,9 @@ public class DiffMatchPatchTest extends TestCase {
         bitmask.put('c', 8);
         assertEquals("match_alphabet: Duplicates.", bitmask, dmp.match_alphabet("abcaba"));
     }
+
+
+    //  PATCH TEST FUNCTIONS
 
     public void testMatchBitap() {
         // Bitap algorithm.
@@ -607,10 +631,6 @@ public class DiffMatchPatchTest extends TestCase {
             // Error expected.
         }
     }
-
-
-    //  PATCH TEST FUNCTIONS
-
 
     public void testPatchObj() {
         // Patch Object.
@@ -864,28 +884,5 @@ public class DiffMatchPatchTest extends TestCase {
         assertEquals(error_msg, a.chars1, b.chars1);
         assertEquals(error_msg, a.chars2, b.chars2);
         assertEquals(error_msg, a.lineArray, b.lineArray);
-    }
-
-    // Construct the two texts which made up the diff originally.
-    private static String[] diff_rebuildtexts(LinkedList<Diff> diffs) {
-        String[] text = {"", ""};
-        for (Diff myDiff : diffs) {
-            if (myDiff.operation != Operation.INSERT) {
-                text[0] += myDiff.text;
-            }
-            if (myDiff.operation != Operation.DELETE) {
-                text[1] += myDiff.text;
-            }
-        }
-        return text;
-    }
-
-    // Private function for quickly building lists of diffs.
-    private static LinkedList<Diff> diffList(Diff... diffs) {
-        LinkedList<Diff> myDiffList = new LinkedList<Diff>();
-        for (Diff myDiff : diffs) {
-            myDiffList.add(myDiff);
-        }
-        return myDiffList;
     }
 }

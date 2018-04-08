@@ -15,7 +15,7 @@ public class ImageService {
      * @param outputPath
      */
     @Deprecated
-    public static void text2ImageLocal(String inputPath, String outputPath){
+    public static void text2ImageLocal(String inputPath, String outputPath) {
         CommandLine cmdLine = new CommandLine("text2image");
         cmdLine.addArgument("--text");
         cmdLine.addArgument(inputPath);
@@ -51,7 +51,7 @@ public class ImageService {
      * @param inputPath
      * @param outputPath
      */
-    public static void text2ImageDocker(String inputPath, String outputPath){
+    public static void text2ImageDocker(String inputPath, String outputPath) {
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");
         cmdLine.addArgument("tesseract4-container");

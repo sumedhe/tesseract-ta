@@ -1,7 +1,6 @@
 package component.grammar;
 
 import common.GrammarService;
-import utils.LangUtils;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
@@ -11,22 +10,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
+import utils.LangUtils;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GrammarController implements Controller{
+public class GrammarController implements Controller {
 
 
+    private final String tessconfigDir = "./tessconfig/";
     @FXML
     private TextField outputDirectoryTextField;
     @FXML
     private Button browseOutputDirectoryButton;
-
     @FXML
     private Label logLabel;
-
     @FXML
     private Button fixMandatoryButton;
     @FXML
@@ -35,13 +34,10 @@ public class GrammarController implements Controller{
     private Button checkLegitimacyButton;
     @FXML
     private Button checkExBlocksButton;
-
     @FXML
     private Button clearLogButton;
     @FXML
     private Button reloadLanguageDataButton;
-
-    private final String tessconfigDir = "./tessconfig/";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

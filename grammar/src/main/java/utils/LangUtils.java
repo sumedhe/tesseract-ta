@@ -8,26 +8,26 @@ import java.util.Set;
 public class LangUtils {
 
     // Sheet indexes
-    private static final int MANDATORY_SHEET  = 0;
-    private static final int AMBIGUITY_SHEET  = 1;
+    private static final int MANDATORY_SHEET = 0;
+    private static final int AMBIGUITY_SHEET = 1;
     private static final int DICTIONARY_SHEET = 2;
-    private static final int VOWELS_SHEET     = 3;
+    private static final int VOWELS_SHEET = 3;
     private static final int CONSONANTS_SHEET = 4;
-    private static final int MODIFIERS_SHEET  = 5;
+    private static final int MODIFIERS_SHEET = 5;
 
-    private static final int EXTENDED_BLOCKS_SHEET    = 6;
-    private static final int EXTENDED_BLOCKS_COLS     = 118;
+    private static final int EXTENDED_BLOCKS_SHEET = 6;
+    private static final int EXTENDED_BLOCKS_COLS = 118;
 
     private static String mandatoryRules[][], ambiguousChars[][];
     private static HashSet<String> vowels, consonants, modifiers;
     private static HashSet<String> dictionaryWordList;
     private static HashSet<String> extendedBlocks;
 
-    public LangUtils(){
+    public LangUtils() {
 
     }
 
-    public static void loadLanguageData(String fileName){
+    public static void loadLanguageData(String fileName) {
         String[][] data;
 
         // Load Mandatory Rules //
@@ -55,48 +55,48 @@ public class LangUtils {
     }
 
     // Get mandatory rules
-    public static String[][] getMandatoryRules(){
+    public static String[][] getMandatoryRules() {
         return mandatoryRules;
     }
 
     // Get Ambituous characters
-    public static String[][] getAmbiguousChars(){
+    public static String[][] getAmbiguousChars() {
         return ambiguousChars;
     }
 
     // Get dictionary word list
-    public static Set<String> getDictionaryWordList(){
+    public static Set<String> getDictionaryWordList() {
         return dictionaryWordList;
     }
 
     // Check whether _ char is _ vowel
-    public static boolean isVowel(char character){
+    public static boolean isVowel(char character) {
         return vowels.contains(String.valueOf(character));
     }
 
     // Check whether _ char is _ consonant
-    public static boolean isConsonant(char character){
+    public static boolean isConsonant(char character) {
         return consonants.contains(String.valueOf(character));
     }
 
 
     // Check whether _ char is _ modifier
-    public static boolean isModifier(char character){
+    public static boolean isModifier(char character) {
         return modifiers.contains(String.valueOf(character));
     }
 
     // Check whether _ word in _ dictionary
-    public static boolean isInDictionary(String word){
+    public static boolean isInDictionary(String word) {
         return dictionaryWordList.contains(word);
     }
 
     // Check whether _ letter in extended block (check validity of _ letter)
-    public static boolean isInExtendedBlock(String letter){
+    public static boolean isInExtendedBlock(String letter) {
         return extendedBlocks.contains(letter);
     }
 
     // Shot Language Data info
-    public static void showLanguageDataInfo(){
+    public static void showLanguageDataInfo() {
         System.out.println("Mandatory rules: " + mandatoryRules.length);
         System.out.println("Ambiguity rules: " + ambiguousChars.length);
         System.out.println("Dictionary words: " + dictionaryWordList.size());

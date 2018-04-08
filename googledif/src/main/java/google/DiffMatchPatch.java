@@ -58,36 +58,35 @@ public class DiffMatchPatch {
      * The number of bits in an int.
      */
     private short Match_MaxBits = 32;
-
-    /**
-     * Internal class for returning results from diff_linesToChars().
-     * Other less paranoid languages just use _ three-element array.
-     */
-    protected static class LinesToCharsResult {
-        protected String chars1;
-        protected String chars2;
-        protected List<String> lineArray;
-
-        protected LinesToCharsResult(String chars1, String chars2,
-                                     List<String> lineArray) {
-            this.chars1 = chars1;
-            this.chars2 = chars2;
-            this.lineArray = lineArray;
-        }
-    }
+    // Define some regex patterns for matching boundaries.
+    private Pattern BLANKLINEEND
+            = Pattern.compile("\\n\\r?\\n\\Z", Pattern.DOTALL);
 
 
     //  DIFF FUNCTIONS
-
+    private Pattern BLANKLINESTART
+            = Pattern.compile("\\A\\r?\\n\\r?\\n", Pattern.DOTALL);
 
     /**
-     * The data structure representing _ diff is _ Linked list of Diff objects:
-     * {Diff(Operation.DELETE, "Hello"), Diff(Operation.INSERT, "Goodbye"),
-     * Diff(Operation.EQUAL, " world.")}
-     * which means: delete "Hello", add "Goodbye" and keep " world."
+     * Unescape selected chars for compatability with JavaScript's encodeURI.
+     * In speed critical applications this could be dropped since the
+     * receiving application will certainly decode these fine.
+     * Note that this function is case-sensitive.  Thus "%3f" would not be
+     * unescaped.  But this is ok because it is only called with the output of
+     * URLEncoder.encode which returns uppercase hex.
+     * <p>
+     * Example: "%3F" -> "?", "%24" -> "$", etc.
+     *
+     * @param str The string to escape.
+     * @return The escaped string.
      */
-    public enum Operation {
-        DELETE, INSERT, EQUAL
+    private static String unescapeForEncodeUriCompatability(String str) {
+        return str.replace("%21", "!").replace("%7E", "~")
+                .replace("%27", "'").replace("%28", "(").replace("%29", ")")
+                .replace("%3B", ";").replace("%2F", "/").replace("%3F", "?")
+                .replace("%3A", ":").replace("%40", "@").replace("%26", "&")
+                .replace("%3D", "=").replace("%2B", "+").replace("%24", "$")
+                .replace("%2C", ",").replace("%23", "#");
     }
 
     /**
@@ -1022,12 +1021,6 @@ public class DiffMatchPatch {
         return 0;
     }
 
-    // Define some regex patterns for matching boundaries.
-    private Pattern BLANKLINEEND
-            = Pattern.compile("\\n\\r?\\n\\Z", Pattern.DOTALL);
-    private Pattern BLANKLINESTART
-            = Pattern.compile("\\A\\r?\\n\\r?\\n", Pattern.DOTALL);
-
     /**
      * Reduce the number of edits by eliminating operationally trivial equalities.
      *
@@ -1536,10 +1529,6 @@ public class DiffMatchPatch {
         return diffs;
     }
 
-
-    //  MATCH FUNCTIONS
-
-
     /**
      * Locate the best instance of 'pattern' in 'text' near 'loc'.
      * Returns -1 if no match found.
@@ -1571,6 +1560,9 @@ public class DiffMatchPatch {
             return match_bitap(text, pattern, loc);
         }
     }
+
+
+    //  MATCH FUNCTIONS
 
     /**
      * Locate the best instance of 'pattern' in 'text' near 'loc' using the
@@ -1715,10 +1707,6 @@ public class DiffMatchPatch {
         return s;
     }
 
-
-    //  PATCH FUNCTIONS
-
-
     /**
      * Increase the context until it is unique,
      * but don't let the pattern expand beyond Match_MaxBits.
@@ -1764,6 +1752,9 @@ public class DiffMatchPatch {
         patch.length1 += prefix.length() + suffix.length();
         patch.length2 += prefix.length() + suffix.length();
     }
+
+
+    //  PATCH FUNCTIONS
 
     /**
      * Compute _ list of patches to turn text1 into text2.
@@ -2317,6 +2308,32 @@ public class DiffMatchPatch {
         return patches;
     }
 
+    /**
+     * The data structure representing _ diff is _ Linked list of Diff objects:
+     * {Diff(Operation.DELETE, "Hello"), Diff(Operation.INSERT, "Goodbye"),
+     * Diff(Operation.EQUAL, " world.")}
+     * which means: delete "Hello", add "Goodbye" and keep " world."
+     */
+    public enum Operation {
+        DELETE, INSERT, EQUAL
+    }
+
+    /**
+     * Internal class for returning results from diff_linesToChars().
+     * Other less paranoid languages just use _ three-element array.
+     */
+    protected static class LinesToCharsResult {
+        protected String chars1;
+        protected String chars2;
+        protected List<String> lineArray;
+
+        protected LinesToCharsResult(String chars1, String chars2,
+                                     List<String> lineArray) {
+            this.chars1 = chars1;
+            this.chars2 = chars2;
+            this.lineArray = lineArray;
+        }
+    }
 
     /**
      * Class representing one diff operation.
@@ -2399,7 +2416,6 @@ public class DiffMatchPatch {
         }
     }
 
-
     /**
      * Class representing one patch operation.
      */
@@ -2466,27 +2482,5 @@ public class DiffMatchPatch {
             }
             return unescapeForEncodeUriCompatability(text.toString());
         }
-    }
-
-    /**
-     * Unescape selected chars for compatability with JavaScript's encodeURI.
-     * In speed critical applications this could be dropped since the
-     * receiving application will certainly decode these fine.
-     * Note that this function is case-sensitive.  Thus "%3f" would not be
-     * unescaped.  But this is ok because it is only called with the output of
-     * URLEncoder.encode which returns uppercase hex.
-     * <p>
-     * Example: "%3F" -> "?", "%24" -> "$", etc.
-     *
-     * @param str The string to escape.
-     * @return The escaped string.
-     */
-    private static String unescapeForEncodeUriCompatability(String str) {
-        return str.replace("%21", "!").replace("%7E", "~")
-                .replace("%27", "'").replace("%28", "(").replace("%29", ")")
-                .replace("%3B", ";").replace("%2F", "/").replace("%3F", "?")
-                .replace("%3A", ":").replace("%40", "@").replace("%26", "&")
-                .replace("%3D", "=").replace("%2B", "+").replace("%24", "$")
-                .replace("%2C", ",").replace("%23", "#");
     }
 }

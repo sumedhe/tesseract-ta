@@ -100,8 +100,8 @@ public class GrammarService {
                 }
 
                 // Check HalKirima error
-                if (word.length() > 1){
-                    if (word.charAt(1) == '\u0DCA' && (word.length() < 3 || word.charAt(2) != '\u200D')){
+                if (word.length() > 1) {
+                    if (word.charAt(1) == '\u0DCA' && (word.length() < 3 || word.charAt(2) != '\u200D')) {
                         log += "  " + (++errorCount) + ": HalKirima    (in " + word + ")\n";
                     }
                 }
