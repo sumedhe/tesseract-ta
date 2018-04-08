@@ -15,7 +15,7 @@ public class OCRService {
      * @param outputPath
      */
     @Deprecated
-    public static void ocrLocal(String inputPath, String outputPath){
+    public static void ocrLocal(String inputPath, String outputPath) {
         CommandLine cmdLine = new CommandLine("tesseract");
         cmdLine.addArgument("--tessdata-dir");
         cmdLine.addArgument("./");
@@ -51,7 +51,7 @@ public class OCRService {
      * @param inputPath
      * @param outputPath
      */
-    public static void ocrDocker(String inputPath, String outputPath){
+    public static void ocrDocker(String inputPath, String outputPath) {
         CommandLine cmdLine = new CommandLine("docker");
         cmdLine.addArgument("exec");
         cmdLine.addArgument("tesseract4-container");

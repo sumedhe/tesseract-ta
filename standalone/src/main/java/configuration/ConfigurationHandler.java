@@ -24,11 +24,11 @@ public class ConfigurationHandler {
     }
 
 
-    public static void setOutputDirecotryPath(String outputPath){
+    public static void setOutputDirecotryPath(String outputPath) {
         configurationFile.setProperty("output_directory_path", outputPath);
     }
 
-    public static String getOutputDirectoryPath(){
+    public static String getOutputDirectoryPath() {
         return configurationFile.getProperty("output_directory_path");
     }
 

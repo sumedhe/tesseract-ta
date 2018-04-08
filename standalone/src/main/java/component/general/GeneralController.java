@@ -1,16 +1,10 @@
 package component.general;
 
-import common.GrammarService;
-import utils.LangUtils;
-import common.DiffService;
+import common.*;
 import common.DiffService.CustomDiff;
-import common.Formatter;
-import common.ImageService;
-import common.OCRService;
 import component.Controller;
 import configuration.ConfigurationHandler;
 import diff.DiffReportService;
-import google.DiffMatchPatch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +16,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
+import utils.LangUtils;
 
 import java.io.File;
 import java.io.IOException;

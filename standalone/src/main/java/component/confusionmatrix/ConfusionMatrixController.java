@@ -5,7 +5,7 @@ import component.Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ConfusionMatrixController implements Controller{
+public class ConfusionMatrixController implements Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

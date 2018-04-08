@@ -30,12 +30,12 @@ public class GeneralTask {
         return FilenameUtils.removeExtension(name);
     }
 
-    public String getNameWithExtension(){
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNameWithExtension() {
+        return name;
     }
 
     public String getInputPath() {

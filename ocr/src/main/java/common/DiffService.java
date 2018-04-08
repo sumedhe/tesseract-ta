@@ -28,7 +28,7 @@ public class DiffService {
         DiffMatchPatch difference = new DiffMatchPatch();
         List<CustomDiff> deltas = new ArrayList<>();
 
-        for(DiffMatchPatch.Diff d: difference.diff_main(s2, s1)){
+        for (DiffMatchPatch.Diff d : difference.diff_main(s2, s1)) {
             CustomDiff diff = new CustomDiff();
             diff.text = d.text;
 
@@ -59,37 +59,36 @@ public class DiffService {
      */
     public static void formatDiff(List<CustomDiff> deltas) throws IOException {
         ListIterator<CustomDiff> iterator = deltas.listIterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             CustomDiff diff = iterator.next();
 
-            if(diff.text.equals("<n><n>")){
+            if (diff.text.equals("<n><n>")) {
                 CustomDiff diff2 = new CustomDiff();
 
                 diff.text = diff2.text = "<n>";
                 diff2.operation = diff.operation;
-                if(diff.operation == Operation.INSERT){
+                if (diff.operation == Operation.INSERT) {
                     diff.customOperation = diff2.customOperation = CustomOperation.INSERT_LINE;
                     diff.description = diff2.description = "Insert new line";
-                }else if(diff.operation == Operation.DELETE){
+                } else if (diff.operation == Operation.DELETE) {
                     diff.customOperation = diff2.customOperation = CustomOperation.DELETE_LINE;
                     diff.description = diff2.description = "Delete line";
                 }
 
                 iterator.add(diff2);
-            }
-            else if(diff.text.equals("<s>")){
-                if(diff.operation == Operation.INSERT){
+            } else if (diff.text.equals("<s>")) {
+                if (diff.operation == Operation.INSERT) {
                     diff.customOperation = CustomOperation.INSERT_SPACE;
                     diff.description = "Insert space";
-                }else if(diff.operation == Operation.DELETE){
+                } else if (diff.operation == Operation.DELETE) {
                     diff.customOperation = CustomOperation.DELETE_SPACE;
                     diff.description = "Delete space";
                 }
-            }else if(diff.text.equals("<n>")){
-                if(diff.operation == Operation.INSERT){
+            } else if (diff.text.equals("<n>")) {
+                if (diff.operation == Operation.INSERT) {
                     diff.customOperation = CustomOperation.INSERT_LINE;
                     diff.description = "Insert new line";
-                }else if(diff.operation == Operation.DELETE){
+                } else if (diff.operation == Operation.DELETE) {
                     diff.customOperation = CustomOperation.DELETE_LINE;
                     diff.description = "Delete line";
                 }
@@ -97,14 +96,7 @@ public class DiffService {
         }
     }
 
-    public static class CustomDiff{
-        public String text;
-        public Operation operation;
-        public CustomOperation customOperation;
-        public String description;
-    }
-
-    public enum CustomOperation{
+    public enum CustomOperation {
         EQUAL,
 
         INSERT,
@@ -114,5 +106,12 @@ public class DiffService {
         DELETE,
         DELETE_LINE,
         DELETE_SPACE
+    }
+
+    public static class CustomDiff {
+        public String text;
+        public Operation operation;
+        public CustomOperation customOperation;
+        public String description;
     }
 }

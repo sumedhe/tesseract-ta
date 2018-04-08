@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements Controller {
 
+    private static final Duration WORKSPACE_ANIMATE_TIME = Duration.millis(400);
     @FXML
     private AnchorPane workspaceAnchorPane;
     @FXML
@@ -30,8 +31,6 @@ public class DashboardController implements Controller {
     private Button confusionMatrixButton;
     @FXML
     private Button grammarButton;
-
-    private static final Duration WORKSPACE_ANIMATE_TIME = Duration.millis(400);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

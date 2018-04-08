@@ -6,7 +6,11 @@ import javafx.stage.Stage;
 
 import static component.ComponentFactory.ComponentName.DASHBOARD_COMPONENT;
 
-public class App extends Application{
+public class App extends Application {
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(ComponentFactory.getComponent(DASHBOARD_COMPONENT).getParent());
         scene.setOnKeyReleased(event -> {
@@ -18,9 +22,5 @@ public class App extends Application{
         primaryStage.setTitle("Tessaract Test Automation System");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

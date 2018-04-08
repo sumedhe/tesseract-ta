@@ -12,8 +12,8 @@ import java.util.HashSet;
 
 public class ExcelReader {
 
-    public static String[][] readAsArray(String fileName, int sheetIndex){
-        String data[][]= {{}};
+    public static String[][] readAsArray(String fileName, int sheetIndex) {
+        String data[][] = {{}};
 
         try {
             int rows, cols;
@@ -28,12 +28,12 @@ public class ExcelReader {
             // Get number of rows and cols
             rows = sheet.getPhysicalNumberOfRows();
             cols = 0;
-            if (rows > 0){
+            if (rows > 0) {
                 cols = sheet.getRow(0).getPhysicalNumberOfCells();
             }
 
             // Load data to array
-            data = new String[rows+1][2];
+            data = new String[rows + 1][2];
             for (int r = 0; r < rows; r++) {
                 row = sheet.getRow(r);
                 if (row != null) {
@@ -53,7 +53,7 @@ public class ExcelReader {
         return data;
     }
 
-    public static HashSet<String> readAsHashSet(String fileName, int sheetIndex, int cols){
+    public static HashSet<String> readAsHashSet(String fileName, int sheetIndex, int cols) {
         HashSet<String> data = new HashSet<String>();
 
         // Load the sheet
@@ -67,12 +67,12 @@ public class ExcelReader {
 
             // Load data
             int rows = sheet.getPhysicalNumberOfRows();
-            for (int i=0; i<rows; i++){
+            for (int i = 0; i < rows; i++) {
                 row = sheet.getRow(i);
-                if (row != null){
-                    for (int j=0; j<cols; j++){
+                if (row != null) {
+                    for (int j = 0; j < cols; j++) {
                         cell = row.getCell((short) j);
-                        if (cell != null && !cell.getStringCellValue().equals("")){
+                        if (cell != null && !cell.getStringCellValue().equals("")) {
                             data.add(cell.getStringCellValue().trim());
                         }
                     }
