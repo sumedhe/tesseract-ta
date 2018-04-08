@@ -13,7 +13,7 @@ public class DictionaryService {
 
     // Load dictionary words
     public static void load(){
-        String text = TextReader.read(dictionaryFileName);
+        String text = TextReader.readAsString(dictionaryFileName);
         words = new HashSet<String>(Arrays.asList(TextUtils.splitWords(text)));
     }
 

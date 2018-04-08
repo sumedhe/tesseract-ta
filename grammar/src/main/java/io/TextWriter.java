@@ -21,6 +21,6 @@ public class TextWriter {
 
     // Append text to a file
     public static void append(String fileName, String text){
-        write(fileName, TextReader.read(fileName) + '\n' + text);
+        write(fileName, TextReader.readAsString(fileName) + '\n' + text);
     }
 }

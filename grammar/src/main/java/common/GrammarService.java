@@ -142,7 +142,7 @@ public class GrammarService {
     public static String openFile(String fileName) {
         // Load recognized text file
         TextReader fo = new TextReader();
-        return fo.read(fileName);
+        return fo.readAsString(fileName);
     }
 
     public static void saveFile(String fileName, String text) {
