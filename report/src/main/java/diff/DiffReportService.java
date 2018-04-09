@@ -61,7 +61,6 @@ public class DiffReportService {
             Row row = sheet.createRow(i++);
 
             d.text = d.text
-                    .replace("¶", "<p>")
                     .replace("\n", "<n>")
                     .replace("\t", "<t>")
                     .replace("\r", "<r>")
