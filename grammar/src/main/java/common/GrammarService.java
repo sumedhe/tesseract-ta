@@ -1,7 +1,10 @@
 package common;
 
 import io.TextReader;
-import utils.LangUtils;
+import rules.AmbiguousRules;
+import rules.LegitimacyRules;
+import rules.MandatoryRules;
+import unicode.Sinhala;
 import utils.TextUtils;
 
 import java.io.FileNotFoundException;
@@ -28,12 +31,11 @@ public class GrammarService {
         int fixCount = 0;
 
         // Find and fix
-        for (String[] rule : LangUtils.getMandatoryRules()) {
-            if (rule[0] != null && rule[1] != null) {
-                if (text.contains(rule[0])) {
-                    text = text.replaceAll(rule[0], rule[1]);
-                    log += " " + (++fixCount) + ": Fixed Mandatory: " + rule[0] + " => " + rule[1] + "\n";
-                }
+        for (String key : MandatoryRules.getRules().keySet()) {
+            String val = MandatoryRules.getRules().get(key);
+            if (text.contains(key)) {
+                text = text.replaceAll(key, val);
+                log += " " + (++fixCount) + ": Fixed Mandatory: " + key + " => " + val + "\n";
             }
         }
 
@@ -44,8 +46,8 @@ public class GrammarService {
 
     // Check and fix Ambiguities
     public static void fixAmbiguity(String outputFilename, String outputDirectoryPath) {
-        String text = openFile(outputFilename);
-        String[][] ambiguousChars = LangUtils.getAmbiguousChars();
+        String      text           = openFile(outputFilename);
+        Set<String> ambiguousChars = AmbiguousRules.getRules().keySet();
 
         String log = "Fixed Ambiguity\n";
         int fixCount = 0;
@@ -57,9 +59,9 @@ public class GrammarService {
             // If not the word in dictionary
             if (!DictionaryService.contains(word)) {
                 // Check for ambiguous options
-                for (String[] s : ambiguousChars) {
-                    if (s[0] != null && word.contains(s[0])) {
-                        String newWord = word.replaceAll(s[0], s[1]);
+                for (String key : ambiguousChars) {
+                    if (word.contains(key)) {
+                        String newWord = word.replaceAll(key, AmbiguousRules.getRules().get(key));
                         // Check for newWord in dictionary
                         if (DictionaryService.contains(newWord)) {
                             // Replace by new word
@@ -87,13 +89,13 @@ public class GrammarService {
         for (String word : words) {
             if (word.length() > 0) {
                 // Check whether the word starting with _ vowel modifier
-                if (LangUtils.isModifier(word.charAt(0))) {
+                if (Sinhala.isModifier(word.charAt(0))) {
                     log += "  " + (++errorCount) + ": Modifier (" + word.charAt(0) + " in " + word + ")\n";
                 }
 
                 // Check whether the word contains _ vowel in the middle
                 for (int i = 1; i < word.length(); i++) {
-                    if (LangUtils.isVowel(word.charAt(i))) {
+                    if (Sinhala.isVowel(word.charAt(i))) {
                         log += "  " + (++errorCount) + ": Vowel    (" + word.charAt(i) + " in " + word + ")\n";
                     }
                 }
@@ -121,7 +123,7 @@ public class GrammarService {
         for (String word : words) {
             List<String> letters = TextUtils.splitLetters(word);
             for (String letter : letters) {
-                if (!LangUtils.isInExtendedBlock(letter) && !Character.isDigit(letter.charAt(0))) {
+                if (!LegitimacyRules.getExBlocks().contains(letter) && !Character.isDigit(letter.charAt(0))) {
                     log += "  " + (++errorCount) + ": " + letter + " in " + letter + "\n";
                 }
             }

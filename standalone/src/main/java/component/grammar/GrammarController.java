@@ -1,6 +1,5 @@
 package component.grammar;
 
-import common.DictionaryService;
 import common.GrammarService;
 import component.Controller;
 import configuration.ConfigurationHandler;
@@ -11,7 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
-import utils.LangUtils;
+import rules.AmbiguousRules;
+import rules.LegitimacyRules;
+import rules.MandatoryRules;
 
 import java.io.File;
 import java.net.URL;
@@ -44,8 +45,6 @@ public class GrammarController implements Controller {
     public void initialize(URL location, ResourceBundle resources) {
         // Set previous filenames
         outputDirectoryTextField.setText(ConfigurationHandler.getOutputDirectoryPath());
-
-        LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
         // Browse rules rulesFileName
         browseOutputDirectoryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -111,7 +110,9 @@ public class GrammarController implements Controller {
         reloadLanguageDataButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
+                AmbiguousRules.load();
+                MandatoryRules.load();
+                LegitimacyRules.load();
             }
         });
 

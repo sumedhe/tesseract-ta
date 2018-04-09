@@ -16,7 +16,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
-import utils.LangUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -206,8 +205,6 @@ public class GeneralController implements Controller {
                     // TODO: 4/7/18
                 }
 
-                // Preparing for Post Process
-                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
                     GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
