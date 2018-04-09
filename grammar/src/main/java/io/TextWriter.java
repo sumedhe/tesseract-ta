@@ -5,13 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 public class TextWriter {
-
-    /**
-     * Write text to a file
-     *
-     * @param fileName
-     * @param text
-     */
+    // Write text to a file
     public static void write(String fileName, String text) {
         PrintWriter writer = null;
         try {
@@ -25,13 +19,8 @@ public class TextWriter {
         }
     }
 
-    /**
-     * Append text to a file
-     *
-     * @param fileName
-     * @param text
-     */
-    public static void append(String fileName, String text) {
-        write(fileName, TextReader.read(fileName) + '\n' + text);
+    // Append text to a file
+    public static void append(String fileName, String text){
+        write(fileName, TextReader.readAsString(fileName) + '\n' + text);
     }
 }

@@ -53,7 +53,6 @@ public class GrammarService {
     public static void fixAmbiguity(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
         String[][] ambiguousChars = LangUtils.getAmbiguousChars();
-        Set<String> dictionaryWordList = LangUtils.getDictionaryWordList();
 
         String log = "Fixed Ambiguity\n";
         int fixCount = 0;
@@ -63,13 +62,13 @@ public class GrammarService {
         // Check for the words in the dictionary
         for (String word : outputWords) {
             // If not the word in dictionary
-            if (!LangUtils.isInDictionary(word)) {
+            if (!DictionaryService.contains(word)) {
                 // Check for ambiguous options
                 for (String[] s : ambiguousChars) {
                     if (s[0] != null && word.contains(s[0])) {
                         String newWord = word.replaceAll(s[0], s[1]);
                         // Check for newWord in dictionary
-                        if (LangUtils.isInDictionary(newWord)) {
+                        if (DictionaryService.contains(newWord)) {
                             // Replace by new word
                             text = text.replaceAll(word, newWord);
                             log += " " + (++fixCount) + ": Fixed Ambiguity: " + word + " => " + newWord + "\n";
@@ -168,7 +167,7 @@ public class GrammarService {
     public static String openFile(String fileName) {
         // Load recognized text file
         TextReader fo = new TextReader();
-        return fo.read(fileName);
+        return fo.readAsString(fileName);
     }
 
     /**

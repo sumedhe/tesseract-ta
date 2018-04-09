@@ -1,5 +1,6 @@
 package component.grammar;
 
+import common.DictionaryService;
 import common.GrammarService;
 import component.Controller;
 import configuration.ConfigurationHandler;
