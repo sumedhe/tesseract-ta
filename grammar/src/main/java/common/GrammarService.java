@@ -1,6 +1,7 @@
 package common;
 
 import io.TextReader;
+import org.jetbrains.annotations.Contract;
 import utils.LangUtils;
 import utils.TextUtils;
 
@@ -16,11 +17,12 @@ public class GrammarService {
 
     private static String logBrief = "";
 
-    public GrammarService() {
-
-    }
-
-    // Apply Mandatory Rules
+    /**
+     * Apply Mandatory Rules
+     *
+     * @param outputFilename
+     * @param outputDirectoryPath
+     */
     public static void fixMandatory(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
         String log = "Fixed Mandatory\n";
@@ -42,7 +44,12 @@ public class GrammarService {
         saveFile(outputFilename, text);
     }
 
-    // Check and fix Ambiguities
+    /**
+     * Check and fix Ambiguities
+     *
+     * @param outputFilename
+     * @param outputDirectoryPath
+     */
     public static void fixAmbiguity(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
         String[][] ambiguousChars = LangUtils.getAmbiguousChars();
@@ -77,7 +84,12 @@ public class GrammarService {
         saveFile(outputFilename, text);
     }
 
-    // Check legitimacy
+    /**
+     * Check legitimacy
+     *
+     * @param outputFilename
+     * @param outputDirectoryPath
+     */
     public static void checkLegitimacy(String outputFilename, String outputDirectoryPath) {
         String text = openFile(outputFilename);
 
@@ -112,7 +124,12 @@ public class GrammarService {
         saveLog(outputDirectoryPath + LOG_FILE_NAME, log);
     }
 
-    // Verify letters with Extended Blocks
+    /**
+     * Verify letters with Extended Blocks
+     *
+     * @param outputFilename
+     * @param outputDirectoryPath
+     */
     public static void checkExBlocks(String outputFilename, String outputDirectoryPath) {
         String[] words = TextUtils.splitWords(openFile(outputFilename));
 
@@ -133,18 +150,31 @@ public class GrammarService {
     }
 
 
+    /**
+     * @return
+     */
+    @Contract(pure = true)
     public static String getLogBrief() {
         return logBrief;
     }
 
 
-    // Load recognnized text
+    /**
+     * Load recognized text
+     *
+     * @param fileName
+     * @return
+     */
     public static String openFile(String fileName) {
         // Load recognized text file
         TextReader fo = new TextReader();
         return fo.read(fileName);
     }
 
+    /**
+     * @param fileName
+     * @param text
+     */
     public static void saveFile(String fileName, String text) {
         PrintWriter writer = null;
         try {
@@ -158,10 +188,17 @@ public class GrammarService {
         }
     }
 
+    /**
+     * @param fileName
+     * @param text
+     */
     public static void saveLog(String fileName, String text) {
         saveFile(fileName, openFile(fileName) + text);
     }
 
+    /**
+     * @param outputDirectoryPath
+     */
     public static void clearLog(String outputDirectoryPath) {
         logBrief = "";
         saveFile(outputDirectoryPath + LOG_FILE_NAME, "");

@@ -12,6 +12,11 @@ import java.util.HashSet;
 
 public class ExcelReader {
 
+    /**
+     * @param fileName
+     * @param sheetIndex
+     * @return
+     */
     public static String[][] readAsArray(String fileName, int sheetIndex) {
         String data[][] = {{}};
 
@@ -53,8 +58,14 @@ public class ExcelReader {
         return data;
     }
 
+    /**
+     * @param fileName
+     * @param sheetIndex
+     * @param cols
+     * @return
+     */
     public static HashSet<String> readAsHashSet(String fileName, int sheetIndex, int cols) {
-        HashSet<String> data = new HashSet<String>();
+        HashSet<String> data = new HashSet<>();
 
         // Load the sheet
         try {

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -190,11 +191,16 @@ public class GeneralController implements Controller {
                     OCRService.ocrDocker(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
                 }
 
+                // Preparing for Post Process
+                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
+
                 if (comparisonCheckBox.isSelected()) {
                     try {
+                        // Diff
                         List<CustomDiff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
                         DiffReportService.generateDefault(deltas, outputDirectoryPath, "diff_google");
 
+                        // Format diff
                         DiffService.formatDiff(deltas);
                         DiffReportService.generateDefault(deltas, outputDirectoryPath, "diff_formatted");
                     } catch (IOException e) {
@@ -202,12 +208,16 @@ public class GeneralController implements Controller {
                     }
                 }
 
+                // Confusion matrix
                 if (confusionMatrixCheckBox.isSelected()) {
-                    // TODO: 4/7/18
+                    try {
+                        List<CustomDiff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
+                        HashMap<String, HashMap<String, Integer>> confusionMap = CMService.getConfusionMap(deltas);
+//                        CMReportService.generateDefault(confusionMap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                // Preparing for Post Process
-                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
 
                 if (fixAmbiguityCheckBox.isSelected()) {
                     GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);

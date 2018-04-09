@@ -1,6 +1,7 @@
 package unicode;
 
 import com.google.common.collect.ImmutableBiMap;
+import org.jetbrains.annotations.Contract;
 
 public class Sinhala {
 
@@ -99,22 +100,45 @@ public class Sinhala {
                 .build();
     }
 
-    // Check whether a char is a vowel
+    /**
+     * Check whether a char is a vowel
+     *
+     * @param c
+     * @return
+     */
+    @Contract(pure = true)
     public static boolean isVowel(char c) {
         return vowels.containsValue(c);
     }
 
-    // Check whether a char is a consonant
+    /**
+     * Check whether a char is a consonant
+     *
+     * @param c
+     * @return
+     */
+    @Contract(pure = true)
     public static boolean isConsonant(char c) {
         return consonants.containsValue(c);
     }
 
-    // Check whether a char is a modifier
+    /**
+     * Check whether a char is a modifier
+     *
+     * @param c
+     * @return
+     */
+    @Contract(pure = true)
     public static boolean isModifier(char c) {
         return modifiers.containsValue(c);
     }
 
-    // Get character by it's name
+    /**
+     * Get character by it's name
+     *
+     * @param s
+     * @return
+     */
     public static char get(String s) {
         if (vowels.containsKey(s)) {
             return vowels.get(s);

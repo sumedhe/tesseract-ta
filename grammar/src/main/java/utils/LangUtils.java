@@ -1,6 +1,7 @@
 package utils;
 
 import io.ExcelReader;
+import org.jetbrains.annotations.Contract;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +28,9 @@ public class LangUtils {
 
     }
 
+    /**
+     * @param fileName
+     */
     public static void loadLanguageData(String fileName) {
         String[][] data;
 
@@ -54,48 +58,92 @@ public class LangUtils {
         //showLanguageDataInfo();
     }
 
-    // Get mandatory rules
+    /**
+     * Get mandatory rules
+     *
+     * @return
+     */
+    @Contract(pure = true)
     public static String[][] getMandatoryRules() {
         return mandatoryRules;
     }
 
-    // Get Ambituous characters
+    /**
+     * Get Ambituous characters
+     *
+     * @return
+     */
+    @Contract(pure = true)
     public static String[][] getAmbiguousChars() {
         return ambiguousChars;
     }
 
-    // Get dictionary word list
+    /**
+     * Get dictionary word list
+     *
+     * @return
+     */
+    @Contract(pure = true)
     public static Set<String> getDictionaryWordList() {
         return dictionaryWordList;
     }
 
-    // Check whether _ char is _ vowel
+    /**
+     * Check whether _ char is _ vowel
+     *
+     * @param character
+     * @return
+     */
     public static boolean isVowel(char character) {
         return vowels.contains(String.valueOf(character));
     }
 
-    // Check whether _ char is _ consonant
+    /**
+     * Check whether _ char is _ consonant
+     *
+     * @param character
+     * @return
+     */
     public static boolean isConsonant(char character) {
         return consonants.contains(String.valueOf(character));
     }
 
 
-    // Check whether _ char is _ modifier
+    /**
+     * Check whether _ char is _ modifier
+     *
+     * @param character
+     * @return
+     */
     public static boolean isModifier(char character) {
         return modifiers.contains(String.valueOf(character));
     }
 
-    // Check whether _ word in _ dictionary
+    /**
+     * Check whether _ word in _ dictionary
+     *
+     * @param word
+     * @return
+     */
+    @Contract(pure = true)
     public static boolean isInDictionary(String word) {
         return dictionaryWordList.contains(word);
     }
 
-    // Check whether _ letter in extended block (check validity of _ letter)
+    /**
+     * Check whether _ letter in extended block (check validity of _ letter)
+     *
+     * @param letter
+     * @return
+     */
+    @Contract(pure = true)
     public static boolean isInExtendedBlock(String letter) {
         return extendedBlocks.contains(letter);
     }
 
-    // Shot Language Data info
+    /**
+     * Show Language Data info
+     */
     public static void showLanguageDataInfo() {
         System.out.println("Mandatory rules: " + mandatoryRules.length);
         System.out.println("Ambiguity rules: " + ambiguousChars.length);

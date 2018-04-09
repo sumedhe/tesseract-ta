@@ -6,10 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class TextReader {
-    public TextReader() {
 
-    }
-
+    /**
+     * @param fileName
+     * @return
+     */
     public static String read(String fileName) {
         String line = null;
         String text = "";

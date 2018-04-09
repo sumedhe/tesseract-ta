@@ -69,7 +69,7 @@ public class OCRService {
         executor.setExitValue(0);
 
         ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
-        executor.setWatchdog(watchdog);
+//        executor.setWatchdog(watchdog);
 
         Map<String, String> customEnvironment = null;
         try {
