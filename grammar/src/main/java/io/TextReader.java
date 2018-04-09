@@ -16,11 +16,11 @@ public class TextReader {
 
     // Read document as a String
     public static String readAsString(String fileName) {
-        return Convert.toString(readAsList(fileName));
+        return Convert.toString(readLines(fileName));
     }
 
     // Read document as a list of lines
-    public static List<String> readAsList(String fileName){
+    public static List<String> readLines(String fileName){
         String       line = null;
         List<String> lines = new ArrayList<>();
 

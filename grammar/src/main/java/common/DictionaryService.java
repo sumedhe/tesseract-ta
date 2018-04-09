@@ -2,6 +2,8 @@ package common;
 
 import io.TextReader;
 import io.TextWriter;
+import models.OCRWord;
+
 import java.util.HashSet;
 
 import static config.Paths.*;
@@ -15,7 +17,7 @@ public class DictionaryService {
 
     // Load dictionary words
     public static void load(){
-        words = new HashSet<String>(TextReader.readAsList(DICTIONARY_PATH));
+        words = new HashSet<String>(TextReader.readLines(DICTIONARY_PATH));
     }
 
     // Check whether a word contains in the dictionary
@@ -27,5 +29,9 @@ public class DictionaryService {
     public static void addWord(String word) {
         words.add(word);
         TextWriter.append(DICTIONARY_PATH, word);
+    }
+
+    public static void check(OCRWord ocrWord){
+        ocrWord.setInDictionary(contains(ocrWord.getValue()));
     }
 }

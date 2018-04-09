@@ -1,6 +1,12 @@
 package io;
 
+import common.DictionaryService;
+import models.OCRLetter;
+import models.OCRLine;
+import models.OCRWord;
+
 import java.io.PrintWriter;
+import java.util.List;
 
 public class HTMLWriter {
     private PrintWriter writer = null;
@@ -27,7 +33,7 @@ public class HTMLWriter {
     }
 
     public void typeColor(String text, String color){
-        content += String.format("<font color=\"r%s\">%s</font>", color, text);
+        content += String.format("<font color=\"%s\">%s</font>", color, text);
     }
 
     public void typeUnderline(String text){
@@ -68,5 +74,33 @@ public class HTMLWriter {
         content = content + "\n</body></html>";
         writer.println(content);
         writer.close();
+    }
+
+    // Write HTML Output
+    public static void writeReport(String fileName, List<OCRLine> document){
+        HTMLWriter html = new HTMLWriter(fileName);
+
+        for (OCRLine ocrLine : document){
+            for (OCRWord ocrWord : ocrLine.getWords()){
+                // Mark if it is not in dictionary
+                html.setColor(ocrWord.isInDictionary() ? "none" : "blue");
+
+                // For each letter
+                for (OCRLetter ocrLetter : ocrWord.getLetters()){
+                    if (ocrLetter.isModified()){
+                        html.typeColor(ocrLetter.getValue(), "green");
+                    } else {
+                        html.type(ocrLetter.getValue());
+                    }
+                }
+
+                html.type(" ");
+                html.setColor("none");
+            }
+
+            html.newLine();
+        }
+
+        html.write();
     }
 }

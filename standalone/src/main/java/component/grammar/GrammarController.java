@@ -6,7 +6,6 @@ import configuration.ConfigurationHandler;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
@@ -26,16 +25,6 @@ public class GrammarController implements Controller {
     private TextField outputDirectoryTextField;
     @FXML
     private Button browseOutputDirectoryButton;
-    @FXML
-    private Label logLabel;
-    @FXML
-    private Button fixMandatoryButton;
-    @FXML
-    private Button fixAmbiguityButton;
-    @FXML
-    private Button checkLegitimacyButton;
-    @FXML
-    private Button checkExBlocksButton;
     @FXML
     private Button clearLogButton;
     @FXML
@@ -58,51 +47,11 @@ public class GrammarController implements Controller {
             }
         });
 
-
-        // Apply Mandatory Rules
-        fixMandatoryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                // Load text
-                GrammarService.fixMandatory(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(GrammarService.getLogBrief());
-            }
-        });
-
-
-        // Check and fix Ambiguities
-        fixAmbiguityButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GrammarService.fixAmbiguity(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(GrammarService.getLogBrief());
-            }
-        });
-
-        // Check legitimacy
-        checkLegitimacyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GrammarService.checkLegitimacy(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(GrammarService.getLogBrief());
-            }
-        });
-
-        // Check Extended blocks
-        checkExBlocksButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GrammarService.checkExBlocks(outputDirectoryTextField.getText() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText(GrammarService.getLogBrief());
-            }
-        });
-
         // Clear Log
         clearLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                GrammarService.clearLog(ConfigurationHandler.getOutputDirectoryPath());
-                logLabel.setText("");
+                GrammarService.execute("/home/sumedhe/Documents/tmp/OCRSample/sin.outtext.txt", "/home/sumedhe/Documents/tmp/OCRSample/report.html");
             }
         });
 

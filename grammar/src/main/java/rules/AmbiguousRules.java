@@ -1,7 +1,10 @@
 package rules;
 
+import common.DictionaryService;
 import config.Paths;
 import io.ExcelReader;
+import models.OCRLetter;
+import models.OCRWord;
 import utils.Convert;
 
 import java.util.HashMap;
@@ -31,5 +34,28 @@ public class AmbiguousRules {
     // Get rules
     public static HashMap<String, String> getRules(){
         return rules;
+    }
+
+    // Apply Ambiguity rules
+    public static void apply(OCRWord ocrWord){
+        // Check for the words in the dictionary
+        String word = ocrWord.getValue();
+        for (String key : rules.keySet()) {
+            String val = rules.get(key);
+            if (ocrWord.getValue().contains(key)) {
+                String newWord = word.replaceAll(key, val);
+                // Check for newWord in dictionary
+                if (DictionaryService.contains(newWord)) {
+                    // Mark changed letter
+                    for (OCRLetter ocrLetter : ocrWord.getLetters()){
+                        if (ocrLetter.getValue().equals(key)){
+                            ocrLetter.setValue(val);
+                        }
+                    }
+                    ocrWord.setInDictionary(true);
+                    ocrWord.refresh();
+                }
+            }
+        }
     }
 }
