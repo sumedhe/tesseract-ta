@@ -216,15 +216,15 @@ public class GeneralController implements Controller {
                 }
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    GrammarService.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    GrammarService.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
             }
 

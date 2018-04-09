@@ -1,8 +1,12 @@
 package utils;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import models.Block;
+import models.OCRLetter;
+import models.OCRLine;
+import models.OCRWord;
+
+import javax.xml.soap.Text;
+import java.util.*;
 
 public class Convert {
     public static HashSet<String> toHashSet(String[][] matrix){
@@ -23,6 +27,30 @@ public class Convert {
             }
         }
         return hashMap;
+    }
+
+    public static OCRWord toOCRWord(String word){
+        OCRWord ocrWord = new OCRWord(word);
+        for (String s: TextUtils.splitLetters(word)){
+            ocrWord.addLetter(new OCRLetter(s));
+        }
+        return ocrWord;
+    }
+
+    public static OCRLine toOCRLine(String line){
+        OCRLine ocrLine = new OCRLine(line);
+        for (String word : TextUtils.splitWords(line)){
+            ocrLine.addWord(toOCRWord(word));
+        }
+        return ocrLine;
+    }
+
+    public static List<OCRLine> toOCRLines(List<String> lines){
+        List<OCRLine> ocrLines = new LinkedList<>();
+        for (String line : lines){
+            ocrLines.add(toOCRLine(line));
+        }
+        return ocrLines;
     }
 
     public static String toString(List<String> list){
