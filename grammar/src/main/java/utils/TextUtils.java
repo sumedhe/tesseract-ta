@@ -1,7 +1,8 @@
 package utils;
 
-import unicode.Sinhala;
 
+import unicode.Sinhala;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +10,34 @@ public class TextUtils {
 
     private final static char ZERO_WIDTH_JOINER = '\u200D';
 
-    // Split text to word array
+    /**
+     * Split text to word array
+     *
+     * @param text
+     * @return
+     */
+    @NotNull
     public static String[] splitWords(String text) {
         return removeWhiteSpaces(text).split(" ");
     }
 
-    // Remove all whitespaces
+    /**
+     * Remove all whitespaces
+     *
+     * @param text
+     * @return
+     */
+    @NotNull
     public static String removeWhiteSpaces(String text) {
         return text.replace("\n", " ").replace("\r", " ");
     }
 
-    // Split letters
+    /**
+     * Split letters
+     *
+     * @param text
+     * @return
+     */
     public static List<String> splitLetters(String text) {
         text = removeWhiteSpaces(text);
         List<String> letters = new ArrayList<>();

@@ -14,7 +14,7 @@ public class DiffReportService {
     public static void generateDefault(List<CustomDiff> deltas, String outputDirectoryPath, String outputFileName) throws IOException {
         Workbook workbook = new XSSFWorkbook();
 
-        Sheet sheet = workbook.createSheet("Diff analysis - Google");
+        Sheet sheet = workbook.createSheet();
         sheet.setColumnWidth(0, 10000);
         sheet.setColumnWidth(1, 10000);
         sheet.setColumnWidth(2, 4000);
@@ -61,7 +61,6 @@ public class DiffReportService {
             Row row = sheet.createRow(i++);
 
             d.text = d.text
-                    .replace("¶", "<p>")
                     .replace("\n", "<n>")
                     .replace("\t", "<t>")
                     .replace("\r", "<r>")
