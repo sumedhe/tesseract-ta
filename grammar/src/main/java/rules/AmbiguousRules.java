@@ -15,7 +15,7 @@ public class AmbiguousRules {
 
     // Load rules
     public static void load(){
-        rules = Convert.toHashMap(ExcelReader.readAsMatrix(Paths.AMBIGUOUS_PATH));
+        rules = Convert.toHashMap(ExcelReader.read(Paths.AMBIGUOUS_PATH));
     }
 
     // Check whether a rule exists

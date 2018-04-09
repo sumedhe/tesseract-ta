@@ -15,7 +15,7 @@ public class MandatoryRules {
 
     // Load rules
     public static void load(){
-        rules = Convert.toHashMap(ExcelReader.readAsMatrix(Paths.MANDATORY_PATH));
+        rules = Convert.toHashMap(ExcelReader.read(Paths.MANDATORY_PATH));
     }
 
     // Check whether a rule exists

@@ -16,7 +16,7 @@ public class ExcelReader {
 
     private static int sheetIndex = 0;
 
-    public static String[][] readAsMatrix(String fileName) {
+    public static String[][] read(String fileName) {
         String data[][] = {{}};
 
         // Load the sheet
@@ -36,7 +36,7 @@ public class ExcelReader {
             }
 
             // Load data to array
-            data = new String[rows + 1][2];
+            data = new String[rows + 1][cols];
             for (int r = 0; r < rows; r++) {
                 row = sheet.getRow(r);
                 if (row != null) {
