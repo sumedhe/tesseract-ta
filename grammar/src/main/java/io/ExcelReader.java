@@ -8,17 +8,19 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class ExcelReader {
 
-    public static String[][] readAsArray(String fileName, int sheetIndex) {
+    private static int sheetIndex = 0;
+
+    public static String[][] readAsMatrix(String fileName) {
         String data[][] = {{}};
 
+        // Load the sheet
         try {
-            int rows, cols;
-
-            // Load the sheet
             POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fileName));
             HSSFWorkbook wb = new HSSFWorkbook(fs);
             HSSFSheet sheet = wb.getSheetAt(sheetIndex);
@@ -26,6 +28,7 @@ public class ExcelReader {
             HSSFCell cell;
 
             // Get number of rows and cols
+            int rows, cols;
             rows = sheet.getPhysicalNumberOfRows();
             cols = 0;
             if (rows > 0) {
@@ -40,7 +43,7 @@ public class ExcelReader {
                     for (int c = 0; c < cols; c++) {
                         cell = row.getCell((short) c);
                         if (cell != null) {
-                            data[r][c] = cell.getStringCellValue();
+                            data[r][c] = cell.getStringCellValue().trim();
                         }
                     }
                 }
@@ -53,36 +56,5 @@ public class ExcelReader {
         return data;
     }
 
-    public static HashSet<String> readAsHashSet(String fileName, int sheetIndex, int cols) {
-        HashSet<String> data = new HashSet<String>();
 
-        // Load the sheet
-        try {
-            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fileName));
-            HSSFWorkbook wb = null;
-            wb = new HSSFWorkbook(fs);
-            HSSFSheet sheet = wb.getSheetAt(sheetIndex);
-            HSSFRow row;
-            HSSFCell cell;
-
-            // Load data
-            int rows = sheet.getPhysicalNumberOfRows();
-            for (int i = 0; i < rows; i++) {
-                row = sheet.getRow(i);
-                if (row != null) {
-                    for (int j = 0; j < cols; j++) {
-                        cell = row.getCell((short) j);
-                        if (cell != null && !cell.getStringCellValue().equals("")) {
-                            data.add(cell.getStringCellValue().trim());
-                        }
-                    }
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return data;
-    }
 }
