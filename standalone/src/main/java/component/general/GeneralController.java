@@ -4,6 +4,7 @@ import common.*;
 import common.DiffService.CustomDiff;
 import component.Controller;
 import configuration.ConfigurationHandler;
+import diff.CMReportService;
 import diff.DiffReportService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,9 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 public class GeneralController implements Controller {
 
@@ -212,8 +213,8 @@ public class GeneralController implements Controller {
                 if (confusionMatrixCheckBox.isSelected()) {
                     try {
                         List<CustomDiff> deltas = DiffService.getDefaultDiff(outputDirectoryPath);
-                        HashMap<String, HashMap<String, Integer>> confusionMap = CMService.getConfusionMap(deltas);
-//                        CMReportService.generateDefault(confusionMap);
+                        TreeMap<String, TreeMap<String, Integer>> confusionMap = CMService.getConfusionMap(deltas);
+                        CMReportService.generateDefault(confusionMap, outputDirectoryPath, "confusion_matrix");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
