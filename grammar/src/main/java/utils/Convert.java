@@ -1,11 +1,9 @@
 package utils;
 
-import models.Block;
 import models.OCRLetter;
 import models.OCRLine;
 import models.OCRWord;
 
-import javax.xml.soap.Text;
 import java.util.*;
 
 public class Convert {
@@ -24,6 +22,22 @@ public class Convert {
         for (String[] row : matrix){
             if (row[0] != null && !row[0].equals("") && row[1] != null){
                 hashMap.put(row[0], row[1]);
+            }
+        }
+        return hashMap;
+    }
+
+    public static HashMap<String, List<String>> toHashMapMultiple(String[][] matrix){
+        HashMap<String, List<String>> hashMap = new HashMap<>();
+        for (String[] row : matrix){
+            if (row[0] != null && !row[0].equals("") && row[1] != null){
+                if (hashMap.containsKey(row[0])){
+                    List<String> val = hashMap.get(row[0]);
+                    val.add(row[1]);
+                    hashMap.put(row[0], val);
+                } else {
+                    hashMap.put(row[0], new ArrayList<>(Arrays.asList(row[1])));
+                }
             }
         }
         return hashMap;

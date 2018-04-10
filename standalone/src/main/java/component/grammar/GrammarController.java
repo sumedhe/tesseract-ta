@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 
 public class GrammarController implements Controller {
 
-
-    private final String tessconfigDir = "./tessconfig/";
     @FXML
     private TextField outputDirectoryTextField;
     @FXML
@@ -59,6 +57,18 @@ public class GrammarController implements Controller {
         reloadLanguageDataButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                final int n = 5;
+                for (int i = 1; i < Math.pow(2, n); i++) {
+                    String bin = Integer.toBinaryString(i);
+                    while (bin.length() < n)
+                        bin = "0" + bin;
+
+
+
+
+                    System.out.println(bin);
+                }
+
                 AmbiguousRules.load();
                 MandatoryRules.load();
                 LegitimacyRules.load();

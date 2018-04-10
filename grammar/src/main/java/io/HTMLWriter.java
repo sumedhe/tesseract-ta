@@ -1,6 +1,5 @@
 package io;
 
-import common.DictionaryService;
 import models.OCRLetter;
 import models.OCRLine;
 import models.OCRWord;
@@ -94,6 +93,11 @@ public class HTMLWriter {
                     } else {
                         html.type(ocrLetter.getValue());
                     }
+                }
+
+                // Type optional words
+                if (ocrWord.getOptionalWords().size() > 0){
+                    html.type(String.format("[%s]", String.join("|", ocrWord.getOptionalWords())));
                 }
 
                 html.type(" ");

@@ -52,6 +52,9 @@ public class LegitimacyRules {
 
     }
 
+    /**
+     * @param ocrWord
+     */
     // Check legitimacy for characters
     public static void checkForCharacters(OCRWord ocrWord){
 
