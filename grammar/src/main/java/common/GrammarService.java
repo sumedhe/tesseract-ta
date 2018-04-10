@@ -2,7 +2,6 @@ package common;
 
 import io.HTMLWriter;
 import io.TextReader;
-import models.OCRLetter;
 import models.OCRLine;
 import models.OCRWord;
 import rules.AmbiguousRules;
@@ -27,10 +26,8 @@ public class GrammarService {
                 // Check dictionary words
                 DictionaryService.check(ocrWord);
 
-                // If invalid word check for ambiguity
-                if (!ocrWord.isInDictionary()){
-                    AmbiguousRules.apply(ocrWord);
-                }
+                // Check for ambiguity
+                AmbiguousRules.apply(ocrWord);
 
                 // Check legitimacy errors
                 LegitimacyRules.checkForPositions(ocrWord);
