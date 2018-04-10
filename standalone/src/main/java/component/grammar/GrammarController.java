@@ -26,9 +26,9 @@ public class GrammarController implements Controller {
     @FXML
     private Button browseOutputDirectoryButton;
     @FXML
-    private Button clearLogButton;
-    @FXML
     private Button reloadLanguageDataButton;
+    @FXML
+    private Button executeGrammarCheckButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,11 +47,11 @@ public class GrammarController implements Controller {
             }
         });
 
-        // Clear Log
-        clearLogButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        // Start grammar check
+        executeGrammarCheckButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                GrammarService.execute("/home/sumedhe/Documents/tmp/OCRSample/sin.outtext.txt", "/home/sumedhe/Documents/tmp/OCRSample/report.html");
+                GrammarService.execute( ConfigurationHandler.getOutputDirectoryPath() + "sin.outtext.txt", ConfigurationHandler.getOutputDirectoryPath() +"sin.report.html");
             }
         });
 
