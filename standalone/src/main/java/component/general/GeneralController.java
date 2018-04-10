@@ -17,7 +17,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
-import utils.LangUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -192,9 +191,6 @@ public class GeneralController implements Controller {
                     OCRService.ocrDocker(outputDirectoryPath + "out.tif", outputDirectoryPath + "/output");
                 }
 
-                // Preparing for Post Process
-                LangUtils.loadLanguageData(tessconfigDir + "lang_data.xls");
-
                 if (comparisonCheckBox.isSelected()) {
                     try {
                         // Diff
@@ -221,15 +217,15 @@ public class GeneralController implements Controller {
                 }
 
                 if (fixAmbiguityCheckBox.isSelected()) {
-                    GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.fixAmbiguity(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (fixMandatoryCheckBox.isSelected()) {
-                    GrammarService.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.fixMandatory(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
 
                 if (checkLegitimacyCheckBox.isSelected()) {
-                    GrammarService.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
+//                    GrammarService.checkLegitimacy(outputDirectoryPath + "sin.outtext.txt", outputDirectoryPath);
                 }
             }
 
