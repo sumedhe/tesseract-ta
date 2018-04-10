@@ -40,7 +40,9 @@ public class Convert {
     public static OCRLine toOCRLine(String line){
         OCRLine ocrLine = new OCRLine(line);
         for (String word : TextUtils.splitWords(line)){
-            ocrLine.addWord(toOCRWord(word));
+            if (!word.equals("")){
+                ocrLine.addWord(toOCRWord(word));
+            }
         }
         return ocrLine;
     }

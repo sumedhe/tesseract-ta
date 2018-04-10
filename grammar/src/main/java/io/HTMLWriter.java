@@ -87,8 +87,10 @@ public class HTMLWriter {
 
                 // For each letter
                 for (OCRLetter ocrLetter : ocrWord.getLetters()){
-                    if (ocrLetter.isModified()){
+                    if (ocrLetter.isModified()) {
                         html.typeColor(ocrLetter.getValue(), "green");
+                    } else if (ocrLetter.isLegitimacyError()) {
+                        html.typeColor(ocrLetter.getValue(), "red");
                     } else {
                         html.type(ocrLetter.getValue());
                     }

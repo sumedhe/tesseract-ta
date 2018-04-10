@@ -22,7 +22,7 @@ public class DictionaryService {
 
     // Check whether a word contains in the dictionary
     public static boolean contains(String word) {
-        return words.contains(word);
+        return words.contains(word.replace(".", "").replace(",", ""));
     }
 
     // Add new word to the dictionary

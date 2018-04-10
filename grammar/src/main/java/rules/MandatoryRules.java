@@ -29,10 +29,8 @@ public class MandatoryRules {
         for (String key : rules.keySet()){
             if (text.contains(key)){
                 text = text.replaceAll(key, rules.get(key));
-                System.out.println(key + " KEY KEY " + rules.get(key));
             }
         }
-        System.out.println("TEXT " + text);
         return text;
     }
 

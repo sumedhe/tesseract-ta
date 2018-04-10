@@ -6,6 +6,7 @@ import models.OCRLetter;
 import models.OCRLine;
 import models.OCRWord;
 import rules.AmbiguousRules;
+import rules.LegitimacyRules;
 import rules.MandatoryRules;
 import utils.Convert;
 
@@ -19,10 +20,8 @@ public class GrammarService {
 
         for (String line : TextReader.readLines(inTextPath)){
             // Apply Mandatory Rules
-            System.out.println(line);
             line = MandatoryRules.apply(line);
             OCRLine ocrLine = Convert.toOCRLine(line);
-            System.out.println(line);
 
             for (OCRWord ocrWord : ocrLine.getWords()){
                 // Check dictionary words
@@ -32,6 +31,9 @@ public class GrammarService {
                 if (!ocrWord.isInDictionary()){
                     AmbiguousRules.apply(ocrWord);
                 }
+
+                // Check legitimacy errors
+                LegitimacyRules.checkForPositions(ocrWord);
 
             }
 
